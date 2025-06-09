@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Brad Bitt - Mission Sauvetage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <h1 class="title-impact">🎬 Le retour incontesté de Brad Bitt</h1>
+
+        <div id="codeSection">
+            <p>Entrez le code secret pour accéder à la mission :</p>
+            <input type="password" id="codeInput" placeholder="Code secret...">
+            <button onclick="checkCode()">Valider</button>
+            <p id="errorMsg" class="error"></p>
+        </div>
+
+        <div id="videoSection" class="hidden">
+            <div id="player"></div>
+            <button id="continueBtn" class="hidden" onclick="goToMap()">Suivant</button>
+        </div>
+
+        <div id="mapSection" class="hidden">
+            <h2>🗺️ Carte de la mission</h2>
+            <div class="location" id="bkLocation">
+                <h3>🍔 Burger King</h3>
+                <button onclick="showBurgerKing()">Entrer</button>
+            </div>
+            <div class="location" id="lgLocation">
+                <h3>🕹️ Laser Game</h3>
+                <div id="lgUnlock" class="hidden">
+                    <input type="text" id="laserCode" placeholder="Entrez le code pour déverrouiller">
+                    <button onclick="unlockLaserGame()">Déverrouiller</button>
+                    <p id="codeError" class="error"></p>
+                </div>
+                <button id="lgBtn" onclick="showLaserGame()" disabled>Entrer</button>
+            </div>
+        </div>
+
+        <div id="burgerKingSection" class="hidden">
+            <h2>🍔 Burger King - Gages</h2>
+            <ul>
+                <li><input type="checkbox" class="bk-gage"> Garder la couronne toute la journée</li>
+                <li><input type="checkbox" class="bk-gage"> Demander s'ils ont des burgers au Serrano</li>
+                <li><input type="checkbox" class="bk-gage"> Aux toilettes, crier : "Oulala, ce Burger était vachement salé !"</li>
+                <li><input type="checkbox" class="bk-gage"> Prendre une photo avec un panneau Burger King</li>
+            </ul>
+            <button onclick="checkBKGages()">Valider les gages</button>
+            <p id="bkCodeReveal" class="hidden">🧩 Code débloqué : <strong>AST2025</strong></p>
+
+            <hr>
+            <h3>🎲 Tirage au sort</h3>
+            <button onclick="tirage()">Lancer la roulette</button>
+            <p id="resultatTirage"></p>
+
+            <button onclick="goToMap()">Retour à la carte</button>
+        </div>
+
+        <div id="laserGameSection" class="hidden">
+            <h2>🕹️ Laser Game - Gages</h2>
+            <ul>
+                <li><input type="checkbox"> Mettre le prénom de sa maman en pseudo</li>
+                <li><input type="checkbox"> Se faire éliminer volontairement une fois</li>
+                <li><input type="checkbox"> Faire une roulade dramatique en jeu</li>
+            </ul>
+            <button onclick="goToMap()">Retour à la carte</button>
+        </div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js"></script>
+</body>
+</html>
