@@ -8,8 +8,13 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div id="intro-screen">
-    <h1>Le retour incontesté de Brad Bitt</h1>
+  <div id="countdown-container">
+    <h2>Lancement dans :</h2>
+    <div id="countdown"></div>
+  </div>
+
+  <div id="intro-screen" class="hidden">
+    <h1 class="impact-font">Le retour incontesté de Brad Bitt</h1>
     <p>Entrez le code :</p>
     <input type="text" id="access-code" placeholder="Code d'accès"/>
     <button onclick="checkAccessCode()">Valider</button>
@@ -17,6 +22,7 @@
   </div>
 
   <div id="video-screen" class="hidden">
+    <h3>Un message de Brad Bitt</h3>
     <iframe id="intro-video" width="560" height="315" 
       src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" 
       title="Vidéo Brad Bitt" frameborder="0" allow="autoplay" allowfullscreen></iframe>
@@ -24,30 +30,10 @@
     <p class="small-text">Le bouton apparaîtra à la fin de la vidéo</p>
   </div>
 
-  <div id="gage-screen" class="hidden">
-    <h2>Tirage au sort des prénoms</h2>
-    <button onclick="drawName()">🎲 Tirer un prénom</button>
-    <p id="selected-name"></p>
-
-    <h2>Tirage au sort des gages</h2>
-    <button onclick="drawGage()">🎯 Tirer un gage</button>
-    <p id="selected-gage"></p>
-
-    <div id="gage-confirmation" class="hidden">
-      <h3>Confirmez avoir fait les gages :</h3>
-      <ul id="gage-list"></ul>
-      <button id="validate-gages" class="disabled" disabled onclick="showCongratsVideo()">✅ Oui</button>
-      <button onclick="alert('Revenez quand tous les gages sont faits !')">❌ Non</button>
-    </div>
-  </div>
-
-  <div id="congrats-video-screen" class="hidden">
-    <iframe id="congrats-video" width="560" height="315" 
-      src="https://www.youtube.com/embed/D9Sou89ULNU?enablejsapi=1" 
-      title="Vidéo de félicitations" frameborder="0" allow="autoplay" allowfullscreen></iframe>
-    <input id="final-code" class="hidden" type="text" placeholder="Entrez le code final"/>
-    <button id="validate-final" class="hidden" onclick="checkFinalCode()">Valider</button>
-    <p id="final-message" class="hidden">🎉 Étape suivante débloquée !</p>
+  <!-- Bouton secret en bas à droite -->
+  <div id="secret-access">
+    <input type="text" id="secret-code" placeholder="Code secret"/>
+    <button onclick="checkSecretCode()">🔒</button>
   </div>
 
   <script src="script.js"></script>
