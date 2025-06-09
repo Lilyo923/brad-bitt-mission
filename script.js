@@ -1,97 +1,112 @@
-let correctCode = "tondeuse";
-let laserGameCode = "epuisette";
-let prénoms = ["Nathanael", "Téo", "Edwin", "Hippolyte"];
-let gages = [
-  "Garder la couronne en carton durant toute la journée",
-  "Demander s’ils ont des Burgers au Serrano",
-  "Aux toilettes, crier « Oulala, ce Burger était vachement salé »",
-  "Demander s’il y a une option Burger végétarien pour sa maman"
+
+let accessGranted = false;
+const codeStart = "tondeuse";
+const codeFinal = "epuisette";
+const gages = [
+  "Garder la couronne du Burger King toute la journée",
+  "Demander s’il y a des burgers au serrano",
+  "Aux toilettes, crier « Oulala, ce burger était vachement salé ! »",
+  "Commander un burger en parlant uniquement en rimes"
 ];
+const names = ["Nathanael", "Téo", "Edwin", "Hippolyte"];
 
-function checkCode() {
-  const input = document.getElementById("codeInput").value.trim().toLowerCase();
-  if (input === correctCode) {
-    document.getElementById("intro").classList.add("hidden");
-    document.getElementById("videoSection").classList.remove("hidden");
+function checkAccessCode() {
+  const input = document.getElementById("access-code").value.toLowerCase();
+  if (input === codeStart) {
+    document.getElementById("intro-screen").classList.add("hidden");
+    document.getElementById("video-screen").classList.remove("hidden");
+    setupVideo("intro-video", "next-button");
   } else {
-    document.getElementById("codeMessage").innerText = "Code incorrect.";
+    document.getElementById("code-error").classList.remove("hidden");
   }
 }
 
-let player1, player2;
-function onYouTubeIframeAPIReady() {
-  player1 = new YT.Player('introVideo', {
+function setupVideo(videoId, buttonId) {
+  const player = new YT.Player(videoId, {
     events: {
-      'onStateChange': function (event) {
+      'onStateChange': event => {
         if (event.data === YT.PlayerState.ENDED) {
-          document.getElementById("nextFromVideo").disabled = false;
+          const btn = document.getElementById(buttonId);
+          btn.disabled = false;
+          btn.classList.remove("disabled");
         }
       }
     }
   });
-  player2 = new YT.Player('finalVideo', {
-    events: {
-      'onStateChange': function (event) {
-        if (event.data === YT.PlayerState.ENDED) {
-          document.getElementById("endButton").disabled = false;
-        }
-      }
-    }
+
+  if (buttonId === "next-button") {
+    document.getElementById(buttonId).addEventListener("click", () => {
+      document.getElementById("video-screen").classList.add("hidden");
+      document.getElementById("gage-screen").classList.remove("hidden");
+      prepareGageList();
+    });
+  }
+}
+
+function drawName() {
+  const name = names[Math.floor(Math.random() * names.length)];
+  document.getElementById("selected-name").innerText = `🎉 ${name}`;
+}
+
+function drawGage() {
+  const gage = gages[Math.floor(Math.random() * gages.length)];
+  document.getElementById("selected-gage").innerText = `😈 ${gage}`;
+  document.getElementById("gage-confirmation").classList.remove("hidden");
+}
+
+function prepareGageList() {
+  const list = document.getElementById("gage-list");
+  list.innerHTML = "";
+  gages.forEach((gage, idx) => {
+    const li = document.createElement("li");
+    const chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.id = "gage" + idx;
+    chk.addEventListener("change", checkAllGages);
+    li.appendChild(chk);
+    li.appendChild(document.createTextNode(" " + gage));
+    list.appendChild(li);
   });
 }
 
-document.getElementById("nextFromVideo").addEventListener("click", () => {
-  document.getElementById("videoSection").classList.add("hidden");
-  document.getElementById("gameSection").classList.remove("hidden");
-});
-
-function spinName() {
-  if (prénoms.length === 0) {
-    document.getElementById("nameResult").innerText = "Tous les prénoms ont été utilisés.";
-    return;
-  }
-  const index = Math.floor(Math.random() * prénoms.length);
-  const name = prénoms.splice(index, 1)[0];
-  document.getElementById("nameResult").innerText = `Prénom tiré : ${name}`;
-  document.getElementById("gageSection").classList.remove("hidden");
-}
-
-function spinGage() {
-  if (gages.length === 0) {
-    document.getElementById("gageResult").innerText = "Tous les gages ont été utilisés.";
-    return;
-  }
-  const index = Math.floor(Math.random() * gages.length);
-  const gage = gages.splice(index, 1)[0];
-  document.getElementById("gageResult").innerText = `Gage : ${gage}`;
-
-  const li = document.createElement("li");
-  const checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  checkbox.onchange = checkAllChecked;
-  li.appendChild(checkbox);
-  li.append(" " + gage);
-  document.getElementById("gageList").appendChild(li);
-}
-
-function checkAllChecked() {
-  const checkboxes = document.querySelectorAll("#gageList input[type='checkbox']");
-  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+function checkAllGages() {
+  const checkboxes = document.querySelectorAll("#gage-list input[type='checkbox']");
+  const allChecked = [...checkboxes].every(chk => chk.checked);
+  const btn = document.getElementById("validate-gages");
   if (allChecked) {
-    document.getElementById("secondCodeInput").disabled = false;
-  }
-}
-
-function checkSecondCode() {
-  const input = document.getElementById("secondCodeInput").value.trim().toLowerCase();
-  if (input === laserGameCode) {
-    document.getElementById("gameSection").classList.add("hidden");
-    document.getElementById("finalVideoSection").classList.remove("hidden");
+    btn.disabled = false;
+    btn.classList.remove("disabled");
   } else {
-    document.getElementById("secondCodeMessage").innerText = "Mot de passe incorrect.";
+    btn.disabled = true;
+    btn.classList.add("disabled");
   }
 }
 
-const tag = document.createElement('script');
+function showCongratsVideo() {
+  document.getElementById("gage-screen").classList.add("hidden");
+  document.getElementById("congrats-video-screen").classList.remove("hidden");
+
+  const player = new YT.Player("congrats-video", {
+    events: {
+      'onStateChange': event => {
+        if (event.data === YT.PlayerState.ENDED) {
+          document.getElementById("final-code").classList.remove("hidden");
+          document.getElementById("validate-final").classList.remove("hidden");
+        }
+      }
+    }
+  });
+}
+
+function checkFinalCode() {
+  const val = document.getElementById("final-code").value.toLowerCase();
+  if (val === codeFinal) {
+    document.getElementById("final-message").classList.remove("hidden");
+  }
+}
+
+// Charger API YouTube pour contrôle des vidéos
+let tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
-document.body.appendChild(tag);
+let firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);

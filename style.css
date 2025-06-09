@@ -1,39 +1,14 @@
+
 body {
   font-family: Arial, sans-serif;
   background-color: #111;
-  color: #f0f0f0;
+  color: white;
   text-align: center;
   padding: 20px;
 }
-h1 {
-  font-family: Impact, sans-serif;
-  font-size: 3em;
-}
-.hidden {
-  display: none;
-}
-button {
-  padding: 10px 20px;
-  font-size: 1em;
-  margin-top: 10px;
-}
-.message {
-  color: red;
-}
-.small-note {
-  font-size: 0.8em;
-  color: #ccc;
-}
-input[type="text"], input[type="password"] {
-  padding: 8px;
-  font-size: 1em;
-  margin-top: 10px;
-}
-ul {
-  list-style: none;
-  padding: 0;
-}
-ul li {
-  text-align: left;
-  margin: 5px 0;
-}
+.hidden { display: none; }
+button { padding: 10px 20px; font-size: 16px; margin: 10px; }
+.disabled { opacity: 0.5; pointer-events: none; }
+input[type="text"] { padding: 10px; font-size: 16px; }
+ul { list-style-type: none; padding: 0; }
+.small-text { font-size: 0.8em; color: #aaa; }

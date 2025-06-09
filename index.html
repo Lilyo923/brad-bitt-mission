@@ -1,49 +1,53 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Le retour incontesté de Brad Bitt</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div id="intro">
+  <div id="intro-screen">
     <h1>Le retour incontesté de Brad Bitt</h1>
-    <p>Entrez le code d'accès pour commencer</p>
-    <input type="text" id="codeInput" placeholder="Code..." />
-    <button onclick="checkCode()">Valider</button>
-    <p id="codeMessage" class="message"></p>
+    <p>Entrez le code :</p>
+    <input type="text" id="access-code" placeholder="Code d'accès"/>
+    <button onclick="checkAccessCode()">Valider</button>
+    <p id="code-error" class="hidden">Code incorrect.</p>
   </div>
 
-  <div id="videoSection" class="hidden">
-    <h2>Message de Brad Bitt</h2>
-    <iframe id="introVideo" width="560" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
-    <button id="nextFromVideo" disabled>Suivant</button>
-    <p class="small-note">Le bouton sera disponible à la fin de la vidéo</p>
+  <div id="video-screen" class="hidden">
+    <iframe id="intro-video" width="560" height="315" 
+      src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" 
+      title="Vidéo Brad Bitt" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+    <button id="next-button" class="disabled" disabled>Suivant</button>
+    <p class="small-text">Le bouton apparaîtra à la fin de la vidéo</p>
   </div>
 
-  <div id="gameSection" class="hidden">
-    <h2>Tirage au sort</h2>
-    <button onclick="spinName()">🎡 Tirer un prénom</button>
-    <p id="nameResult"></p>
+  <div id="gage-screen" class="hidden">
+    <h2>Tirage au sort des prénoms</h2>
+    <button onclick="drawName()">🎲 Tirer un prénom</button>
+    <p id="selected-name"></p>
 
-    <div id="gageSection" class="hidden">
-      <button onclick="spinGage()">🎯 Tirer un gage</button>
-      <p id="gageResult"></p>
+    <h2>Tirage au sort des gages</h2>
+    <button onclick="drawGage()">🎯 Tirer un gage</button>
+    <p id="selected-gage"></p>
+
+    <div id="gage-confirmation" class="hidden">
+      <h3>Confirmez avoir fait les gages :</h3>
+      <ul id="gage-list"></ul>
+      <button id="validate-gages" class="disabled" disabled onclick="showCongratsVideo()">✅ Oui</button>
+      <button onclick="alert('Revenez quand tous les gages sont faits !')">❌ Non</button>
     </div>
-
-    <h3>Gages à valider</h3>
-    <ul id="gageList"></ul>
-    <input type="password" id="secondCodeInput" placeholder="Code secret..." disabled />
-    <button onclick="checkSecondCode()">Débloquer la suite</button>
-    <p id="secondCodeMessage" class="message"></p>
   </div>
 
-  <div id="finalVideoSection" class="hidden">
-    <h2>Félicitations !</h2>
-    <iframe id="finalVideo" width="560" height="315" src="https://www.youtube.com/embed/D9Sou89ULNU?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
-    <button id="endButton" disabled>Terminer</button>
-    <p class="small-note">Le bouton sera disponible à la fin de la vidéo</p>
+  <div id="congrats-video-screen" class="hidden">
+    <iframe id="congrats-video" width="560" height="315" 
+      src="https://www.youtube.com/embed/D9Sou89ULNU?enablejsapi=1" 
+      title="Vidéo de félicitations" frameborder="0" allow="autoplay" allowfullscreen></iframe>
+    <input id="final-code" class="hidden" type="text" placeholder="Entrez le code final"/>
+    <button id="validate-final" class="hidden" onclick="checkFinalCode()">Valider</button>
+    <p id="final-message" class="hidden">🎉 Étape suivante débloquée !</p>
   </div>
 
   <script src="script.js"></script>
