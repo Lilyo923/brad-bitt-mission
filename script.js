@@ -19,6 +19,7 @@ function checkSecretCode() {
     clearInterval(countdownInterval);
     document.getElementById("countdown-container").classList.add("hidden");
     document.getElementById("intro-screen").classList.remove("hidden");
+    document.getElementById("secret-access").style.display = "none";
   }
 }
 
