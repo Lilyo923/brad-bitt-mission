@@ -1,55 +1,39 @@
 body {
-    background-color: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  color: #f0f0f0;
+  text-align: center;
+  padding: 20px;
 }
-
-.title-impact {
-    font-family: Impact, Charcoal, sans-serif;
-    font-size: 2.5em;
-    margin-bottom: 20px;
+h1 {
+  font-family: Impact, sans-serif;
+  font-size: 3em;
 }
-
 .hidden {
-    display: none;
+  display: none;
 }
-
-input[type="password"], input[type="text"] {
-    padding: 10px;
-    font-size: 16px;
-    margin: 10px;
-    border-radius: 5px;
-    border: none;
-    width: 80%;
-}
-
 button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bfc;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 10px;
-    cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1em;
+  margin-top: 10px;
 }
-
-button:disabled {
-    background-color: #555;
+.message {
+  color: red;
 }
-
-button:hover:enabled {
-    background-color: #005ec4;
+.small-note {
+  font-size: 0.8em;
+  color: #ccc;
 }
-
-.location {
-    margin: 20px 0;
+input[type="text"], input[type="password"] {
+  padding: 8px;
+  font-size: 1em;
+  margin-top: 10px;
 }
-
-.error {
-    color: red;
-    margin-top: 10px;
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul li {
+  text-align: left;
+  margin: 5px 0;
 }
