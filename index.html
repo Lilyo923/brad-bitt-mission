@@ -1,49 +1,123 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brad Bitt - Mission Gages</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Brad Bitt – Mission Gages</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="secret-access">
-    <input type="password" placeholder="Code secret..." id="secret-code" />
-    <button onclick="checkSecret()">OK</button>
-    <p id="secret-msg"></p>
-  </div>
 
-  <div id="countdown-container">
+  <!-- 1. COMPTE À REBOURS & ACCÈS SECRET -->
+  <div id="intro-screen">
     <h1>Lancement dans :</h1>
-    <div id="countdown"></div>
+    <div id="countdown">--</div>
+    <div id="secret-access">
+      <input type="password" id="secret-code" placeholder="Code secret…">
+      <button onclick="checkSecret()">OK</button>
+    </div>
   </div>
 
-  <div id="start-button-container" style="display: none;">
-    <button id="start-btn" onclick="launchIntro()">Commencer l’aventure</button>
+  <!-- 2. BOUTON COMMENCER -->
+  <div id="start-screen" class="hidden">
+    <button id="start-btn" onclick="startAnimation()">Commencer l’aventure</button>
   </div>
 
-  <div id="intro-animation" style="display: none;">
-    <h1 id="intro-text"></h1>
+  <!-- 3. ANIMATION + MOT DE PASSE TONDEUSE -->
+  <div id="animation-screen" class="hidden">
+    <h1 id="animated-text" class="impact"></h1>
+    <input type="password" id="main-password" placeholder="Mot de passe…">
+    <button onclick="checkMainPassword()">Valider</button>
+    <p id="main-error" class="error"></p>
   </div>
 
-  <div id="code-container" style="display: none;">
-    <input type="password" id="access-code" placeholder="Mot de passe..."/>
-    <button onclick="validateAccessCode()">Valider</button>
-    <p id="code-error"></p>
-  </div>
-
-  <div id="video-section" style="display: none;">
+  <!-- 4. VIDÉO INTRO (YouTube IFrame API) -->
+  <div id="video-intro-screen" class="hidden">
     <h2>Un message de Brad Bitt</h2>
-    <div id="player-container">
-  <div id="player"></div>
-</div>
-<button id="next-button" class="disabled" disabled>Suivant</button>
-<p id="next-hint">Le bouton "Suivant" sera disponible à la fin de la vidéo.</p>
-    <button id="next-button" disabled>Suivant</button>
-    <p class="small-warning">Le bouton ne s'activera qu'à la fin de la vidéo.</p>
+    <div id="player-intro"></div>
+    <button id="next-from-intro" class="disabled" disabled onclick="showMap()">Suivant</button>
+    <p class="hint">Vous devez regarder la vidéo jusqu’à la fin.</p>
   </div>
 
-  <script src="script.js"></script>
+  <!-- 5. CARTE DES LIEUX -->
+  <div id="map-screen" class="hidden">
+    <h2>Carte au trésor</h2>
+    <ul class="map-list">
+      <li><button onclick="enterSection('lille')">• Lille</button></li>
+      <li>
+        <button id="btn-bk" class="locked" disabled>• ???</button>
+        <div class="code-container"><input type="password" id="code-bk" placeholder="Code…"><button onclick="unlock('bk')">OK</button></div>
+      </li>
+      <li>
+        <button id="btn-lg" class="locked" disabled>• ???</button>
+        <div class="code-container"><input type="password" id="code-lg" placeholder="Code…"><button onclick="unlock('lg')">OK</button></div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 6. SECTION LILLE -->
+  <div id="section-lille" class="hidden section">
+    <h2>📍 Lille</h2>
+    <button onclick="spin('lille')">🎲 Tirages</button>
+    <p id="name-lille"></p>
+    <p id="gage-lille"></p>
+    <ul id="list-lille" class="gage-list"></ul>
+    <button id="confirm-lille" class="disabled" disabled onclick="confirmSection('lille')">✅ Oui</button>
+    <button onclick="backToMap()">❌ Non</button>
+  </div>
+
+  <!-- 7. VIDÉO FÉLICITATIONS LILLE -->
+  <div id="congrats-lille" class="hidden section">
+    <div id="player-lille"></div>
+    <input type="password" id="final-lille" placeholder="Code…">
+    <button onclick="submitCode('lille')">OK</button>
+    <p id="error-lille" class="error"></p>
+  </div>
+
+  <!-- 8. SECTION BURGER KING -->
+  <div id="section-bk" class="hidden section">
+    <h2>📍 Burger King</h2>
+    <button onclick="spin('bk')">🎲 Tirages</button>
+    <p id="name-bk"></p>
+    <p id="gage-bk"></p>
+    <ul id="list-bk" class="gage-list"></ul>
+    <button id="confirm-bk" class="disabled" disabled onclick="confirmSection('bk')">✅ Oui</button>
+    <button onclick="backToMap()">❌ Non</button>
+  </div>
+
+  <!-- 9. VIDÉO FÉLICITATIONS BK -->
+  <div id="congrats-bk" class="hidden section">
+    <div id="player-bk"></div>
+    <input type="password" id="final-bk" placeholder="Code…">
+    <button onclick="submitCode('bk')">OK</button>
+    <p id="error-bk" class="error"></p>
+  </div>
+
+  <!-- 10. SECTION LASER GAMES -->
+  <div id="section-lg" class="hidden section">
+    <h2>📍 Laser Games</h2>
+    <p class="red">Chacun doit prendre le pseudo d’un autre !</p>
+    <button onclick="spin('lg')">🎲 Tirages</button>
+    <p id="name-lg"></p>
+    <p id="gage-lg"></p>
+    <ul id="list-lg" class="gage-list"></ul>
+    <button id="confirm-lg" class="disabled" disabled onclick="confirmSection('lg')">✅ Oui</button>
+    <button onclick="backToMap()">❌ Non</button>
+  </div>
+
+  <!-- 11. VIDÉO FÉLICITATIONS LG -->
+  <div id="congrats-lg" class="hidden section">
+    <div id="player-lg"></div>
+    <button id="final-next" class="disabled" disabled onclick="showFinal()">Suivant</button>
+    <p class="hint">Vous devez regarder la vidéo jusqu’à la fin.</p>
+  </div>
+
+  <!-- 12. ÉCRAN FINAL -->
+  <div id="final-screen" class="hidden section">
+    <p class="italic">Merci d’avoir joué</p>
+  </div>
+
+  <!-- YouTube IFrame API + notre script -->
   <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js"></script>
 </body>
 </html>
