@@ -3,33 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Le retour de Brad Bitt</title>
+  <title>Brad Bitt – Mission Gages</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div id="intro">
-    <h1 style="font-family: Impact, sans-serif;">Lancement dans :</h1>
-    <div id="countdown"></div>
+  <!-- 1. INTRO & COMPTE À REBOURS -->
+  <div id="intro" class="center">
+    <h1>Lancement dans :</h1>
+    <div id="countdown">--</div>
     <div id="secret-access">
-      <input type="password" id="secret-password" placeholder="Mot de passe secret" />
-      <button onclick="checkSecretAccess()">Accès</button>
+      <input type="password" id="secret-code" placeholder="Code secret…"/>
+      <button onclick="checkSecret()">OK</button>
     </div>
   </div>
 
-  <div id="start-section" style="display:none;">
-    <div id="animation"></div>
-    <input type="password" id="main-password" placeholder="Entrez le mot de passe"/>
+  <!-- 2. BOUTON COMMENCER (après countdown ou secret) -->
+  <div id="start-btn-container" class="center hidden">
+    <button id="start-btn" onclick="startAnimation()">Commencer l’aventure</button>
+  </div>
+
+  <!-- 3. ANIMATION + MOT DE PASSE PRINCIPAL -->
+  <div id="animation-section" class="center hidden">
+    <h1 id="animated-text" class="impact"></h1>
+    <input type="password" id="main-password" placeholder="Mot de passe…"/>
     <button onclick="checkMainPassword()">Valider</button>
+    <p id="main-error" class="error"></p>
   </div>
 
-  <div id="video-section" style="display:none;">
+  <!-- 4. VIDÉO D’INTRO -->
+  <div id="video-intro" class="center hidden">
     <h2>Un message de Brad Bitt</h2>
-    <div id="player-container">
-      <div id="player"></div>
-    </div>
-    <button id="next-button" class="disabled" disabled>Suivant</button>
-    <p id="next-hint">Le bouton "Suivant" sera disponible à la fin de la vidéo.</p>
+    <div id="player-intro"></div>
+    <button id="next-from-intro" class="disabled" disabled onclick="showMap()">Suivant</button>
+    <p class="hint">Le bouton s’activera à la fin de la vidéo.</p>
+  </div>
+
+  <!-- 5. CARTE / LIEUX -->
+  <div id="map" class="center hidden">
+    <h2>Carte de mission</h2>
+    <ul class="map-list">
+      <li><button onclick="enterLille()">Lille</button></li>
+      <li><button id="bk-lock" class="locked">???</button>
+        <div id="bk-code-container" class="code-inline hidden">
+          <input type="password" id="bk-code" placeholder="Code …"/>
+          <button onclick="unlockBK()">OK</button>
+        </div>
+      </li>
+      <li><button id="lg-lock" class="locked">???</button>
+        <div id="lg-code-container" class="code-inline hidden">
+          <input type="password" id="lg-code" placeholder="Code …"/>
+          <button onclick="unlockLG()">OK</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 6. SECTION LILLE -->
+  <div id="section-lille" class="center hidden">
+    <h2>📍 Lille</h2>
+    <button onclick="drawName('lille')">🎲 Tirer un prénom</button>
+    <p id="lille-name"></p>
+    <button onclick="drawGage('lille')" id="lille-gage-btn" class="hidden">🎯 Tirer un gage</button>
+    <p id="lille-gage"></p>
+    <ul id="lille-list" class="gage-list"></ul>
+    <button id="lille-confirm" class="disabled" disabled onclick="confirmLille()">✅ Oui</button>
+    <button onclick="cancelToMap()">❌ Non</button>
+  </div>
+
+  <!-- 7. VIDÉO FÉLICITATIONS LILLE -->
+  <div id="congrats-lille" class="center hidden">
+    <div id="player-lille"></div>
+    <input type="password" id="lille-final-code" placeholder="Code…"/>
+    <button onclick="submitLilleCode()">OK</button>
+    <p id="lille-code-error" class="error"></p>
+  </div>
+
+  <!-- 8. SECTION BURGER KING -->
+  <div id="section-bk" class="center hidden">
+    <h2>📍 Burger King</h2>
+    <button onclick="drawName('bk')">🎲 Tirer un prénom</button>
+    <p id="bk-name"></p>
+    <button onclick="drawGage('bk')" id="bk-gage-btn" class="hidden">🎯 Tirer un gage</button>
+    <p id="bk-gage"></p>
+    <ul id="bk-list" class="gage-list"></ul>
+    <button id="bk-confirm" class="disabled" disabled onclick="confirmBK()">✅ Oui</button>
+    <button onclick="cancelToMap()">❌ Non</button>
+  </div>
+
+  <!-- 9. VIDÉO FÉLICITATIONS BK -->
+  <div id="congrats-bk" class="center hidden">
+    <div id="player-bk"></div>
+    <input type="password" id="bk-final-code" placeholder="Code…"/>
+    <button onclick="submitBKCode()">OK</button>
+    <p id="bk-code-error" class="error"></p>
+  </div>
+
+  <!-- 10. SECTION LASER GAME -->
+  <div id="section-lg" class="center hidden">
+    <h2>📍 Laser Games</h2>
+    <span class="highlight">À noter : chacun change son pseudo en celui d’un autre (en rouge)</span>
+    <button onclick="drawName('lg')">🎲 Tirer un prénom</button>
+    <p id="lg-name"></p>
+    <button onclick="drawGage('lg')" id="lg-gage-btn" class="hidden">🎯 Tirer un gage</button>
+    <p id="lg-gage"></p>
+    <ul id="lg-list" class="gage-list"></ul>
+    <button id="lg-confirm" class="disabled" disabled onclick="confirmLG()">✅ Oui</button>
+    <button onclick="cancelToMap()">❌ Non</button>
+  </div>
+
+  <!-- 11. VIDÉO FÉLICITATIONS LG -->
+  <div id="congrats-lg" class="center hidden">
+    <div id="player-lg"></div>
+    <button id="final-thanks" onclick="showFinal()">Suivant</button>
+  </div>
+
+  <!-- 12. PAGE FINALE -->
+  <div id="final" class="center hidden">
+    <p class="italic">Merci d’avoir joué</p>
   </div>
 
   <script src="https://www.youtube.com/iframe_api"></script>
