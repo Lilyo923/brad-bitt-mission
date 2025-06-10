@@ -1,63 +1,79 @@
-// ========== 🎯 COMPTE À REBOURS ==========
-const countdownEl = document.getElementById("countdown");
-const startSection = document.getElementById("start-section");
+// Countdown until June 12, 2025 at 10:00
+const countdownContainer = document.getElementById("countdown");
+const startBtnContainer = document.getElementById("start-button-container");
 
-const targetDate = new Date("June 12, 2025 10:00:00").getTime();
+const targetDate = new Date("2025-06-12T10:00:00").getTime();
 
-const timer = setInterval(() => {
+const countdownInterval = setInterval(() => {
   const now = new Date().getTime();
   const distance = targetDate - now;
 
   if (distance <= 0) {
-    clearInterval(timer);
-    countdownEl.textContent = "";
-    startSection.style.display = "block";
-  } else {
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
+    clearInterval(countdownInterval);
+    countdownContainer.innerHTML = "C'est l'heure !";
+    startBtnContainer.style.display = "block";
+    return;
   }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  countdownContainer.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
 }, 1000);
 
-// ========== 🔐 ACCÈS SECRET (bas de page) ==========
-function checkSecretAccess() {
-  const pwd = document.getElementById("secret-password").value;
-  if (pwd.toLowerCase() === "checkpoint") {
-    clearInterval(timer);
-    document.getElementById("intro").style.display = "none";
-    startSection.style.display = "block";
+// Secret access
+function checkSecret() {
+  const input = document.getElementById("secret-code").value;
+  if (input.toLowerCase() === "checkpoint") {
+    document.getElementById("secret-msg").textContent = "✅ Accès débloqué pour test.";
+    document.getElementById("start-button-container").style.display = "block";
+  } else {
+    document.getElementById("secret-msg").textContent = "❌ Mot de passe incorrect.";
   }
 }
 
-// ========== 🔓 MOT DE PASSE PRINCIPAL ==========
-function checkMainPassword() {
-  const mainPwd = document.getElementById("main-password").value;
-  if (mainPwd.toLowerCase() === "tondeuse") {
-    document.getElementById("start-section").style.display = "none";
-    document.getElementById("video-section").style.display = "block";
-  }
-}
+// Animation intro
+function launchIntro() {
+  document.getElementById("countdown-container").style.display = "none";
+  document.getElementById("start-button-container").style.display = "none";
+  const container = document.getElementById("intro-animation");
+  const text = document.getElementById("intro-text");
+  container.style.display = "block";
 
-// ========== ▶️ API YOUTUBE ==========
-let player;
+  let fullText = "Le retour incontesté de Brad Bitt";
+  let i = 0;
+  text.textContent = "";
 
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '315',
-    width: '560',
-    videoId: '2DMl0zoaPZ0', // ID de la vidéo Brad Bitt
-    events: {
-      'onStateChange': onPlayerStateChange
+  const animInterval = setInterval(() => {
+    text.textContent += fullText[i];
+    i++;
+    if (i >= fullText.length) {
+      clearInterval(animInterval);
+      document.getElementById("code-container").style.display = "block";
     }
-  });
+  }, 100);
 }
 
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
-    const nextBtn = document.getElementById("next-button");
-    nextBtn.disabled = false;
-    nextBtn.classList.remove("disabled");
-    document.getElementById("next-hint").textContent = "";
+// Mot de passe pour démarrer
+function validateAccessCode() {
+  const code = document.getElementById("access-code").value;
+  if (code.toLowerCase() === "tondeuse") {
+    document.getElementById("code-container").style.display = "none";
+    document.getElementById("video-section").style.display = "block";
+    document.getElementById("access-code").value = ""; // Effacer le champ après validation
+  } else {
+    document.getElementById("code-error").textContent = "Mot de passe incorrect.";
   }
+}
+
+// Activer bouton "suivant" après la vidéo
+const video = document.getElementById("intro-video");
+const nextBtn = document.getElementById("next-button");
+
+if (video) {
+  video.addEventListener("ended", () => {
+    nextBtn.disabled = false;
+  });
 }
