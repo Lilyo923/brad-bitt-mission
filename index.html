@@ -34,10 +34,11 @@
 
   <div id="video-section" style="display: none;">
     <h2>Un message de Brad Bitt</h2>
-    <video id="intro-video" controls>
-      <source src="https://youtu.be/2DMl0zoaPZ0?si=hUPWycu-XJokrakO" type="video/mp4" />
-      Votre navigateur ne prend pas en charge les vidéos.
-    </video>
+    <div id="player-container">
+  <div id="player"></div>
+</div>
+<button id="next-button" class="disabled" disabled>Suivant</button>
+<p id="next-hint">Le bouton "Suivant" sera disponible à la fin de la vidéo.</p>
     <button id="next-button" disabled>Suivant</button>
     <p class="small-warning">Le bouton ne s'activera qu'à la fin de la vidéo.</p>
   </div>
