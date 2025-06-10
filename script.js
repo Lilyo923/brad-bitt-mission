@@ -1,69 +1,79 @@
-body {
-  background: black;
-  color: white;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
+// Countdown until June 12, 2025 at 10:00
+const countdownContainer = document.getElementById("countdown");
+const startBtnContainer = document.getElementById("start-button-container");
 
-h1, h2 {
-  margin-top: 40px;
-}
+const targetDate = new Date("2025-06-12T10:00:00").getTime();
 
-#intro-text {
-  font-family: Impact, sans-serif;
-  font-size: 2.5rem;
-  animation: popIn 1s ease-in-out forwards;
-}
+const countdownInterval = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
 
-#countdown-container {
-  margin-top: 80px;
-  font-size: 2rem;
-}
-
-#start-btn {
-  font-size: 1.5rem;
-  padding: 15px 25px;
-  margin-top: 20px;
-  background-color: #ff4444;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-#code-container input, #secret-access input {
-  padding: 10px;
-  font-size: 1rem;
-  margin-top: 20px;
-}
-
-#code-container button, #secret-access button {
-  padding: 10px 15px;
-  font-size: 1rem;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-#secret-access {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-}
-
-.small-warning {
-  font-size: 0.8rem;
-  color: #aaaaaa;
-}
-
-@keyframes popIn {
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
+  if (distance <= 0) {
+    clearInterval(countdownInterval);
+    countdownContainer.innerHTML = "C'est l'heure !";
+    startBtnContainer.style.display = "block";
+    return;
   }
-  100% {
-    transform: scale(1);
-    opacity: 1;
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  countdownContainer.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+
+// Secret access
+function checkSecret() {
+  const input = document.getElementById("secret-code").value;
+  if (input.toLowerCase() === "checkpoint") {
+    document.getElementById("secret-msg").textContent = "✅ Accès débloqué pour test.";
+    document.getElementById("start-button-container").style.display = "block";
+  } else {
+    document.getElementById("secret-msg").textContent = "❌ Mot de passe incorrect.";
   }
+}
+
+// Animation intro
+function launchIntro() {
+  document.getElementById("countdown-container").style.display = "none";
+  document.getElementById("start-button-container").style.display = "none";
+  const container = document.getElementById("intro-animation");
+  const text = document.getElementById("intro-text");
+  container.style.display = "block";
+
+  let fullText = "Le retour incontesté de Brad Bitt";
+  let i = 0;
+  text.textContent = "";
+
+  const animInterval = setInterval(() => {
+    text.textContent += fullText[i];
+    i++;
+    if (i >= fullText.length) {
+      clearInterval(animInterval);
+      document.getElementById("code-container").style.display = "block";
+    }
+  }, 100);
+}
+
+// Mot de passe pour démarrer
+function validateAccessCode() {
+  const code = document.getElementById("access-code").value;
+  if (code.toLowerCase() === "tondeuse") {
+    document.getElementById("code-container").style.display = "none";
+    document.getElementById("video-section").style.display = "block";
+    document.getElementById("access-code").value = ""; // Effacer le champ après validation
+  } else {
+    document.getElementById("code-error").textContent = "Mot de passe incorrect.";
+  }
+}
+
+// Activer bouton "suivant" après la vidéo
+const video = document.getElementById("intro-video");
+const nextBtn = document.getElementById("next-button");
+
+if (video) {
+  video.addEventListener("ended", () => {
+    nextBtn.disabled = false;
+  });
 }
