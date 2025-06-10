@@ -2,7 +2,7 @@
 const countdownContainer = document.getElementById("countdown");
 const startBtnContainer = document.getElementById("start-button-container");
 
-const targetDate = new Date("2025-06-12T10:00:00").getTime();
+const targetDate = new Date("2025-06-13T10:00:00").getTime();
 
 const countdownInterval = setInterval(() => {
   const now = new Date().getTime();
