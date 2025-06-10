@@ -84,3 +84,24 @@ if (video) {
     nextBtn.disabled = false;
   });
 }
+let player;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '315',
+    width: '560',
+    videoId: '2DMl0zoaPZ0', // L’ID de la vidéo Brad Bitt
+    events: {
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerStateChange(event) {
+  // 0 signifie que la vidéo est terminée
+  if (event.data === YT.PlayerState.ENDED) {
+    document.getElementById("next-button").disabled = false;
+    document.getElementById("next-button").classList.remove("disabled");
+    document.getElementById("next-hint").textContent = ""; // Cache le texte
+  }
+}
