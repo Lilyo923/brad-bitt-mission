@@ -1,67 +1,69 @@
-
-const codeStart = "tondeuse";
-const secretCode = "checkpoint";
-
-function checkAccessCode() {
-  const input = document.getElementById("access-code").value.toLowerCase();
-  if (input === codeStart) {
-    document.getElementById("intro-screen").classList.add("hidden");
-    document.getElementById("video-screen").classList.remove("hidden");
-    setupVideo("intro-video", "next-button");
-  } else {
-    document.getElementById("code-error").classList.remove("hidden");
-  }
+body {
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
-function checkSecretCode() {
-  const val = document.getElementById("secret-code").value.toLowerCase();
-  if (val === secretCode) {
-    clearInterval(countdownInterval);
-    document.getElementById("countdown-container").classList.add("hidden");
-    document.getElementById("intro-screen").classList.remove("hidden");
-    document.getElementById("secret-access").style.display = "none";
-  }
+h1, h2 {
+  margin-top: 40px;
 }
 
-function setupVideo(videoId, buttonId) {
-  const player = new YT.Player(videoId, {
-    events: {
-      'onStateChange': event => {
-        if (event.data === YT.PlayerState.ENDED) {
-          const btn = document.getElementById(buttonId);
-          btn.disabled = false;
-          btn.classList.remove("disabled");
-        }
-      }
-    }
-  });
+#intro-text {
+  font-family: Impact, sans-serif;
+  font-size: 2.5rem;
+  animation: popIn 1s ease-in-out forwards;
 }
 
-// Countdown until June 12, 2025 10:45
-const targetDate = new Date("2025-06-12T10:45:00").getTime();
-let countdownInterval = setInterval(() => {
-  const now = new Date().getTime();
-  const diff = targetDate - now;
-  if (diff <= 0) {
-    clearInterval(countdownInterval);
-    document.getElementById("countdown-container").classList.add("hidden");
-    document.getElementById("intro-screen").classList.remove("hidden");
-    return;
-  }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-  document.getElementById("countdown").innerHTML =
-    `${days}j ${hours}h ${minutes}m ${seconds}s`;
-}, 1000);
+#countdown-container {
+  margin-top: 80px;
+  font-size: 2rem;
+}
 
-// Load YouTube Iframe API
-let tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-let firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-function goToNextStep() {
-  document.getElementById("video-screen").classList.add("hidden");
-  document.getElementById("next-step").classList.remove("hidden");
+#start-btn {
+  font-size: 1.5rem;
+  padding: 15px 25px;
+  margin-top: 20px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+#code-container input, #secret-access input {
+  padding: 10px;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+#code-container button, #secret-access button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#secret-access {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+.small-warning {
+  font-size: 0.8rem;
+  color: #aaaaaa;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
