@@ -3,45 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brad Bitt - Mission Gages</title>
+  <title>Le retour de Brad Bitt</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="secret-access">
-    <input type="password" placeholder="Code secret..." id="secret-code" />
-    <button onclick="checkSecret()">OK</button>
-    <p id="secret-msg"></p>
-  </div>
 
-  <div id="countdown-container">
-    <h1>Lancement dans :</h1>
+  <div id="intro">
+    <h1 style="font-family: Impact, sans-serif;">Lancement dans :</h1>
     <div id="countdown"></div>
+    <div id="secret-access">
+      <input type="password" id="secret-password" placeholder="Mot de passe secret" />
+      <button onclick="checkSecretAccess()">Accès</button>
+    </div>
   </div>
 
-  <div id="start-button-container" style="display: none;">
-    <button id="start-btn" onclick="launchIntro()">Commencer l’aventure</button>
+  <div id="start-section" style="display:none;">
+    <div id="animation"></div>
+    <input type="password" id="main-password" placeholder="Entrez le mot de passe"/>
+    <button onclick="checkMainPassword()">Valider</button>
   </div>
 
-  <div id="intro-animation" style="display: none;">
-    <h1 id="intro-text"></h1>
-  </div>
-
-  <div id="code-container" style="display: none;">
-    <input type="password" id="access-code" placeholder="Mot de passe..."/>
-    <button onclick="validateAccessCode()">Valider</button>
-    <p id="code-error"></p>
-  </div>
-
-  <div id="video-section" style="display: none;">
+  <div id="video-section" style="display:none;">
     <h2>Un message de Brad Bitt</h2>
-    <video id="intro-video" controls>
-      <source src="https://youtu.be/2DMl0zoaPZ0?si=hUPWycu-XJokrakO" type="video/mp4" />
-      Votre navigateur ne prend pas en charge les vidéos.
-    </video>
-    <button id="next-button" disabled>Suivant</button>
-    <p class="small-warning">Le bouton ne s'activera qu'à la fin de la vidéo.</p>
+    <div id="player-container">
+      <div id="player"></div>
+    </div>
+    <button id="next-button" class="disabled" disabled>Suivant</button>
+    <p id="next-hint">Le bouton "Suivant" sera disponible à la fin de la vidéo.</p>
   </div>
 
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
 </html>
