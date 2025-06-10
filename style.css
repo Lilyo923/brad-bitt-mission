@@ -1,19 +1,69 @@
 body {
-  margin: 0; padding: 0;
-  background: #111; color: #eee;
+  background: black;
+  color: white;
   font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
 }
-.center { text-align: center; padding: 2rem; }
-.hidden { display: none; }
-.impact { font-family: Impact, sans-serif; font-size: 2.5rem; }
-button { padding: .5rem 1rem; margin: .5rem; cursor: pointer; }
-button.locked { opacity: .4; cursor: not-allowed; }
-button.disabled { opacity: .4; cursor: not-allowed; }
-.error { color: #f55; }
-.hint { color: #aaa; font-size: .9rem; }
-.map-list { list-style: none; padding: 0; }
-.map-list li { margin: .5rem 0; }
-.code-inline input { width: 6rem; }
-.gage-list { text-align: left; display: inline-block; margin-top:1rem; }
-.highlight { color: red; display: block; margin-bottom:1rem; }
-#secret-access { position: fixed; bottom: 1rem; right: 1rem; }
+
+h1, h2 {
+  margin-top: 40px;
+}
+
+#intro-text {
+  font-family: Impact, sans-serif;
+  font-size: 2.5rem;
+  animation: popIn 1s ease-in-out forwards;
+}
+
+#countdown-container {
+  margin-top: 80px;
+  font-size: 2rem;
+}
+
+#start-btn {
+  font-size: 1.5rem;
+  padding: 15px 25px;
+  margin-top: 20px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+#code-container input, #secret-access input {
+  padding: 10px;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+#code-container button, #secret-access button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#secret-access {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+.small-warning {
+  font-size: 0.8rem;
+  color: #aaaaaa;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
