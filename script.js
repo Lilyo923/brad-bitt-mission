@@ -26,14 +26,21 @@ const countdownInterval = setInterval(() => {
 // Secret access
 function checkSecret() {
   const input = document.getElementById("secret-code").value;
+  const container = document.getElementById("secret-access");
+  const msg = document.getElementById("secret-msg");
+
   if (input.toLowerCase() === "checkpoint") {
-    document.getElementById("secret-msg").textContent = "✅ Accès débloqué pour test.";
+    msg.textContent = "✅ Accès débloqué pour test.";
     document.getElementById("start-button-container").style.display = "block";
+
+    // Masquer le champ après 1 seconde
+    setTimeout(() => {
+      container.style.display = "none";
+    }, 1000);
   } else {
-    document.getElementById("secret-msg").textContent = "❌ Mot de passe incorrect.";
+    msg.textContent = "❌ Mot de passe incorrect.";
   }
 }
-
 // Animation intro
 function launchIntro() {
   document.getElementById("countdown-container").style.display = "none";
