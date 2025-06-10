@@ -1,45 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Le retour incontesté de Brad Bitt</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>Brad Bitt - Mission Gages</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="secret-access">
+    <input type="password" placeholder="Code secret..." id="secret-code" />
+    <button onclick="checkSecret()">OK</button>
+    <p id="secret-msg"></p>
+  </div>
+
   <div id="countdown-container">
-    <h2>Lancement dans :</h2>
+    <h1>Lancement dans :</h1>
     <div id="countdown"></div>
   </div>
 
-  <div id="intro-screen" class="hidden">
-    <h1 class="impact-font">Le retour incontesté de Brad Bitt</h1>
-    <p>Entrez le code :</p>
-    <input type="text" id="access-code" placeholder="Code d'accès"/>
-    <button onclick="checkAccessCode()">Valider</button>
-    <p id="code-error" class="hidden">Code incorrect.</p>
+  <div id="start-button-container" style="display: none;">
+    <button id="start-btn" onclick="launchIntro()">Commencer l’aventure</button>
   </div>
 
-  <div id="video-screen" class="hidden">
-    <h3>Un message de Brad Bitt</h3>
-    <iframe id="intro-video" width="560" height="315" 
-      src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" 
-      title="Vidéo Brad Bitt" frameborder="0" allow="autoplay" allowfullscreen></iframe>
-    <button id="next-button" class="disabled" disabled onclick="goToNextStep()">Suivant</button>
-    <p class="small-text">Le bouton apparaîtra à la fin de la vidéo</p>
+  <div id="intro-animation" style="display: none;">
+    <h1 id="intro-text"></h1>
   </div>
 
-  <!-- Bouton secret en bas à droite -->
-  <div id="secret-access">
-    <input type="text" id="secret-code" placeholder="Code secret"/>
-    <button onclick="checkSecretCode()">🔒</button>
+  <div id="code-container" style="display: none;">
+    <input type="password" id="access-code" placeholder="Mot de passe..."/>
+    <button onclick="validateAccessCode()">Valider</button>
+    <p id="code-error"></p>
   </div>
-  <div id="next-step" class="hidden">
-  <h2>Bienvenue dans la suite de l'aventure !</h2>
-  <p>Ici commenceront les gages ou autres étapes.</p>
-</div>
 
+  <div id="video-section" style="display: none;">
+    <h2>Un message de Brad Bitt</h2>
+    <video id="intro-video" controls>
+      <source src="https://youtu.be/2DMl0zoaPZ0?si=hUPWycu-XJokrakO" type="video/mp4" />
+      Votre navigateur ne prend pas en charge les vidéos.
+    </video>
+    <button id="next-button" disabled>Suivant</button>
+    <p class="small-warning">Le bouton ne s'activera qu'à la fin de la vidéo.</p>
+  </div>
 
   <script src="script.js"></script>
 </body>
