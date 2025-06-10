@@ -166,3 +166,16 @@ document.head.appendChild(tag);
 // —— EVENEMENTS CARTE ——
 $("btn-bk").addEventListener("click",()=>enterSection('bk'));
 $("btn-lg").addEventListener("click",()=>enterSection('lg'));
+// —— NAVIGATION : passer de la vidéo à la carte ——
+function showMap() {
+  // Masquer l'écran vidéo
+  document.getElementById("video-intro-screen").classList.add("hidden");
+  // Afficher l'écran carte
+  document.getElementById("map-screen").classList.remove("hidden");
+}
+
+// Dès que le DOM est chargé, lier le bouton “Suivant” à cette fonction
+document.addEventListener("DOMContentLoaded", () => {
+  const nextBtn = document.getElementById("next-from-intro");
+  nextBtn.addEventListener("click", showMap);
+});
