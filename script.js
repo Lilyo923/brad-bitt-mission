@@ -1,21 +1,83 @@
-body {
-  margin: 0;
-  padding: 0;
-  background-color: #111;
-  color: #f0f0f0;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
+// Compte à rebours jusqu'au 12 juin 2025 à 10h
+const countdownEl = document.getElementById("countdown");
+const startBtn = document.getElementById("startBtn");
+const checkpointInput = document.getElementById("checkpointInput");
+const validateCheckpoint = document.getElementById("validateCheckpoint");
+const passwordContainer = document.getElementById("password-container");
+
+const secondScreen = document.getElementById("second-screen");
+const bradInput = document.getElementById("bradPassword");
+const validateBrad = document.getElementById("validateBrad");
+
+const thirdScreen = document.getElementById("third-screen");
+const nextBtn = document.getElementById("nextBtn");
+let player;
+
+function updateCountdown() {
+  const target = new Date("2025-06-12T10:00:00");
+  const now = new Date();
+  const diff = target - now;
+
+  if (diff <= 0) {
+    countdownEl.textContent = "Lancement prêt !";
+    startBtn.classList.remove("hidden");
+  } else {
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
+    requestAnimationFrame(updateCountdown);
+  }
 }
 
-.maintenance-container {
-  max-width: 600px;
-  padding: 2rem;
-  border: 2px solid #f0f0f0;
-  border-radius: 10px;
-  background-color: #222;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+updateCountdown();
+
+// Mot de passe checkpoint
+validateCheckpoint.addEventListener("click", () => {
+  if (checkpointInput.value === "Checkpoint") {
+    passwordContainer.innerHTML = "✅ Accès autorisé";
+    setTimeout(() => {
+      document.getElementById("main-screen").classList.add("hidden");
+      secondScreen.classList.remove("hidden");
+    }, 5000);
+  } else {
+    passwordContainer.innerHTML = "❌ Mot de passe incorrect";
+    setTimeout(() => location.reload(), 2000);
+  }
+});
+
+// Bouton "Commencer l'aventure"
+startBtn.addEventListener("click", () => {
+  document.getElementById("main-screen").classList.add("hidden");
+  secondScreen.classList.remove("hidden");
+});
+
+// Mot de passe Brad
+validateBrad.addEventListener("click", () => {
+  if (bradInput.value.toLowerCase() === "tondeuse") {
+    secondScreen.classList.add("hidden");
+    thirdScreen.classList.remove("hidden");
+  } else {
+    alert("Mot de passe incorrect !");
+  }
+});
+
+// Gérer l’API YouTube (attendre la fin de la vidéo)
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('bradVideo', {
+    events: {
+      'onStateChange': onPlayerStateChange
+    }
+  });
 }
+
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    nextBtn.disabled = false;
+  }
+}
+
+// Charger API YouTube
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
