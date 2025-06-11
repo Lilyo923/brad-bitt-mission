@@ -1,75 +1,144 @@
-let countdownEl = document.getElementById('countdown');
-let startBtn = document.getElementById('start-btn');
-let passBtn = document.getElementById('pass-btn');
-let passMsg = document.getElementById('pass-msg');
-let passwordInput = document.getElementById('password');
+const launchTime = new Date("2025-06-12T10:00:00").getTime();
+const codes = { secret: "checkpoint", main: "tondeuse", bk: "bouilloire", lg: "epuisette" };
+const G = {
+  lille: [
+    "Demander un Serrano très salé",
+    "Dans un magasin Pokémon, demander des Aquali",
+    "Imprimer photo d’Astérion et dire qu’on le cherche",
+    "Dans l’Apple Store, afficher le site"
+  ],
+  bk: [
+    "Garder la couronne BK toute la journée",
+    "Demander un burger au Serrano",
+    "Aux toilettes, crier « vachement salé »",
+    "Se filmer en story dégustation"
+  ],
+  lg: [
+    "Faire semblant quand on vous tire dessus",
+    "Faire une emote toutes les 5 min",
+    "Courir dans le labyrinthe toutes les 5 min",
+    "Dire votre emplacement toutes les 5 min"
+  ]
+};
+const N = ["Téo","Edwin","Hippolyte","Arthur"];
+let used = { lille: [], bk: [], lg: [] }, current = "";
 
-const launchTime = new Date('2025-06-12T10:00:00');
+// 1. Timer et accès secret
+setInterval(()=>{
+  const d = launchTime - Date.now();
+  if (d <= 0) { show("launch"); hide("intro"); } 
+  else {
+    const h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000), s = Math.floor((d%60000)/1000);
+    query("#countdown").innerText = `${h}h ${m}m ${s}s`;
+  }
+},1000);
 
-function updateCountdown(){
-  let now = new Date();
-  let diff = launchTime - now;
-  if(diff <=0){
-    countdownEl.textContent="00:00:00";
-    startBtn.disabled=false;
-    clearInterval(timer);
-  } else {
-    let h = String(Math.floor(diff/3600000)).padStart(2,'0');
-    let m = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
-    let s = String(Math.floor(diff%60000/1000)).padStart(2,'0');
-    countdownEl.textContent=`${h}:${m}:${s}`;
+function checkSecret(){
+  if (q("#secretCode").value.toLowerCase() === codes.secret) {
+    show("launch"); hide("intro");
   }
 }
-let timer = setInterval(updateCountdown,1000);
-updateCountdown();
 
-passBtn.addEventListener('click',()=>{
-  if(passwordInput.value === 'Checkpoint'){
-    passMsg.textContent = '✓ Accès accordé';
-  } else {
-    passMsg.textContent = '✗ Mot incorrect';
-  }
-});
+// 2. Animation + mot de passe main
+function startAnimation(){
+  hide("launch");
+  show("anim");
+  const txt="Le retour incontesté de Brad Bitt";
+  let i=0, el=q("#animText"), anim = setInterval(()=>{
+    el.textContent += txt[i++] || (()=>{ clearInterval(anim); show("videoIntro"); initYT("player_int","btn_int"); })();
+  }, 100);
+}
 
-function animateCutscene(){
-  const txt = "le retour incontesté de Brad Bitt".split('');
-  let container = document.getElementById('cutscene-text');
-  container.innerHTML = '';
-  txt.forEach((l,i)=>{
-    let span = document.createElement('span');
-    span.textContent=l;
-    span.style.position='relative';
-    span.style.opacity=0;
-    container.appendChild(span);
-    setTimeout(()=>{
-      span.style.transition='all 0.5s';
-      span.style.opacity=1;
-      span.style.transform = `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px)`;
-      span.style.fontSize='3rem';
-    }, i*100);
+function checkMain(){
+  if (q("#mainCode").value.toLowerCase() === codes.main) {
+    hide("anim");
+    show("videoIntro");
+    initYT("player_int","btn_int");
+  } else q("#errorMain").innerText="❌";
+}
+
+// 3. Init YouTube
+function initYT(playerId, btnId){
+  new YT.Player(playerId, {
+    videoId: "2DMl0zoaPZ0", events: { 'onStateChange': ev=>{
+      if (ev.data===YT.PlayerState.ENDED) {
+        q(`#${btnId}`).disabled=false;
+        q(`#${btnId}`).classList.remove("locked");
+      }
+    }}
   });
 }
 
-let player1, player2, player3;
-function onYouTubeIframeAPIReady(){
-  player1 = new YT.Player('player1',{ videoId:'2DMl0zoaPZ0', events:{'onStateChange':onState1}});
-  player2 = new YT.Player('player2',{ videoId:'D9Sou89ULNU', events:{'onStateChange':onState2}});
-  player3 = new YT.Player('player3',{ videoId:'xkADM8X-tz8', events:{'onStateChange':onState3}});
+// 4. Map
+function goMap(){
+  hide("videoIntro", "section","congrats");
+  show("map");
 }
 
-function onState1(e){
-  if(e.data === YT.PlayerState.ENDED) document.getElementById('next1').disabled=false;
-}
-// mêmes fonctions onState2 et onState3...
-
-startBtn.addEventListener('click',()=>{
-  if(passMsg.textContent==='✓ Accès accordé'){
-    document.getElementById('countdown-screen').classList.add('hidden');
-    document.getElementById('cutscene-screen').classList.remove('hidden');
-    animateCutscene();
-    setTimeout(()=>{
-      document.getElementById('cutscene-screen').classList.add('hidden');
-      document.getElementById('video1-screen').classList.remove('hidden');
-    }, txt.length*100 + 2000);
+function unlock(loc){
+  const val = q(`#code_${loc}`).value.toLowerCase();
+  if (val===codes[loc]) {
+    q(`#btn_${loc}`).disabled=false;
+    q(`#btn_${loc}`).classList.remove("locked");
   }
-});
+}
+
+function enter(loc){
+  current = loc;
+  hide("map");
+  show("section");
+  q("#secTitle").innerText = `📍 ${loc.charAt(0).toUpperCase()+loc.slice(1)}`;
+  q("#secNote").innerText = loc==="lg" ? "Changement de pseudo en rouge !" : "";
+}
+
+// 5. Roulette + gages
+function spin(){
+  const name = rnd(N.filter(n=>!used[current].includes(n)));
+  used[current].push(name);
+  q("#spinName").innerText = `🎉 ${name}`;
+  
+  const gage = rnd(G[current].filter(g=> !used[current].includes(g)));
+  used[current].push(gage);
+  q("#spinGage").innerText = `🎯 ${gage}`;
+  
+  const li = document.createElement("li"), cb=document.createElement("input");
+  cb.type="checkbox"; cb.addEventListener("change",()=>confirmEnable());
+  li.appendChild(cb); li.append(" "+gage);
+  q("#gageList").appendChild(li);
+}
+
+function confirmEnable(){
+  const chks = qAll("#gageList input");
+  if (chks.every(c=>c.checked)) {
+    unq("#btn_confirm");
+    q("#btn_confirm").disabled=false;
+  }
+}
+
+// 6. Validation
+function confirm(){
+  hide("section");
+  show("congrats");
+  initYT(`player_${current}`, "btn_" + (current==="lg"?"final":""));
+}
+
+// 7. Code final
+function submitCode(){
+  if (q("#finalCode").value.toLowerCase()===codes[current]) {
+    hide("congrats");
+    show("map");
+    q(`#btn_${current}`).disabled=false;
+    if (current==="lg") show("final");
+  } else q("#errorFinal").innerText="❌";
+}
+
+// Utils
+function q(s){ return document.querySelector(s); }
+function qAll(s){ return [...document.querySelectorAll(s)]; }
+function show(...ids){ ids.forEach(i=>q("#"+i).classList.remove("hidden")); }
+function hide(...ids){ ids.forEach(i=>q("#"+i).classList.add("hidden")); }
+function rnd(a){ return a[Math.floor(Math.random()*a.length)]; }
+
+// Load YT API
+let t=document.createElement("script"); t.src="https://www.youtube.com/iframe_api";
+document.head.appendChild(t);
