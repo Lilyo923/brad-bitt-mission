@@ -1,78 +1,52 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-  font-family: Arial, sans-serif;
-  background-color: #111;
-  color: white;
   margin: 0;
-  padding: 0;
-  text-align: center;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .container {
-  padding: 20px;
-  margin-top: 15vh;
-}
-
-h1 {
-  font-size: 6vw;
-  margin-bottom: 20px;
+  text-align: center;
+  max-width: 90%;
 }
 
 #countdown {
-  font-size: 8vw;
-  margin: 20px 0;
+  font-size: 2em;
+  margin-bottom: 20px;
 }
 
-#startButton {
-  padding: 15px 30px;
-  font-size: 5vw;
-  background-color: #0f0;
-  color: black;
+#start-btn {
+  font-size: 1.5em;
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 20px;
 }
 
-.password-box {
+.hidden {
+  display: none;
+}
+
+#password-container {
   position: fixed;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  bottom: 20px;
+  right: 20px;
 }
 
-.password-box input {
-  padding: 10px;
-  font-size: 4vw;
-  border-radius: 5px;
-  border: none;
-  margin-bottom: 5px;
+#checkpoint-password {
+  padding: 5px;
+  font-size: 1em;
 }
 
-.password-box button {
-  padding: 8px 16px;
-  font-size: 4vw;
-  border: none;
-  border-radius: 5px;
-  background-color: #444;
-  color: white;
-  cursor: pointer;
-}
-#animationContainer {
-  font-family: Impact, sans-serif;
-  font-size: 7vw;
-  margin: 40px 0;
-}
-
-#tondeuseSection input,
-#tondeuseSection button,
-#videoContainer button {
-  font-size: 4.5vw;
-  padding: 10px;
-  margin: 5px;
+#password-error {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
 }
