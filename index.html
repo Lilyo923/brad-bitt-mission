@@ -1,40 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Le retour Incontesté de Brad Bitt</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brad Bitt - Aventure</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Lancement dans :</h1>
+    <h1 id="launch-title">Lancement dans :</h1>
     <div id="countdown"></div>
 
-    <button id="startButton" style="display: none;">Commencer l'aventure</button>
-  </div>
+    <button id="start-btn" class="hidden">Commencer l’aventure</button>
 
-  <div class="password-box">
-    <input type="password" id="checkpointPassword" placeholder="Mot de passe">
-    <button onclick="checkCheckpoint()">Valider</button>
+    <div id="password-container">
+      <input type="password" id="checkpoint-password" placeholder="Mot de passe..." />
+      <button onclick="checkPassword()">Valider</button>
+      <p id="password-error"></p>
+    </div>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-<div id="adventureSection" style="display: none;">
-  <div id="animationContainer"></div>
-
-  <div id="tondeuseSection" style="display: none;">
-    <input type="password" id="tondeuseInput" placeholder="Mot de passe secret">
-    <button onclick="checkTondeuse()">Valider</button>
-  </div>
-
-  <div id="videoContainer" style="display: none;">
-    <h2>Un message de Brad Bitt</h2>
-    <iframe id="bradVideo" width="100%" height="200" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1"
-      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-    <button id="nextButton" disabled>Il faut finir la vidéo pour continuer</button>
-  </div>
-</div>
