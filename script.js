@@ -106,4 +106,160 @@ checkpointValidate.addEventListener('click', () => {
 function startBradBittAnimation() {
     animationContainer.textContent = ''; // Reset
 
-    const phrase = "le retour incont
+    const phrase = "le retour incontesté de Brad Bitt";
+    const letters = phrase.split('');
+    letters.forEach((letter, i) => {
+        const span = document.createElement('span');
+        span.textContent = letter;
+        span.style.position = 'relative';
+        span.style.opacity = '0';
+        span.style.fontFamily = 'Impact, Arial Black, sans-serif';
+        span.style.fontSize = '2.5em';
+        span.style.color = '#ff4500';
+        span.style.display = 'inline-block';
+        animationContainer.appendChild(span);
+
+        // Animation entrée lettres
+        setTimeout(() => {
+            span.style.opacity = '1';
+            span.style.top = '0';
+            span.style.transition = 'all 0.5s ease';
+        }, i * 100);
+    });
+}
+
+// Validation mot de passe pour commencer l’aventure
+tondeuseValidate.addEventListener('click', () => {
+    const val = tondeuseInput.value.trim().toLowerCase();
+    if (val === 'tondeuse') {
+        tondeuseMsg.textContent = "Mot de passe correct !";
+        tondeuseMsg.classList.remove('error-msg');
+        // Cache la section mot de passe et lance l’animation
+        bradbittSection.style.display = 'none';
+
+        // Affiche la section vidéo
+        videoSection.style.display = 'block';
+        videoMessage.textContent = "Message de Brad Bitt";
+
+        // Intégration YouTube vidéo
+        loadYouTubeVideo("2DMl0zoaPZ0"); // ID vidéo de la première URL
+
+        // Active le bouton suivant seulement à la fin de la vidéo
+        videoNextBtn.disabled = true;
+        videoEnded = false;
+    } else {
+        tondeuseMsg.textContent = "Mot de passe incorrect";
+        tondeuseMsg.classList.add('error-msg');
+    }
+});
+
+// Fonction pour intégrer une vidéo YouTube avec l’API iframe
+function loadYouTubeVideo(videoId) {
+    videoPlayer.innerHTML = ''; // Reset
+
+    // Créer iframe
+    const iframe = document.createElement('iframe');
+    iframe.width = "560";
+    iframe.height = "315";
+    iframe.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&rel=0`;
+    iframe.frameBorder = "0";
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.id = "ytplayer";
+
+    videoPlayer.appendChild(iframe);
+
+    // Setup API Player
+    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+        // Load script if not loaded
+        let tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = function() {
+            setupPlayer(videoId);
+        };
+    } else {
+        setupPlayer(videoId);
+    }
+}
+
+function setupPlayer(videoId) {
+    videoPlayerYT = new YT.Player('ytplayer', {
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+// Gestion de l’état vidéo pour activer bouton suivant à la fin
+function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+        videoEnded = true;
+        videoNextBtn.disabled = false;
+    }
+}
+
+// Au clic sur bouton suivant vidéo
+videoNextBtn.addEventListener('click', () => {
+    if (!videoEnded) return; // sécurité
+    // Cache la section vidéo, affiche la section lieux
+    videoSection.style.display = 'none';
+    locationsSection.style.display = 'block';
+
+    // Affiche roulette pour les gages Lille
+    setupRoulette('Lille', gagesLille);
+});
+
+// Setup roulette des prénoms et gages
+function setupRoulette(location, gages) {
+    rouletteSection.style.display = 'block';
+    roulettePrenoms.textContent = '';
+    rouletteGages.textContent = '';
+    rouletteResult.textContent = '';
+    gageDoneCheckbox.checked = false;
+    nextChallengeBtn.disabled = true;
+
+    // Variables pour stocker état
+    let selectedPrenom = null;
+    let selectedGage = null;
+
+    rouletteSpinBtn.onclick = () => {
+        // Animation de roulette simple
+        roulettePrenoms.textContent = '...';
+        rouletteGages.textContent = '...';
+        rouletteResult.textContent = '';
+
+        setTimeout(() => {
+            // Tirage aléatoire
+            selectedPrenom = prenoms[Math.floor(Math.random() * prenoms.length)];
+            selectedGage = gages[Math.floor(Math.random() * gages.length)];
+
+            roulettePrenoms.textContent = `Prénom: ${selectedPrenom}`;
+            rouletteGages.textContent = `Gage: ${selectedGage}`;
+            rouletteResult.textContent = '';
+
+            // Activation checkbox
+            gageDoneCheckbox.checked = false;
+            nextChallengeBtn.disabled = true;
+        }, 1000);
+    };
+
+    // Checkbox gage accompli active bouton suivant
+    gageDoneCheckbox.onchange = () => {
+        nextChallengeBtn.disabled = !gageDoneCheckbox.checked;
+    };
+
+    // Au clic suivant challenge
+    nextChallengeBtn.onclick = () => {
+        alert(`Gage de ${selectedPrenom} validé : "${selectedGage}"`);
+        // Ici tu peux ajouter la logique pour passer au prochain gage ou fin etc.
+    };
+}
+
+// Au clic commencer l’aventure
+startBtn.addEventListener('click', () => {
+    document.getElementById('launch-section').style.display = 'none';
+    bradbittSection.style.display = 'block';
+    startBradBittAnimation();
+});
