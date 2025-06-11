@@ -3,30 +3,70 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Aventure Brad Bitt</title>
+<title>Brad Bitt Adventure</title>
 <link rel="stylesheet" href="style.css" />
+<script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
 
-<div id="app">
+<div id="countdown-container">
+  <h2>Lancement dans :</h2>
+  <div id="countdown"></div>
+</div>
 
-  <!-- SECTION LANCEMENT -->
-  <section id="launch-section">
-    <h1>Compte à rebours jusqu'au lancement</h1>
-    <div id="countdown">--:--:--:--</div>
-    <button id="start-btn" style="display:none;">Commencer l'aventure</button>
-  </section>
+<button id="start-btn" disabled>Commencer l’aventure</button>
 
-  <!-- SECTION VIDEO -->
-  <section id="video-section" style="display:none;">
-    <h2>Message de Brad Bitt</h2>
-    <div id="video-player"></div>
-    <button id="video-next" disabled>Suivant</button>
-  </section>
+<div id="password-container">
+  <input type="text" id="checkpoint-input" placeholder="Mot de passe Checkpoint" />
+  <button id="checkpoint-validate">Valider</button>
+  <div id="checkpoint-msg"></div>
+</div>
 
+<div id="animation-container" class="hidden">
+  <h1 id="animated-text" class="impact"></h1>
+  <input type="text" id="adventure-pass" placeholder="Mot de passe pour la vidéo" />
+  <button id="adventure-validate">Valider</button>
+  <div id="adventure-msg"></div>
+</div>
+
+<div id="video-section" class="hidden">
+  <h3>Message de Brad Bitt</h3>
+  <div id="player"></div>
+  <button id="next-btn" disabled>Suivant (finir la vidéo)</button>
+</div>
+
+<div id="locations-section" class="hidden">
+  <h2>Les lieux à suivre :</h2>
+  <div id="map">
+    <p>Lille</p>
+    <p>...</p>
+    <p>??? (Burger King)</p>
+    <p>...</p>
+    <p>??? (Laser Games)</p>
+  </div>
+
+  <button id="code-btn" disabled>Mettre le code</button>
+  <input type="text" id="location-code" placeholder="Entrer le code" />
+  <div id="code-msg"></div>
+</div>
+
+<div id="tasks-section" class="hidden">
+  <h2>Gages pour <span id="current-location"></span></h2>
+  <div id="roulette-container">
+    <div id="name-roulette">Prénom: <span></span></div>
+    <div id="task-roulette">Gage: <span></span></div>
+    <button id="spin-btn">Lancer la roulette</button>
+  </div>
+
+  <div id="tasks-list"></div>
+
+  <button id="confirm-tasks" disabled>Confirmer tous faits</button>
+</div>
+
+<div id="final-section" class="hidden">
+  <h2>Merci d’avoir joué</h2>
 </div>
 
 <script src="script.js"></script>
-<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
