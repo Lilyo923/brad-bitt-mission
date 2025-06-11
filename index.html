@@ -3,58 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Aventure Brad Bitt</title>
+  <title>Brad Bitt Adventure</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <div id="countdown-container">
-      <h1>Lancement dans :</h1>
-      <div id="countdown">--:--:--:--</div>
+  <div id="container">
+    <h1>Lancement dans :</h1>
+    <div id="countdown">--:--:--</div>
+
+    <div id="password-section">
+      <label for="password-input">Mot de passe secret :</label>
+      <input type="password" id="password-input" autocomplete="off" />
+      <button id="password-validate-btn">Valider</button>
+      <div id="password-feedback"></div>
     </div>
 
     <button id="start-adventure" style="display:none;">Commencer l’aventure</button>
 
-    <div id="password-section">
-      <input type="text" id="password-input" placeholder="Mot de passe" />
-      <button id="password-validate">Valider</button>
-      <div id="password-feedback"></div>
+    <div id="animation-container" style="display:none;">
+      <canvas id="animation-canvas" width="600" height="200"></canvas>
     </div>
 
-    <div id="animation-container" style="display:none;"></div>
+    <div id="second-password-section" style="display:none;">
+      <label for="second-password-input">Mot de passe pour accéder :</label>
+      <input type="password" id="second-password-input" autocomplete="off" />
+      <button id="second-password-validate-btn">Valider</button>
+      <div id="second-password-feedback"></div>
+    </div>
 
     <div id="video-section" style="display:none;">
-      <h2 id="brad-message"></h2>
-      <div id="player"></div>
-      <button id="video-next" disabled>Suivant</button>
-      <div id="video-info"></div>
+      <h2>Message de Brad Bitt :</h2>
+      <div id="video-message">Bienvenue dans l’aventure !</div>
+      <div id="video-player-container">
+        <iframe
+          id="youtube-video"
+          width="560"
+          height="315"
+          src=""
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <button id="next-btn" disabled>Suivant (terminez la vidéo)</button>
     </div>
 
-    <div id="locations-section" style="display:none;">
-      <h2>Les lieux à suivre</h2>
-      <ul id="locations-list">
-        <li>Lille</li>
-        <li>???</li>
-        <li>???</li>
-      </ul>
-      <button id="enter-code-btn" disabled>Mettre le code</button>
-      <div id="code-status">Le code ne peut pas encore être entré</div>
-    </div>
+    <!-- À partir d’ici on peut rajouter la suite avec les lieux etc -->
 
-    <div id="tasks-section" style="display:none;">
-      <h2>Gages pour <span id="current-location"></span></h2>
-      <div id="roulette-prenoms"></div>
-      <div id="roulette-tasks"></div>
-      <ul id="tasks-list"></ul>
-      <button id="confirm-tasks" disabled>Confirmer</button>
-    </div>
-
-    <div id="end-section" style="display:none;">
-      <p><em>Merci d’avoir joué</em></p>
-    </div>
   </div>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
 </html>
