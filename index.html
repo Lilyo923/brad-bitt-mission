@@ -1,61 +1,52 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brad Bitt Adventure</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Le retour incontesté de Brad Bitt</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- PAGE 1 : Accueil avec compte à rebours -->
-  <div id="page-1" class="page">
+  <!-- PAGE 1 : Compte à rebours -->
+  <section id="page-1" class="page">
     <h1>Lancement dans :</h1>
-    <div id="countdown"></div>
-
-    <div id="checkpointAccess">
-      <input type="password" id="checkpointInput" placeholder="Mot de passe..." />
-      <button onclick="validateCheckpoint()">Valider</button>
+    <div id="countdown">--:--:--</div>
+    <button id="start-adventure" style="display:none;">Commencer l’aventure</button>
+    <button id="password-btn">Mots de passe</button>
+    <div id="password-section" class="hidden">
+      <input type="password" id="password-input" placeholder="Entrez mot de passe" />
+      <button id="password-validate">Valider</button>
+      <div id="password-message"></div>
     </div>
+  </section>
 
-    <button id="startBtn" onclick="goToPage2()">Commencer l’aventure</button>
-  </div>
+  <!-- PAGE 2 : Mot de passe tondeuse -->
+  <section id="page-2" class="page hidden">
+    <h1 style="font-family: Impact, sans-serif; font-size: 2em;">Le retour incontesté de Brad Bitt</h1>
+    <input type="password" id="pw-tondeuse" placeholder="Mot de passe" />
+    <button id="validate-tondeuse">Valider</button>
+    <div id="msg-tondeuse"></div>
+  </section>
 
-  <!-- PAGE 2 : Animation texte + mot de passe -->
-  <div id="page-2" class="page hidden">
-    <h1 id="animatedTitle">Le retour incontesté de Brad Bitt</h1>
-    <input type="password" id="secondPassword" placeholder="Mot de passe..." />
-    <button onclick="validateSecondPassword()">Valider</button>
-  </div>
+  <!-- PAGE 3 : Message Brad Bitt + vidéo -->
+  <section id="page-3" class="page hidden">
+    <h2>Message de Brad Bitt</h2>
+    <iframe id="video" width="100%" height="200" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <button id="next-button" disabled>Suivant</button>
+    <p>Le bouton sera accessible uniquement lorsque la vidéo sera finie.</p>
+  </section>
 
-  <!-- PAGE 3 : Message de Brad Bitt + vidéo -->
-  <div id="page-3" class="page hidden">
-    <h2>Un message de Brad Bitt</h2>
-    <div class="video-container">
-      <iframe id="bradVideo" width="560" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    </div>
-    <p class="info-text">Le bouton sera accessible uniquement lorsque la vidéo sera finie.</p>
-    <button id="nextBtn" onclick="goToNextPart()" disabled>Suivant</button>
-  </div>
+  <!-- PAGE 4 : Menu des lieux -->
+  <section id="page-4" class="page hidden">
+    <h2>Les lieux à suivre</h2>
+    <ul>
+      <li>Lille</li>
+      <li>Burger King ???</li>
+      <li>Laser Games ???</li>
+    </ul>
+  </section>
 
   <script src="script.js"></script>
-  <!-- PAGE 4 : CARTE DES LIEUX -->
-<div id="page-4" class="page hidden">
-  <h1 class="title">Carte de l'aventure</h1>
-  <div class="map">
-    <div class="location" id="lille">
-      <h2>Lille</h2>
-      <button onclick="showLille()">Accéder</button>
-    </div>
-    <div class="location locked">
-      <h2>???</h2>
-      <p>Lieu secret</p>
-    </div>
-    <div class="location locked">
-      <h2>???</h2>
-      <p>Lieu secret</p>
-    </div>
-  </div>
-</div>
 </body>
 </html>
