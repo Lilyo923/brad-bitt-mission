@@ -1,71 +1,46 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brad Bitt - Aventure</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Écran 1 : Compte à rebours -->
-  <div id="screen-countdown">
+  <!-- Écran de compte à rebours -->
+  <div id="screen-countdown" class="screen">
     <h1>Lancement dans :</h1>
-    <div id="countdown"></div>
+    <div id="countdown" class="countdown"></div>
+
+    <!-- Champ mot de passe -->
+    <div id="passwordBypass">
+      <input type="password" id="checkpointPassword" placeholder="Mot de passe">
+      <button onclick="bypassCountdown()">Valider</button>
+      <p id="bypassError" class="hidden">Mot de passe incorrect</p>
+    </div>
   </div>
 
-  <!-- Écran 2 : Vidéo d’intro -->
-  <div id="screen-intro" class="hidden">
+  <!-- Écran d’intro -->
+  <div id="screen-intro" class="screen hidden">
+    <h1 id="introText">Le retour incontesté de Brad Bitt</h1>
+    <input type="password" id="introPassword" placeholder="Mot de passe">
+    <button onclick="validateIntroPassword()">Valider</button>
+    <p id="introError" class="hidden">Mot de passe incorrect</p>
+  </div>
+
+  <!-- Écran vidéo -->
+  <div id="screen-video" class="screen hidden">
     <h2>Un message de Brad Bitt</h2>
-    <iframe id="introVideo" width="560" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <p class="info">Le bouton sera actif une fois la vidéo terminée.</p>
-    <button id="btnToMenu" disabled>Suivant</button>
-  </div>
-
-  <!-- Écran 3 : Menu des lieux -->
-  <div id="screen-menu" class="hidden">
-    <h2>Les lieux à suivre</h2>
-    <ul>
-      <li onclick="goToLille()">Lille</li>
-      <li>???</li>
-      <li>???</li>
-    </ul>
-  </div>
-
-  <!-- Écran 4 : Gages Lille -->
-  <div id="screen-lille" class="hidden">
-    <h2>Gages - Lille</h2>
-
-    <div class="roulette">
-      <h3>Roulette des prénoms</h3>
-      <button onclick="spin('name')">Lancer</button>
-      <p id="result-name"></p>
+    <div class="video-container">
+      <iframe id="bradVideo" width="560" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" 
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen></iframe>
     </div>
-
-    <div class="roulette">
-      <h3>Roulette des gages</h3>
-      <button onclick="spin('task')">Lancer</button>
-      <p id="result-task"></p>
-    </div>
-
-    <h3>Checklist des gages :</h3>
-    <ul id="taskList">
-      <li><input type="checkbox" /> Aller dans un supermarché et demander un Serrano très très salé.</li>
-      <li><input type="checkbox" /> Demander dans un magasin de cartes Pokémon s’ils ont des Aquali avec un regard douteux.</li>
-      <li><input type="checkbox" /> Aller imprimer des photos d’Asterion et dire que vous cherchez cet homme.</li>
-      <li><input type="checkbox" /> Aller dans un Apple Store et mettre le site sur tous les appareils.</li>
-    </ul>
-
-    <button id="validateLille" onclick="checkTasks()">Valider les gages</button>
-
-    <div id="lilleVideoContainer" class="hidden">
-      <h3>Un message de Brad Bitt</h3>
-      <iframe id="lilleVideo" width="560" height="315" src="https://www.youtube.com/embed/ZAHUIzGBiOQ?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      <button id="btnToNextFromLille">Suivant</button>
-    </div>
+    <p class="info-text">Le bouton sera accessible uniquement lorsque la vidéo sera finie.</p>
+    <button id="nextBtn" disabled>Suivant</button>
   </div>
 
   <script src="script.js"></script>
-  <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
