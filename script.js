@@ -1,123 +1,85 @@
-// --------- COMPTE À REBOURS ---------
+// ----------- Countdown -----------
+const countdownTarget = new Date("2025-06-12T10:00:00").getTime();
 const countdownEl = document.getElementById("countdown");
-const startBtn = document.getElementById("start-adventure");
-const passwordBtn = document.getElementById("password-btn");
-const passwordSection = document.getElementById("password-section");
-const passwordInput = document.getElementById("password-input");
-const passwordValidate = document.getElementById("password-validate");
-const passwordMessage = document.getElementById("password-message");
+const screenCountdown = document.getElementById("screen-countdown");
+const screenIntro = document.getElementById("screen-intro");
 
-const launchDate = new Date("2025-06-12T10:00:00");
+let countdownInterval = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = countdownTarget - now;
 
-function updateCountdown() {
-  const now = new Date();
-  const diff = launchDate - now;
+  if (distance <= 0) {
+    clearInterval(countdownInterval);
+    screenCountdown.classList.add("hidden");
+    screenIntro.classList.remove("hidden");
+    return;
+  }
 
-  if (diff <= 0) {
-    countdownEl.textContent = "C’est parti !";
-    startBtn.style.display = "inline-block";
-    clearInterval(intervalId);
+  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  countdownEl.innerText = `${hours}h ${minutes}m ${seconds}s`;
+}, 1000);
+
+// ----------- Vidéo Intro -----------
+let introPlayer, lillePlayer;
+
+function onYouTubeIframeAPIReady() {
+  introPlayer = new YT.Player("introVideo", {
+    events: {
+      onStateChange: function (event) {
+        if (event.data === YT.PlayerState.ENDED) {
+          document.getElementById("btnToMenu").disabled = false;
+        }
+      }
+    }
+  });
+
+  lillePlayer = new YT.Player("lilleVideo");
+}
+
+document.getElementById("btnToMenu").addEventListener("click", () => {
+  document.getElementById("screen-intro").classList.add("hidden");
+  document.getElementById("screen-menu").classList.remove("hidden");
+});
+
+// ----------- Menu vers Lille -----------
+function goToLille() {
+  document.getElementById("screen-menu").classList.add("hidden");
+  document.getElementById("screen-lille").classList.remove("hidden");
+}
+
+// ----------- Roulette -----------
+const names = ["Téo", "Edwin", "Hippolyte", "Arthur"];
+const tasks = [
+  "Aller dans un supermarché et demander un Serrano très très salé.",
+  "Demander dans un magasin de cartes Pokémon s’ils ont des Aquali avec un regard douteux.",
+  "Aller imprimer des photos d’Asterion et dire que vous cherchez cet homme.",
+  "Aller dans un Apple Store et mettre le site sur tous les appareils."
+];
+
+function spin(type) {
+  const target = document.getElementById(`result-${type}`);
+  const items = type === "name" ? names : tasks;
+  const result = items[Math.floor(Math.random() * items.length)];
+  target.textContent = result;
+}
+
+// ----------- Validation des gages Lille -----------
+function checkTasks() {
+  const checkboxes = document.querySelectorAll("#taskList input[type='checkbox']");
+  const allChecked = Array.from(checkboxes).every(box => box.checked);
+
+  if (allChecked) {
+    document.getElementById("validateLille").style.display = "none";
+    document.getElementById("lilleVideoContainer").classList.remove("hidden");
   } else {
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((diff % (1000 * 60)) / 1000);
-    countdownEl.textContent = `${hours.toString().padStart(2,"0")}:${mins.toString().padStart(2,"0")}:${secs.toString().padStart(2,"0")}`;
+    alert("Tous les gages doivent être cochés !");
   }
 }
 
-const intervalId = setInterval(updateCountdown, 1000);
-updateCountdown();
-
-startBtn.addEventListener("click", () => {
-  document.getElementById("page-1").classList.add("hidden");
-  document.getElementById("page-2").classList.remove("hidden");
-});
-
-// --------- MOT DE PASSE CHECKPOINT ---------
-passwordBtn.addEventListener("click", () => {
-  passwordSection.classList.remove("hidden");
-});
-
-passwordValidate.addEventListener("click", () => {
-  if (passwordInput.value.toLowerCase() === "checkpoint") {
-    passwordMessage.textContent = "Accès autorisé";
-    setTimeout(() => {
-      passwordSection.classList.add("hidden");
-      passwordMessage.textContent = "";
-      passwordInput.value = "";
-      document.getElementById("page-1").classList.add("hidden");
-      document.getElementById("page-2").classList.remove("hidden");
-    }, 5000);
-  } else {
-    passwordMessage.textContent = "Mot de passe incorrect";
-  }
-});
-
-// --------- MOT DE PASSE TONDEUSE ---------
-const validateTondeuse = document.getElementById("validate-tondeuse");
-const pwTondeuse = document.getElementById("pw-tondeuse");
-const msgTondeuse = document.getElementById("msg-tondeuse");
-
-validateTondeuse.addEventListener("click", () => {
-  if (pwTondeuse.value.toLowerCase() === "tondeuse") {
-    msgTondeuse.textContent = "";
-    document.getElementById("page-2").classList.add("hidden");
-    document.getElementById("page-3").classList.remove("hidden");
-  } else {
-    msgTondeuse.textContent = "Mot de passe incorrect";
-  }
-});
-
-// --------- BOUTON SUIVANT SANS ATTENTE VIDÉO ---------
-const nextButton = document.getElementById("next-button");
-
-nextButton.addEventListener("click", () => {
-  document.getElementById("page-3").classList.add("hidden");
-  document.getElementById("page-4").classList.remove("hidden");
-});
-const prenoms = ["Téo", "Edwin", "Hippolyte", "Arthur"];
-const gages = [
-  "Aller dans un supermarché et demander un Serrano très très salé.",
-  "Aller dans un magasin de cartes Pokémon et demander des cartes Aquali avec un regard discutable.",
-  "Aller imprimer quelques photos de Asterion et dire que vous cherchez cet homme.",
-  "Aller dans l’Apple Store et mettre le site de Brad Bitt sur tous les appareils."
-];
-
-const prenomDisplay = document.getElementById("prenomDisplay");
-const gageDisplay = document.getElementById("gageDisplay");
-const spinPrenomBtn = document.getElementById("spinPrenomBtn");
-const spinGageBtn = document.getElementById("spinGageBtn");
-const gageList = document.getElementById("gageList");
-const videoSection = document.getElementById("videoSection");
-const nextBtn = document.getElementById("nextBtn");
-
-// Roulette prénom
-spinPrenomBtn.addEventListener("click", () => {
-  const randomIndex = Math.floor(Math.random() * prenoms.length);
-  prenomDisplay.textContent = prenoms[randomIndex];
-});
-
-// Roulette gage
-spinGageBtn.addEventListener("click", () => {
-  const randomIndex = Math.floor(Math.random() * gages.length);
-  gageDisplay.textContent = gages[randomIndex];
-});
-
-// Gestion checklist et affichage vidéo quand tous cochés
-gageList.addEventListener("change", () => {
-  const checkboxes = gageList.querySelectorAll("input[type=checkbox]");
-  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
-  
-  if(allChecked) {
-    videoSection.classList.remove("hidden");
-  } else {
-    videoSection.classList.add("hidden");
-  }
-});
-
-// Bouton suivant actif dès le départ (pas de gestion vidéo)
-nextBtn.disabled = false;
-
-nextBtn.addEventListener("click", () => {
-  alert("Suivant cliqué - ici tu peux gérer la navigation vers la prochaine étape.");
+// ----------- Suivant depuis Lille -----------
+document.getElementById("btnToNextFromLille").addEventListener("click", () => {
+  alert("La suite n’est pas encore codée, mais ça arrive !");
 });
