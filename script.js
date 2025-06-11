@@ -1,3 +1,3 @@
-document.getElementById('reportBtn').addEventListener('click', function () {
-  alert("Trop tard… Brad a déjà fui par le conduit d’aération. 🕳️");
+document.getElementById("report-btn").addEventListener("click", function () {
+  alert("Signalement enregistré. Merci pour votre vigilance.");
 });
