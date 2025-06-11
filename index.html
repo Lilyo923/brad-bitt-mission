@@ -2,38 +2,40 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Brad Bitt Adventure</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+  <!-- PAGE 1 : Accueil avec compte à rebours -->
   <div id="page-1" class="page">
     <h1>Lancement dans :</h1>
     <div id="countdown"></div>
-    <button id="startBtn" style="display:none;">Commencer l'aventure</button>
 
     <div id="checkpointAccess">
-      <input type="password" id="checkpointInput" placeholder="Mot de passe" />
+      <input type="password" id="checkpointInput" placeholder="Mot de passe..." />
       <button onclick="validateCheckpoint()">Valider</button>
     </div>
+
+    <button id="startBtn" onclick="goToPage2()">Commencer l’aventure</button>
   </div>
 
+  <!-- PAGE 2 : Animation texte + mot de passe -->
   <div id="page-2" class="page hidden">
-    <h1 id="introTitle">Le retour incontesté de Brad Bitt</h1>
-    <div id="passwordSection">
-      <input type="password" id="secondPassword" placeholder="Mot de passe" />
-      <button onclick="validateSecondPassword()">Valider</button>
-    </div>
+    <h1 id="animatedTitle">Le retour incontesté de Brad Bitt</h1>
+    <input type="password" id="secondPassword" placeholder="Mot de passe..." />
+    <button onclick="validateSecondPassword()">Valider</button>
   </div>
 
+  <!-- PAGE 3 : Message de Brad Bitt + vidéo -->
   <div id="page-3" class="page hidden">
     <h2>Un message de Brad Bitt</h2>
     <div class="video-container">
-      <iframe id="ytplayer" width="100%" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe id="bradVideo" width="560" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
-    <p>Le bouton sera accessible une fois la vidéo terminée.</p>
-    <button id="nextBtn" disabled>Suivant</button>
+    <p class="info-text">Le bouton sera accessible uniquement lorsque la vidéo sera finie.</p>
+    <button id="nextBtn" onclick="goToNextPart()" disabled>Suivant</button>
   </div>
 
   <script src="script.js"></script>
