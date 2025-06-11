@@ -1,113 +1,71 @@
-// ==== VARIABLES ====
+// --- Compte à rebours ---
+const countdown = document.getElementById('countdown');
+const startBtn = document.getElementById('startBtn');
+const targetDate = new Date("June 12, 2025 10:00:00").getTime();
 
-const launchSection = document.getElementById('launch-section');
-const countdownEl = document.getElementById('countdown');
-const btnCommencer = document.getElementById('btn-commencer');
+const interval = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
 
-const checkpointContainer = document.getElementById('checkpoint-container');
-const checkpointInput = document.getElementById('checkpoint-input');
-const checkpointValider = document.getElementById('checkpoint-valider');
-
-const bradbittSection = document.getElementById('bradbitt-section');
-const bradbittPasswordInput = document.getElementById('bradbitt-password');
-const bradbittValider = document.getElementById('bradbitt-valider');
-
-const videoSection = document.getElementById('video-section');
-const btnSuivant = document.getElementById('btn-suivant');
-const infoText = document.getElementById('info');
-
-const lieuxSection = document.getElementById('lieux-section');
-
-const pages = document.querySelectorAll('.page');
-
-const LAUNCH_DATE = new Date('2025-06-12T10:00:00');
-
-let player; // YouTube player
-
-// ==== FONCTIONS UTILITAIRES ====
-
-function showPage(page) {
-  pages.forEach(p => p.classList.remove('active'));
-  page.classList.add('active');
-}
-
-// ==== COMPTE À REBOURS ====
-
-function updateCountdown() {
-  const now = new Date();
-  const diff = LAUNCH_DATE - now;
-
-  if (diff <= 0) {
-    countdownEl.textContent = '00:00:00';
-    btnCommencer.disabled = false;
-    btnCommencer.classList.add('enabled');
-    clearInterval(intervalCountdown);
+  if (distance <= 0) {
+    clearInterval(interval);
+    countdown.innerHTML = "C'est parti !";
+    startBtn.style.display = "inline-block";
   } else {
-    let h = Math.floor(diff / 1000 / 3600);
-    let m = Math.floor((diff / 1000 % 3600) / 60);
-    let s = Math.floor((diff / 1000) % 60);
-
-    h = h.toString().padStart(2, '0');
-    m = m.toString().padStart(2, '0');
-    s = s.toString().padStart(2, '0');
-
-    countdownEl.textContent = `${h}:${m}:${s}`;
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    countdown.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
   }
-}
+}, 1000);
 
-const intervalCountdown = setInterval(updateCountdown, 1000);
-updateCountdown();
-
-// ==== MOT DE PASSE CHECKPOINT ====
-
-checkpointValider.addEventListener('click', () => {
-  const val = checkpointInput.value.trim();
-  if (val.toLowerCase() === 'checkpoint') {
-    alert('Accès Checkpoint autorisé !');
-    checkpointContainer.style.display = 'none'; // disparait 5s plus tard ?
+// --- Mot de passe checkpoint ---
+function validateCheckpoint() {
+  const input = document.getElementById('checkpointInput');
+  if (input.value === "Checkpoint") {
+    alert("Accès autorisé !");
+    setTimeout(() => {
+      document.getElementById("checkpointAccess").style.display = "none";
+    }, 5000);
   } else {
-    alert('Mot de passe Checkpoint incorrect');
+    alert("Mot de passe incorrect.");
   }
+}
+
+// --- Navigation ---
+startBtn.addEventListener('click', () => {
+  document.getElementById("page-1").classList.add("hidden");
+  document.getElementById("page-2").classList.remove("hidden");
 });
 
-// ==== BOUTON COMMENCER ====
-
-btnCommencer.addEventListener('click', () => {
-  showPage(bradbittSection);
-});
-
-// ==== MOT DE PASSE LE RETOUR INCONTESTÉ DE BRAD BITT ====
-
-bradbittValider.addEventListener('click', () => {
-  if (bradbittPasswordInput.value.trim().toLowerCase() === 'tondeuse') {
-    showPage(videoSection);
+// --- Mot de passe étape 2 ---
+function validateSecondPassword() {
+  const pw = document.getElementById("secondPassword").value;
+  if (pw === "tondeuse") {
+    document.getElementById("page-2").classList.add("hidden");
+    document.getElementById("page-3").classList.remove("hidden");
+    checkVideoEnded();
   } else {
-    alert('Mot de passe incorrect');
-  }
-});
-
-// ==== YOUTUBE IFRAME API ====
-
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('video', {
-    events: {
-      'onStateChange': onPlayerStateChange
-    }
-  });
-}
-
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.ENDED) {
-    btnSuivant.disabled = false;
-    btnSuivant.classList.add('enabled');
-    infoText.style.display = 'none';
+    alert("Mot de passe incorrect.");
   }
 }
 
-// ==== BOUTON SUIVANT ====
+// --- Attente de fin de vidéo ---
+function checkVideoEnded() {
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.body.appendChild(tag);
 
-btnSuivant.addEventListener('click', () => {
-  if (!btnSuivant.disabled) {
-    showPage(lieuxSection);
+  window.onYouTubeIframeAPIReady = function () {
+    const player = new YT.Player('ytplayer', {
+      events: {
+        'onStateChange': function (event) {
+          if (event.data === YT.PlayerState.ENDED) {
+            document.getElementById("nextBtn").disabled = false;
+          }
+        }
+      }
+    });
   }
-});
+}
