@@ -1,107 +1,78 @@
 body {
-  background-color: #000;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
-  text-align: center;
+  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 20px;
+  padding: 1em;
+  background: #121212;
+  color: #eee;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .page {
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .page:not(.hidden) {
-  display: block;
+  display: flex;
 }
 
-.hidden {
-  display: none;
+h1, h2 {
+  margin-bottom: 1em;
 }
 
-#startBtn,
+#countdown {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
 button {
-  background-color: #fff;
-  color: #000;
-  padding: 10px 20px;
-  font-weight: bold;
-  cursor: pointer;
+  background: #444;
+  color: #eee;
   border: none;
-  margin-top: 20px;
+  padding: 10px 20px;
+  margin: 0.5em;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 button:disabled {
-  opacity: 0.5;
+  background: #666;
   cursor: not-allowed;
 }
 
-#checkpointAccess {
-  margin-top: 20px;
+#password-section {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #222;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+#password-section.hidden {
+  display: none;
 }
 
 input[type="password"] {
-  padding: 10px;
-  margin: 10px;
+  padding: 6px;
+  margin-right: 6px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background: #333;
+  color: #eee;
 }
 
-.video-container {
-  margin-top: 20px;
+ul {
+  list-style-type: none;
+  padding-left: 0;
 }
 
-.info-text {
-  margin-top: 10px;
-  font-style: italic;
-}
-/* PAGE 4 - CARTE DES LIEUX */
-#page-4 {
-  text-align: center;
-  background: url('https://i.imgur.com/QgzYZep.jpg') no-repeat center center;
-  background-size: cover;
-  color: #fff;
-  padding: 40px 20px;
-  min-height: 100vh;
-}
-
-.map {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  margin-top: 30px;
-}
-
-.location {
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px dashed #fff;
-  padding: 20px;
-  border-radius: 12px;
-  transition: transform 0.3s ease;
-}
-
-.location:hover {
-  transform: scale(1.02);
-}
-
-.location h2 {
-  font-family: 'Impact', sans-serif;
-  font-size: 28px;
-}
-
-.location button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-weight: bold;
-  background: #ffdd57;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.location button:hover {
-  background: #ffd000;
-}
-
-.locked {
-  opacity: 0.4;
-  pointer-events: none;
+ul li {
+  font-size: 1.3em;
+  margin: 0.5em 0;
 }
