@@ -1,54 +1,37 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brad Bitt - Aventure</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lancement de l'aventure</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <!-- ÉTAPE 1 : COMPTE À REBOURS -->
-    <div id="countdown-container">
-        <h1>Lancement dans :</h1>
-        <div id="countdown"></div>
+  <div id="main-screen">
+    <h1>Lancement dans :</h1>
+    <div id="countdown"></div>
+    <button id="startBtn" class="hidden">Commencer l’aventure</button>
+    
+    <div id="password-container">
+      <input type="password" id="checkpointInput" placeholder="Mot de passe" />
+      <button id="validateCheckpoint">Valider</button>
     </div>
+  </div>
 
-    <!-- Mot de passe Checkpoint -->
-    <div id="checkpoint-box">
-        <input type="password" id="checkpoint-password" placeholder="Mot de passe">
-        <button onclick="checkCheckpoint()">Valider</button>
+  <div id="second-screen" class="hidden">
+    <h1 id="brad-title">Le retour incontesté de Brad Bitt</h1>
+    <input type="password" id="bradPassword" placeholder="Mot de passe..." />
+    <button id="validateBrad">Valider</button>
+  </div>
+
+  <div id="third-screen" class="hidden">
+    <h2>Un message de Brad Bitt</h2>
+    <div id="video-container">
+      <iframe id="bradVideo" width="100%" height="215" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
     </div>
+    <button id="nextBtn" disabled>Suivant</button>
+  </div>
 
-    <!-- ÉTAPE 2 : BOUTON COMMENCER -->
-    <div id="start-button-container" class="hidden">
-        <button onclick="showIntro()">Commencer l'aventure</button>
-    </div>
-
-    <!-- ÉTAPE 3 : ANIMATION TITRE -->
-    <div id="brad-animation" class="hidden">
-        <h1 id="animated-title">Le retour incontesté de Brad Bitt</h1>
-    </div>
-
-    <!-- ÉTAPE 4 : MOT DE PASSE TONDEUSE -->
-    <div id="tondeuse-password-container" class="hidden">
-        <input type="password" id="tondeuse-password" placeholder="Mot de passe">
-        <button onclick="checkTondeuse()">Valider</button>
-    </div>
-
-    <!-- ÉTAPE 5 : VIDÉO BRAD BITT + SUIVANT -->
-    <div id="brad-message" class="hidden">
-        <h2>Un message de Brad Bitt</h2>
-        <div id="video-container">
-            <iframe id="brad-video" width="560" height="315" 
-                src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" 
-                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
-        </div>
-        <p id="video-warning">Le bouton sera accessible uniquement lorsque la vidéo sera finie.</p>
-        <button id="next-button" class="disabled" disabled>Suivant</button>
-    </div>
-
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
