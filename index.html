@@ -1,88 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Brad Bitt – Mission Gages</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brad Bitt - Aventure</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- 1. COMPTE À REBOURS + ACCÈS SECRET -->
-  <div id="intro">
+  <div id="container">
     <h1>Lancement dans :</h1>
     <div id="countdown"></div>
-    <div id="secret">
-      <input type="password" id="secretCode" placeholder="Code secret…">
-      <button onclick="checkSecret()">OK</button>
+    <button id="startBtn" style="display:none;">Commencer l'aventure</button>
+
+    <div id="checkpointAccess">
+      <input type="password" id="checkpointPassword" placeholder="Mot de passe Checkpoint" />
+      <button onclick="checkCheckpoint()">Accès test</button>
     </div>
   </div>
 
-  <!-- 2. BOUTON LANCEMENT -->
-  <div id="launch" class="hidden">
-    <button onclick="playAnimation()">Commencer l’aventure</button>
+  <div id="secretSection" style="display: none;">
+    <input type="password" id="secretPassword" placeholder="Mot de passe secret (tondeuse)" />
+    <button onclick="validateSecret()">Valider</button>
+    <div id="animationContainer"></div>
   </div>
 
-  <!-- 3. ANIMATION + CODE TONDEUSE -->
-  <div id="screenAnim" class="hidden">
-    <h1 id="animText" class="impact"></h1>
-    <input type="password" id="mainCode" placeholder="Code tondeuse…">
-    <button onclick="checkMainCode()">Valider</button>
-    <p id="mainError" class="error"></p>
-  </div>
-
-  <!-- 4. VIDÉO INTRODUCTIVE -->
-  <div id="screenIntroVid" class="hidden">
-    <h2>Un message de Brad Bitt</h2>
-    <div id="player_intro"></div>
-    <button id="nextIntro" class="disabled" disabled onclick="enterMap()">Suivant</button>
-    <p class="hint">Vous devez visionner jusqu’à la fin.</p>
-  </div>
-
-  <!-- 5. CARTE DES LIEUX -->
-  <div id="screenMap" class="hidden">
-    <h2>Carte de l’aventure</h2>
-    <ul>
-      <li><button onclick="openSection('lille')">• Lille</button></li>
-      <li>
-        <button id="btnBK" class="locked" disabled>• ???</button>
-        <input type="password" id="codeBK" placeholder="Code…">
-        <button onclick="unlock('bk')">OK</button>
-      </li>
-      <li>
-        <button id="btnLG" class="locked" disabled>• ???</button>
-        <input type="password" id="codeLG" placeholder="Code…">
-        <button onclick="unlock('lg')">OK</button>
-      </li>
-    </ul>
-  </div>
-
-  <!-- 6. SECTION GENERIQUE POUR GAGES (LILLE/BK/LG) -->
-  <div id="section" class="hidden">
-    <h2 id="sectionTitle"></h2>
-    <p id="sectionNote" class="red"></p>
-    <button onclick="spin()">🎲 Tirage prénom + gage</button>
-    <p id="spinName"></p>
-    <p id="spinGage"></p>
-    <ul id="gageList"></ul>
-    <button id="confirmBtn" class="disabled" disabled>✅ Oui</button>
-    <button onclick="backToMap()">❌ Non</button>
-  </div>
-
-  <!-- 7. VIDÉOS FÉLICITATIONS + CODES -->
-  <div id="congrats" class="hidden">
-    <div id="player_section"></div>
-    <input type="password" id="finalCode" placeholder="Code…">
-    <button id="submitCodeBtn">OK</button>
-    <p id="finalError" class="error"></p>
-  </div>
-
-  <!-- 8. ÉCRAN FINAL -->
-  <div id="finalScreen" class="hidden">
-    <p class="italic">Merci d’avoir joué</p>
-  </div>
-
-  <!-- API YouTube + Script principal -->
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
 </html>
