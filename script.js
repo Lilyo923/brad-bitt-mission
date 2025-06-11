@@ -1,3 +1,4 @@
+console.log("Le fichier script.js est bien chargé !");
 // Compte à rebours pour le 12 juin 2025 à 10h
 const countdown = document.getElementById("countdown");
 const startButton = document.getElementById("startButton");
