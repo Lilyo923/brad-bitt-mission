@@ -1,32 +1,10 @@
-body {
-  margin: 0; padding: 0;
-  background: #111; color: #eee;
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-.hidden { display: none; }
-.section { padding: 20px; }
-.impact { font-family: Impact, sans-serif; font-size: 2.5rem; }
+body { background: #111; color: #eee; font-family: Arial; text-align: center; padding: 20px; }
+.hidden { display:none; }
+.impact { font-family: Impact; font-size: 2.5rem; }
+.error { color: #f55; }
 .red { color: red; font-weight: bold; }
 .italic { font-style: italic; }
-.error { color: #f55; }
-.hint { color: #aaa; font-size: 0.9rem; }
-button {
-  padding: .5rem 1rem;
-  margin: .5rem;
-  font-size: 1rem;
-  cursor: pointer;
-}
-button:disabled {
-  background: #444;
-  color: #666;
-  cursor: not-allowed;
-}
-#secret-access { position: fixed; bottom: 1rem; right: 1rem; }
-#countdown { font-size: 2rem; margin: 1rem 0; }
-.map-list { list-style: none; padding: 0; }
-.map-list li { margin: .5rem 0; }
-.locked { opacity: .3; }
-.code-container { display: inline-block; margin-left: .5rem; }
-.gage-list { text-align: left; display: inline-block; margin-top: 1rem; }
-.impact-text { font-family: Impact, sans-serif; }
+button { padding: .5rem 1rem; margin: .5rem; }
+button.disabled, button.locked { background: #333; color: #555; cursor: not-allowed; }
+button:not(.disabled):not(.locked) { cursor: pointer; }
+.hint { color: #aaa; font-size: .9rem; margin-top: .5rem; }
