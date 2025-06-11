@@ -1,82 +1,32 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Le Retour Incontesté de Brad Bitt</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aventure Brad Bitt</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="app">
 
-        <!-- Section de lancement avec le timer -->
-        <div id="launch-section">
-            <h1>Lancement dans :</h1>
-            <div id="countdown">--:--:--:--</div>
-            <!-- Bouton commencer l’aventure, caché au départ -->
-            <button id="start-btn" style="display:none;">Commencer l’aventure</button>
-        </div>
+<div id="app">
 
-        <!-- Section mot de passe Checkpoint (accès au site) -->
-        <div id="password-checkpoint" class="password-section">
-            <label for="checkpoint-input">Mot de passe Checkpoint :</label>
-            <input type="text" id="checkpoint-input" />
-            <button id="checkpoint-validate">Valider</button>
-            <div id="checkpoint-msg"></div>
-        </div>
+  <!-- SECTION LANCEMENT -->
+  <section id="launch-section">
+    <h1>Compte à rebours jusqu'au lancement</h1>
+    <div id="countdown">--:--:--:--</div>
+    <button id="start-btn" style="display:none;">Commencer l'aventure</button>
+  </section>
 
-        <!-- Section animation et accès au retour de Brad Bitt -->
-        <div id="bradbitt-section" style="display:none;">
-            <div id="bradbitt-message">Message de Brad Bitt ici</div>
-            <div id="animation-container"></div>
-            <div class="password-section">
-                <label for="tondeuse-input">Mot de passe pour l’aventure :</label>
-                <input type="text" id="tondeuse-input" />
-                <button id="tondeuse-validate">Valider</button>
-                <div id="tondeuse-msg"></div>
-            </div>
-        </div>
+  <!-- SECTION VIDEO -->
+  <section id="video-section" style="display:none;">
+    <h2>Message de Brad Bitt</h2>
+    <div id="video-player"></div>
+    <button id="video-next" disabled>Suivant</button>
+  </section>
 
-        <!-- Section vidéo YouTube -->
-        <div id="video-section" style="display:none;">
-            <div id="video-message"></div>
-            <div id="video-player"></div>
-            <button id="video-next" disabled>Suivant (regarder la vidéo jusqu’à la fin)</button>
-        </div>
+</div>
 
-        <!-- Section lieux et gages -->
-        <div id="locations-section" style="display:none;">
-            <h2>Les lieux à suivre :</h2>
-            <ul id="location-list">
-                <li id="location-lille">Lille</li>
-                <li id="location-burgerking">Burger King ???</li>
-                <li id="location-lasergames">Laser Games ???</li>
-            </ul>
-            <button id="enter-code-btn" disabled>Entrer le code</button>
-            <input type="text" id="code-input" placeholder="Entrer le code" />
-            <div id="code-msg"></div>
-
-            <!-- Roulette prénoms et gages -->
-            <div id="roulette-section" style="display:none;">
-                <h3>Roulette des prénoms et gages</h3>
-                <div id="roulette-prenoms"></div>
-                <div id="roulette-gages"></div>
-                <button id="roulette-spin">Lancer la roulette</button>
-                <div id="roulette-result"></div>
-                <div>
-                    <label><input type="checkbox" id="gage-done" /> Gage accompli</label>
-                </div>
-                <button id="next-challenge" disabled>Suivant</button>
-            </div>
-        </div>
-
-        <!-- Section fin -->
-        <div id="end-section" style="display:none; color: white; background-color: black; height: 100vh; display:flex; justify-content:center; align-items:center;">
-            <em>Merci d’avoir joué</em>
-        </div>
-
-    </div>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
