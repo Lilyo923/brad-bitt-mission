@@ -48,3 +48,8 @@ button:disabled {
   font-family: Impact, sans-serif;
   font-size: 1.8rem;
 }
+#infoVideo {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
