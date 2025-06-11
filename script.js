@@ -1,89 +1,88 @@
-// Countdown to June 12, 2025, 10:00
-const countdownElement = document.getElementById("countdown");
-const launchDate = new Date("2025-06-12T10:00:00").getTime();
+// --------- COMPTE À REBOURS ---------
+const countdownEl = document.getElementById("countdown");
+const startBtn = document.getElementById("start-adventure");
+const passwordBtn = document.getElementById("password-btn");
+const passwordSection = document.getElementById("password-section");
+const passwordInput = document.getElementById("password-input");
+const passwordValidate = document.getElementById("password-validate");
+const passwordMessage = document.getElementById("password-message");
 
-const countdown = setInterval(() => {
-  const now = new Date().getTime();
-  const distance = launchDate - now;
+const launchDate = new Date("2025-06-12T10:00:00");
 
-  if (distance < 0) {
-    clearInterval(countdown);
-    countdownElement.innerText = "Lancement disponible !";
+function updateCountdown() {
+  const now = new Date();
+  const diff = launchDate - now;
+
+  if (diff <= 0) {
+    countdownEl.textContent = "C’est parti !";
+    startBtn.style.display = "inline-block";
+    clearInterval(intervalId);
   } else {
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    countdownElement.innerText = `${days}j ${hours}h ${minutes}m ${seconds}s`;
-  }
-}, 1000);
-
-// Checkpoint logic
-function validateCheckpoint() {
-  const input = document.getElementById('checkpointInput');
-  if (input.value === "Checkpoint") {
-    alert("Accès autorisé !");
-    setTimeout(() => {
-      document.getElementById("checkpointAccess").style.display = "none";
-    }, 5000);
-    document.getElementById("startBtn").style.display = "inline-block";
-  } else {
-    alert("Mot de passe incorrect.");
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+    countdownEl.textContent = `${hours.toString().padStart(2,"0")}:${mins.toString().padStart(2,"0")}:${secs.toString().padStart(2,"0")}`;
   }
 }
 
-// Aller à page 2
-function goToPage2() {
+const intervalId = setInterval(updateCountdown, 1000);
+updateCountdown();
+
+startBtn.addEventListener("click", () => {
   document.getElementById("page-1").classList.add("hidden");
   document.getElementById("page-2").classList.remove("hidden");
-}
+});
 
-// Valider mot de passe pour accéder à la vidéo
-function validateSecondPassword() {
-  const input = document.getElementById("secondPassword").value;
-  if (input === "tondeuse") {
+// --------- MOT DE PASSE CHECKPOINT ---------
+passwordBtn.addEventListener("click", () => {
+  passwordSection.classList.remove("hidden");
+});
+
+passwordValidate.addEventListener("click", () => {
+  if (passwordInput.value.toLowerCase() === "checkpoint") {
+    passwordMessage.textContent = "Accès autorisé";
+    setTimeout(() => {
+      passwordSection.classList.add("hidden");
+      passwordMessage.textContent = "";
+      passwordInput.value = "";
+      document.getElementById("page-1").classList.add("hidden");
+      document.getElementById("page-2").classList.remove("hidden");
+    }, 5000);
+  } else {
+    passwordMessage.textContent = "Mot de passe incorrect";
+  }
+});
+
+// --------- MOT DE PASSE TONDEUSE ---------
+const validateTondeuse = document.getElementById("validate-tondeuse");
+const pwTondeuse = document.getElementById("pw-tondeuse");
+const msgTondeuse = document.getElementById("msg-tondeuse");
+
+validateTondeuse.addEventListener("click", () => {
+  if (pwTondeuse.value.toLowerCase() === "tondeuse") {
+    msgTondeuse.textContent = "";
     document.getElementById("page-2").classList.add("hidden");
     document.getElementById("page-3").classList.remove("hidden");
-    setupVideoEndListener();
   } else {
-    alert("Mot de passe incorrect.");
+    msgTondeuse.textContent = "Mot de passe incorrect";
   }
-}
+});
 
-// Activation bouton suivant après vidéo
-function setupVideoEndListener() {
-  const iframe = document.getElementById('bradVideo');
-  const player = new YT.Player(iframe, {
-    events: {
-      'onStateChange': function (event) {
-        if (event.data === YT.PlayerState.ENDED) {
-          document.getElementById("nextBtn").disabled = false;
-        }
-      }
-    }
-  });
-}
+// --------- VIDÉO ET BOUTON SUIVANT ---------
+const video = document.getElementById("video");
+const nextButton = document.getElementById("next-button");
 
-// Aller à la suite (tu ajouteras la suite ici)
-function goToNextPart() {
-  alert("Suite du projet ici...");
-}
+window.onYouTubeIframeAPIReady = function() {
+  // Just in case, if you want to use YouTube API for control, can be implemented here
+};
 
-// Charger l'API YouTube
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+video.addEventListener("ended", () => {
+  nextButton.disabled = false;
+});
 
-function showLille() {
-  document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
-  // Ici on affichera plus tard la page des gages de Lille
-  alert("Tu entres dans le territoire de Lille ! (à venir...)");
-}
-document.getElementById("next-button").addEventListener("click", function () {
-  if (!this.disabled) {
-    document.querySelector("#page-3").classList.add("hidden");
-    document.querySelector("#page-4").classList.remove("hidden");
+nextButton.addEventListener("click", () => {
+  if (!nextButton.disabled) {
+    document.getElementById("page-3").classList.add("hidden");
+    document.getElementById("page-4").classList.remove("hidden");
   }
 });
