@@ -1,46 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brad Bitt Adventure</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Brad Bitt - L'aventure</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="countdown-container">
+  <div class="container">
     <h1>Lancement dans :</h1>
     <div id="countdown"></div>
+
+    <button id="startButton" style="display: none;">Commencer l'aventure</button>
   </div>
 
-  <button id="start-button" class="hidden">Commencer l'aventure</button>
-
-  <div id="checkpoint-box">
-    <input type="password" id="checkpoint-password" placeholder="Mot de passe" />
+  <div class="password-box">
+    <input type="password" id="checkpointPassword" placeholder="Mot de passe">
     <button onclick="checkCheckpoint()">Valider</button>
   </div>
 
-  <div id="main-content" class="hidden">
-    <div id="intro-animation" class="hidden"></div>
-    <div id="password-section" class="hidden">
-      <p>Entrez le mot de passe pour continuer :</p>
-      <input type="password" id="main-password" placeholder="Mot de passe secret" />
-      <button onclick="checkMainPassword()">Valider</button>
-    </div>
-
-    <div id="video-section" class="hidden">
-      <h2>Un message de Brad Bitt</h2>
-      <iframe id="video-frame"
-              width="560" height="315"
-              src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen>
-      </iframe>
-      <button id="next-button" disabled>Suivant (regardez la vidéo d'abord)</button>
-    </div>
-  </div>
-
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
 </html>
