@@ -63,3 +63,16 @@ h1 {
   color: white;
   cursor: pointer;
 }
+#animationContainer {
+  font-family: Impact, sans-serif;
+  font-size: 7vw;
+  margin: 40px 0;
+}
+
+#tondeuseSection input,
+#tondeuseSection button,
+#videoContainer button {
+  font-size: 4.5vw;
+  padding: 10px;
+  margin: 5px;
+}
