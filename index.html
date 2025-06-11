@@ -2,45 +2,61 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Brad Bitt - Aventure</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Update du Projet</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #f5f5f5;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    .message-box {
+      border: 2px dashed #e67e22;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 700px;
+      margin: auto;
+      background-color: #1e1e1e;
+    }
+    h1 {
+      color: #e74c3c;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2em;
+      line-height: 1.7;
+    }
+    .emoji {
+      font-size: 1.6em;
+      margin-top: 20px;
+    }
+    strong {
+      color: #f39c12;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Écran de compte à rebours -->
-  <div id="screen-countdown" class="screen">
-    <h1>Lancement dans :</h1>
-    <div id="countdown" class="countdown"></div>
+  <div class="message-box">
+    <h1>🚧 Mission Update : Let’s pivot 🚧</h1>
+    <p>
+      Okay team... sometimes, even les projets les plus stylés need a <strong>plan B</strong> 💡.<br><br>
+      On voulait faire un site ? Yes. On a try hard pendant des heures ? Double yes.<br>
+      Mais là, entre les bugs, les limites techniques et le cerveau en PLS... j’ai décidé de faire un petit <strong>switch de stratégie</strong> 🔁.<br><br>
 
-    <!-- Champ mot de passe -->
-    <div id="passwordBypass">
-      <input type="password" id="checkpointPassword" placeholder="Mot de passe">
-      <button onclick="bypassCountdown()">Valider</button>
-      <p id="bypassError" class="hidden">Mot de passe incorrect</p>
-    </div>
+      🛑 Le site web ? It's cancelled (for now).<br>
+      ✅ Mais no worries ! Une <strong>nouvelle alternative</strong> est déjà en préparation — plus simple, plus rapide, mais toujours aussi épique 🚀.<br><br>
+
+      Brad Bitt ne s’avoue jamais vaincu, et moi non plus 😎.<br>
+      On va continuer l’aventure sous une autre forme... et croyez-moi, ça va être 🔥.<br><br>
+
+      Merci à ceux qui suivent jusqu’au bout du tunnel numérique.<br>
+      Stay tuned... the show must go on 🎭.
+    </p>
+    <p class="emoji">💻➡️🧠➡️🎉</p>
   </div>
 
-  <!-- Écran d’intro -->
-  <div id="screen-intro" class="screen hidden">
-    <h1 id="introText">Le retour incontesté de Brad Bitt</h1>
-    <input type="password" id="introPassword" placeholder="Mot de passe">
-    <button onclick="validateIntroPassword()">Valider</button>
-    <p id="introError" class="hidden">Mot de passe incorrect</p>
-  </div>
-
-  <!-- Écran vidéo -->
-  <div id="screen-video" class="screen hidden">
-    <h2>Un message de Brad Bitt</h2>
-    <div class="video-container">
-      <iframe id="bradVideo" width="560" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" 
-        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe>
-    </div>
-    <p class="info-text">Le bouton sera accessible uniquement lorsque la vidéo sera finie.</p>
-    <button id="nextBtn" disabled>Suivant</button>
-  </div>
-
-  <script src="script.js"></script>
 </body>
 </html>
