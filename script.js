@@ -1,177 +1,109 @@
-// Variables globales
-const countdownElem = document.getElementById('countdown');
-const startBtn = document.getElementById('start-adventure');
-const passwordInput = document.getElementById('password-input');
-const passwordValidateBtn = document.getElementById('password-validate');
-const passwordFeedback = document.getElementById('password-feedback');
+// Date cible pour le lancement : 12 Juin 2025 10h00
+const launchDate = new Date('2025-06-12T10:00:00');
+
+// Références DOM
+const countdownEl = document.getElementById('countdown');
+const startBtn = document.getElementById('start-btn');
+const checkpointInput = document.getElementById('checkpoint-input');
+const checkpointValidate = document.getElementById('checkpoint-validate');
+const checkpointMsg = document.getElementById('checkpoint-msg');
+
+const bradbittSection = document.getElementById('bradbitt-section');
+const tondeuseInput = document.getElementById('tondeuse-input');
+const tondeuseValidate = document.getElementById('tondeuse-validate');
+const tondeuseMsg = document.getElementById('tondeuse-msg');
 const animationContainer = document.getElementById('animation-container');
+
 const videoSection = document.getElementById('video-section');
-const bradMessage = document.getElementById('brad-message');
+const videoPlayer = document.getElementById('video-player');
 const videoNextBtn = document.getElementById('video-next');
-const videoInfo = document.getElementById('video-info');
+const videoMessage = document.getElementById('video-message');
+
 const locationsSection = document.getElementById('locations-section');
 const enterCodeBtn = document.getElementById('enter-code-btn');
-const codeStatus = document.getElementById('code-status');
-const tasksSection = document.getElementById('tasks-section');
-const currentLocationElem = document.getElementById('current-location');
-const tasksList = document.getElementById('tasks-list');
-const confirmTasksBtn = document.getElementById('confirm-tasks');
+const codeInput = document.getElementById('code-input');
+const codeMsg = document.getElementById('code-msg');
 
-const countdownTarget = new Date('June 12, 2025 10:00:00').getTime();
+const rouletteSection = document.getElementById('roulette-section');
+const roulettePrenoms = document.getElementById('roulette-prenoms');
+const rouletteGages = document.getElementById('roulette-gages');
+const rouletteSpinBtn = document.getElementById('roulette-spin');
+const rouletteResult = document.getElementById('roulette-result');
+const gageDoneCheckbox = document.getElementById('gage-done');
+const nextChallengeBtn = document.getElementById('next-challenge');
 
-let player; // YouTube player
-let videoDone = false;
+const endSection = document.getElementById('end-section');
 
-// --- Compte à rebours ---
+// Variables d’état
+let countdownInterval;
+let currentStep = 'launch';
+let videoPlayerYT;
+let videoEnded = false;
+
+const prenoms = ['Téo', 'Edwin', 'Hippolyte', 'Arthur'];
+
+const gagesLille = [
+  "aller dans un supermarché et demander un Serrano très très salé",
+  "aller dans un magasin de cartes Pokémon et demander si ils ont des cartes Aquali avec un regard ma foi discutable",
+  "aller imprimer quelques photos de asterion et dire que vous cherchez cet homme",
+  "aller dans l’Apple Store, et mettre le site de Brad Bitt sur tous les appareils"
+];
+
+const gagesBurgerKing = [
+  "garder la couronne en carton durant la journée entière",
+  "demander si ils sont des Burger au Serrano",
+  "aux toilettes, crier, oulala ce Burger était vachement salé",
+  "se filmer en train de faire une vidéo dégustation qui devra être mis en story"
+];
+
+const gagesLaserGames = [
+  "insister sur le fait que si quelqu’un vous tire dessus, faire semblant de souffrir durant toute la partie",
+  "se taper une Emote devant un ennemi sans lui tirer dessus toutes les 5 mins",
+  "cuire dans tout le labyrinthe tous les 5mins",
+  "dire notre emplacement à haute voix toute les 5mins"
+];
+
+// Décompte jusqu’à la date cible
 function updateCountdown() {
-  const now = new Date().getTime();
-  let diff = countdownTarget - now;
+    const now = new Date();
+    const diff = launchDate - now;
 
-  if (diff <= 0) {
-    countdownElem.textContent = '00:00:00:00';
-    startBtn.style.display = 'inline-block';
-    clearInterval(countdownInterval);
-  } else {
-    let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    countdownElem.textContent = 
-      `${String(days).padStart(2,'0')}:` + 
-      `${String(hours).padStart(2,'0')}:` + 
-      `${String(minutes).padStart(2,'0')}:` + 
-      `${String(seconds).padStart(2,'0')}`;
-  }
+    if (diff <= 0) {
+        clearInterval(countdownInterval);
+        countdownEl.textContent = "00:00:00:00";
+        startBtn.style.display = 'block'; // Affiche le bouton commencer l’aventure
+        document.getElementById('launch-section').style.display = 'none'; // Cache la section lancement
+    } else {
+        // Format Jours:Heures:Minutes:Secondes
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        countdownEl.textContent =
+          `${String(days).padStart(2,'0')}:${String(hours).padStart(2,'0')}:` +
+          `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+    }
 }
 
-const countdownInterval = setInterval(updateCountdown, 1000);
+// Lancement du timer
+countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// --- Mot de passe Checkpoint ---
-passwordValidateBtn.addEventListener('click', () => {
-  const val = passwordInput.value.trim().toLowerCase();
-  if(val === 'checkpoint') {
-    passwordFeedback.style.color = 'lightgreen';
-    passwordFeedback.textContent = 'Mot de passe correct, accès autorisé.';
-  } else {
-    passwordFeedback.style.color = '#f66';
-    passwordFeedback.textContent = 'Mot de passe incorrect.';
-  }
-});
-
-// --- Animation lettres qui volent et forment phrase ---
-function animatePhrase(phrase, container, callback) {
-  container.style.display = 'block';
-  container.textContent = '';
-  let letters = phrase.split('');
-  letters.forEach((letter, i) => {
-    let span = document.createElement('span');
-    span.textContent = letter;
-    span.style.position = 'relative';
-    span.style.opacity = 0;
-    span.style.transition = 'all 0.5s ease';
-    container.appendChild(span);
-    setTimeout(() => {
-      span.style.opacity = 1;
-      span.style.transform = `translate(${(Math.random()*200 - 100)}px, ${(Math.random()*200 - 100)}px)`;
-    }, i * 100);
-  });
-
-  setTimeout(() => {
-    // Réassemble
-    Array.from(container.children).forEach((span, i) => {
-      span.style.transform = 'translate(0,0)';
-      span.style.opacity = 1;
-    });
-    if(callback) setTimeout(callback, 1000);
-  }, letters.length * 100 + 1000);
-}
-
-// --- Gestion du bouton "Commencer l’aventure" ---
-startBtn.addEventListener('click', () => {
-  startBtn.style.display = 'none';
-  animationContainer.style.display = 'block';
-
-  animatePhrase("le retour incontesté de Brad Bitt", animationContainer, () => {
-    animationContainer.style.display = 'none';
-    showPasswordForTondeuse();
-  });
-});
-
-// --- Mot de passe "tondeuse" pour accès vidéo ---
-function showPasswordForTondeuse() {
-  passwordInput.value = '';
-  passwordFeedback.textContent = '';
-  passwordInput.placeholder = 'Mot de passe pour continuer';
-  passwordValidateBtn.textContent = 'Valider';
-  passwordValidateBtn.disabled = false;
-
-  // On réutilise les mêmes éléments, mais avec ce mot de passe
-  passwordValidateBtn.onclick = () => {
-    if(passwordInput.value.trim().toLowerCase() === 'tondeuse') {
-      passwordInput.style.display = 'none';
-      passwordValidateBtn.style.display = 'none';
-      passwordFeedback.textContent = '';
-      startVideo();
+// Checkpoint mot de passe (checkpoint)
+checkpointValidate.addEventListener('click', () => {
+    const val = checkpointInput.value.trim().toLowerCase();
+    if (val === 'checkpoint') {
+        checkpointMsg.textContent = "Accès autorisé";
+        checkpointMsg.classList.remove('error-msg');
+        // On peut ajouter plus de logique si besoin
     } else {
-      passwordFeedback.style.color = '#f66';
-      passwordFeedback.textContent = 'Mot de passe incorrect.';
+        checkpointMsg.textContent = "Mot de passe incorrect";
+        checkpointMsg.classList.add('error-msg');
     }
-  };
-}
-
-// --- YouTube Player API ---
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '270',
-    width: '480',
-    videoId: '2DMl0zoaPZ0',
-    events: {
-      'onStateChange': onPlayerStateChange
-    }
-  });
-}
-
-function onPlayerStateChange(event) {
-  if(event.data === YT.PlayerState.ENDED) {
-    videoDone = true;
-    videoNextBtn.disabled = false;
-    videoInfo.textContent = '';
-  } else if(event.data === YT.PlayerState.PLAYING) {
-    videoInfo.textContent = 'Regardez la vidéo jusqu\'à la fin pour continuer';
-  }
-}
-
-function startVideo() {
-  videoSection.style.display = 'block';
-  bradMessage.textContent = 'Message de Brad Bitt : Préparez-vous pour l\'aventure !';
-  videoNextBtn.disabled = true;
-  videoInfo.textContent = 'Regardez la vidéo jusqu\'à la fin pour continuer';
-  if(player && player.loadVideoById) {
-    player.loadVideoById('2DMl0zoaPZ0');
-  }
-}
-
-// --- Bouton suivant vidéo ---
-videoNextBtn.addEventListener('click', () => {
-  if(!videoDone) return;
-  videoSection.style.display = 'none';
-  showLocations();
 });
 
-// --- Affichage des lieux ---
-function showLocations() {
-  locationsSection.style.display = 'block';
-}
+// Fonction animation lettres volantes et collision pour former la phrase
+function startBradBittAnimation() {
+    animationContainer.textContent = ''; // Reset
 
-// --- Au démarrage, on masque ce qui ne doit pas être visible ---
-window.onload = () => {
-  startBtn.style.display = 'none';
-  animationContainer.style.display = 'none';
-  videoSection.style.display = 'none';
-  locationsSection.style.display = 'none';
-  tasksSection.style.display = 'none';
-  enterCodeBtn.disabled = true;
-  codeStatus.textContent = 'Le code ne peut pas encore être entré';
-};
+    const phrase = "le retour incont
