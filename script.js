@@ -68,21 +68,10 @@ validateTondeuse.addEventListener("click", () => {
   }
 });
 
-// --------- VIDÉO ET BOUTON SUIVANT ---------
-const video = document.getElementById("video");
+// --------- BOUTON SUIVANT SANS ATTENTE VIDÉO ---------
 const nextButton = document.getElementById("next-button");
 
-window.onYouTubeIframeAPIReady = function() {
-  // Just in case, if you want to use YouTube API for control, can be implemented here
-};
-
-video.addEventListener("ended", () => {
-  nextButton.disabled = false;
-});
-
 nextButton.addEventListener("click", () => {
-  if (!nextButton.disabled) {
-    document.getElementById("page-3").classList.add("hidden");
-    document.getElementById("page-4").classList.remove("hidden");
-  }
+  document.getElementById("page-3").classList.add("hidden");
+  document.getElementById("page-4").classList.remove("hidden");
 });
