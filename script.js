@@ -75,3 +75,15 @@ var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function showLille() {
+  document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
+  // Ici on affichera plus tard la page des gages de Lille
+  alert("Tu entres dans le territoire de Lille ! (à venir...)");
+}
+document.getElementById("next-button").addEventListener("click", function () {
+  if (!this.disabled) {
+    document.querySelector("#page-3").classList.add("hidden");
+    document.querySelector("#page-4").classList.remove("hidden");
+  }
+});
