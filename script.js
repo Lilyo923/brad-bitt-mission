@@ -75,3 +75,49 @@ nextButton.addEventListener("click", () => {
   document.getElementById("page-3").classList.add("hidden");
   document.getElementById("page-4").classList.remove("hidden");
 });
+const prenoms = ["Téo", "Edwin", "Hippolyte", "Arthur"];
+const gages = [
+  "Aller dans un supermarché et demander un Serrano très très salé.",
+  "Aller dans un magasin de cartes Pokémon et demander des cartes Aquali avec un regard discutable.",
+  "Aller imprimer quelques photos de Asterion et dire que vous cherchez cet homme.",
+  "Aller dans l’Apple Store et mettre le site de Brad Bitt sur tous les appareils."
+];
+
+const prenomDisplay = document.getElementById("prenomDisplay");
+const gageDisplay = document.getElementById("gageDisplay");
+const spinPrenomBtn = document.getElementById("spinPrenomBtn");
+const spinGageBtn = document.getElementById("spinGageBtn");
+const gageList = document.getElementById("gageList");
+const videoSection = document.getElementById("videoSection");
+const nextBtn = document.getElementById("nextBtn");
+
+// Roulette prénom
+spinPrenomBtn.addEventListener("click", () => {
+  const randomIndex = Math.floor(Math.random() * prenoms.length);
+  prenomDisplay.textContent = prenoms[randomIndex];
+});
+
+// Roulette gage
+spinGageBtn.addEventListener("click", () => {
+  const randomIndex = Math.floor(Math.random() * gages.length);
+  gageDisplay.textContent = gages[randomIndex];
+});
+
+// Gestion checklist et affichage vidéo quand tous cochés
+gageList.addEventListener("change", () => {
+  const checkboxes = gageList.querySelectorAll("input[type=checkbox]");
+  const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+  
+  if(allChecked) {
+    videoSection.classList.remove("hidden");
+  } else {
+    videoSection.classList.add("hidden");
+  }
+});
+
+// Bouton suivant actif dès le départ (pas de gestion vidéo)
+nextBtn.disabled = false;
+
+nextBtn.addEventListener("click", () => {
+  alert("Suivant cliqué - ici tu peux gérer la navigation vers la prochaine étape.");
+});
