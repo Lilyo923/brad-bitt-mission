@@ -2,96 +2,67 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Le retour incontesté de Brad Bitt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brad Bitt - Aventure</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- PAGE 1 : Compte à rebours -->
-  <section id="page-1" class="page">
+  <!-- Écran 1 : Compte à rebours -->
+  <div id="screen-countdown">
     <h1>Lancement dans :</h1>
-    <div id="countdown">--:--:--</div>
-    <button id="start-adventure" style="display:none;">Commencer l’aventure</button>
-    <button id="password-btn">Mots de passe</button>
-    <div id="password-section" class="hidden">
-      <input type="password" id="password-input" placeholder="Entrez mot de passe" />
-      <button id="password-validate">Valider</button>
-      <div id="password-message"></div>
-    </div>
-  </section>
+    <div id="countdown"></div>
+  </div>
 
-  <!-- PAGE 2 : Mot de passe tondeuse -->
-  <section id="page-2" class="page hidden">
-    <h1 style="font-family: Impact, sans-serif; font-size: 2em;">Le retour incontesté de Brad Bitt</h1>
-    <input type="password" id="pw-tondeuse" placeholder="Mot de passe" />
-    <button id="validate-tondeuse">Valider</button>
-    <div id="msg-tondeuse"></div>
-  </section>
+  <!-- Écran 2 : Vidéo d’intro -->
+  <div id="screen-intro" class="hidden">
+    <h2>Un message de Brad Bitt</h2>
+    <iframe id="introVideo" width="560" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <p class="info">Le bouton sera actif une fois la vidéo terminée.</p>
+    <button id="btnToMenu" disabled>Suivant</button>
+  </div>
 
-  <!-- PAGE 3 : Message Brad Bitt + vidéo -->
-  <section id="page-3" class="page hidden">
-    <h2>Message de Brad Bitt</h2>
-    <iframe id="video" width="100%" height="200" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    <button id="next-button">Suivant</button>
-    <p>Le bouton est toujours accessible.</p>
-  </section>
+  <!-- Écran 3 : Menu des lieux -->
+  <div id="screen-menu" class="hidden">
+    <h2>Les lieux à suivre</h2>
+    <ul>
+      <li onclick="goToLille()">Lille</li>
+      <li>???</li>
+      <li>???</li>
+    </ul>
+  </div>
 
-  <!-- PAGE 4 : Menu des lieux -->
-<section id="page-4" class="page hidden">
-  <h2>Les lieux à suivre</h2>
-  <ul>
-    <li>Lille</li>
-    <li>???</li> <!-- remplace Burger King -->
-    <li>???</li> <!-- remplace Laser Games -->
-  </ul>
-</section>
+  <!-- Écran 4 : Gages Lille -->
+  <div id="screen-lille" class="hidden">
+    <h2>Gages - Lille</h2>
 
-  <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lille - Gages</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>Lille - Les gages</h1>
-    
-    <div class="roulette-container">
-      <div>
-        <h2>Prénom</h2>
-        <div id="prenomDisplay" class="roulette-display">--</div>
-        <button id="spinPrenomBtn">Lancer prénom</button>
-      </div>
-      <div>
-        <h2>Gage</h2>
-        <div id="gageDisplay" class="roulette-display">--</div>
-        <button id="spinGageBtn">Lancer gage</button>
-      </div>
+    <div class="roulette">
+      <h3>Roulette des prénoms</h3>
+      <button onclick="spin('name')">Lancer</button>
+      <p id="result-name"></p>
     </div>
 
-    <h3>Liste des gages :</h3>
-    <ul id="gageList">
-      <li><label><input type="checkbox" data-gage="1"> Aller dans un supermarché et demander un Serrano très très salé.</label></li>
-      <li><label><input type="checkbox" data-gage="2"> Aller dans un magasin de cartes Pokémon et demander des cartes Aquali avec un regard discutable.</label></li>
-      <li><label><input type="checkbox" data-gage="3"> Aller imprimer quelques photos de Asterion et dire que vous cherchez cet homme.</label></li>
-      <li><label><input type="checkbox" data-gage="4"> Aller dans l’Apple Store et mettre le site de Brad Bitt sur tous les appareils.</label></li>
+    <div class="roulette">
+      <h3>Roulette des gages</h3>
+      <button onclick="spin('task')">Lancer</button>
+      <p id="result-task"></p>
+    </div>
+
+    <h3>Checklist des gages :</h3>
+    <ul id="taskList">
+      <li><input type="checkbox" /> Aller dans un supermarché et demander un Serrano très très salé.</li>
+      <li><input type="checkbox" /> Demander dans un magasin de cartes Pokémon s’ils ont des Aquali avec un regard douteux.</li>
+      <li><input type="checkbox" /> Aller imprimer des photos d’Asterion et dire que vous cherchez cet homme.</li>
+      <li><input type="checkbox" /> Aller dans un Apple Store et mettre le site sur tous les appareils.</li>
     </ul>
 
-    <div id="videoSection" class="hidden">
-      <h3>Message de Brad Bitt</h3>
-      <iframe id="videoBrad" width="320" height="180" 
-        src="https://www.youtube.com/embed/ZAHUIzGBiQ?rel=0&autoplay=1" 
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
-    </div>
+    <button id="validateLille" onclick="checkTasks()">Valider les gages</button>
 
-    <button id="nextBtn">Suivant</button>
+    <div id="lilleVideoContainer" class="hidden">
+      <h3>Un message de Brad Bitt</h3>
+      <iframe id="lilleVideo" width="560" height="315" src="https://www.youtube.com/embed/ZAHUIzGBiOQ?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <button id="btnToNextFromLille">Suivant</button>
+    </div>
   </div>
 
   <script src="script.js"></script>
