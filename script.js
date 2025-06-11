@@ -1,85 +1,83 @@
-// ----------- Countdown -----------
-const countdownTarget = new Date("2025-06-12T10:00:00").getTime();
-const countdownEl = document.getElementById("countdown");
+// Compte à rebours
+const countdownElement = document.getElementById("countdown");
+const countdownDate = new Date("2025-06-12T10:00:00").getTime();
 const screenCountdown = document.getElementById("screen-countdown");
 const screenIntro = document.getElementById("screen-intro");
+const screenVideo = document.getElementById("screen-video");
 
-let countdownInterval = setInterval(() => {
+const nextBtn = document.getElementById("nextBtn");
+const videoIframe = document.getElementById("bradVideo");
+
+function updateCountdown() {
   const now = new Date().getTime();
-  const distance = countdownTarget - now;
+  const distance = countdownDate - now;
 
   if (distance <= 0) {
     clearInterval(countdownInterval);
     screenCountdown.classList.add("hidden");
     screenIntro.classList.remove("hidden");
-    return;
+  } else {
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    countdownElement.innerText = `${hours}h ${minutes}m ${seconds}s`;
   }
+}
 
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+const countdownInterval = setInterval(updateCountdown, 1000);
+updateCountdown(); // initial
 
-  countdownEl.innerText = `${hours}h ${minutes}m ${seconds}s`;
-}, 1000);
+// Bypass par mot de passe
+function bypassCountdown() {
+  const input = document.getElementById("checkpointPassword").value;
+  const errorText = document.getElementById("bypassError");
 
-// ----------- Vidéo Intro -----------
-let introPlayer, lillePlayer;
+  if (input.toLowerCase() === "checkpoint") {
+    screenCountdown.classList.add("hidden");
+    screenIntro.classList.remove("hidden");
+    errorText.classList.add("hidden");
 
-function onYouTubeIframeAPIReady() {
-  introPlayer = new YT.Player("introVideo", {
+    // Supprimer la zone mot de passe
+    document.getElementById("passwordBypass").remove();
+  } else {
+    errorText.classList.remove("hidden");
+  }
+}
+
+// Mot de passe intro
+function validateIntroPassword() {
+  const input = document.getElementById("introPassword").value;
+  const error = document.getElementById("introError");
+
+  if (input.toLowerCase() === "tondeuse") {
+    screenIntro.classList.add("hidden");
+    screenVideo.classList.remove("hidden");
+    error.classList.add("hidden");
+
+    waitForVideoToEnd(); // active le bouton suivant quand la vidéo finit
+  } else {
+    error.classList.remove("hidden");
+  }
+}
+
+// Gérer fin vidéo pour bouton suivant
+function waitForVideoToEnd() {
+  const player = new YT.Player("bradVideo", {
     events: {
-      onStateChange: function (event) {
+      'onStateChange': function (event) {
         if (event.data === YT.PlayerState.ENDED) {
-          document.getElementById("btnToMenu").disabled = false;
+          nextBtn.disabled = false;
         }
       }
     }
   });
-
-  lillePlayer = new YT.Player("lilleVideo");
 }
 
-document.getElementById("btnToMenu").addEventListener("click", () => {
-  document.getElementById("screen-intro").classList.add("hidden");
-  document.getElementById("screen-menu").classList.remove("hidden");
-});
-
-// ----------- Menu vers Lille -----------
-function goToLille() {
-  document.getElementById("screen-menu").classList.add("hidden");
-  document.getElementById("screen-lille").classList.remove("hidden");
+// Charger API YouTube
+function loadYouTubeAPI() {
+  const tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.body.appendChild(tag);
 }
 
-// ----------- Roulette -----------
-const names = ["Téo", "Edwin", "Hippolyte", "Arthur"];
-const tasks = [
-  "Aller dans un supermarché et demander un Serrano très très salé.",
-  "Demander dans un magasin de cartes Pokémon s’ils ont des Aquali avec un regard douteux.",
-  "Aller imprimer des photos d’Asterion et dire que vous cherchez cet homme.",
-  "Aller dans un Apple Store et mettre le site sur tous les appareils."
-];
-
-function spin(type) {
-  const target = document.getElementById(`result-${type}`);
-  const items = type === "name" ? names : tasks;
-  const result = items[Math.floor(Math.random() * items.length)];
-  target.textContent = result;
-}
-
-// ----------- Validation des gages Lille -----------
-function checkTasks() {
-  const checkboxes = document.querySelectorAll("#taskList input[type='checkbox']");
-  const allChecked = Array.from(checkboxes).every(box => box.checked);
-
-  if (allChecked) {
-    document.getElementById("validateLille").style.display = "none";
-    document.getElementById("lilleVideoContainer").classList.remove("hidden");
-  } else {
-    alert("Tous les gages doivent être cochés !");
-  }
-}
-
-// ----------- Suivant depuis Lille -----------
-document.getElementById("btnToNextFromLille").addEventListener("click", () => {
-  alert("La suite n’est pas encore codée, mais ça arrive !");
-});
+loadYouTubeAPI();
