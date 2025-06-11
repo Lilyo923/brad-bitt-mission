@@ -1,168 +1,37 @@
-/* Style général du body et du contenu */
 body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #000; /* fond noir */
-    color: #fff; /* texte blanc */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding: 20px;
-    box-sizing: border-box;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
 }
 
-/* Container principal */
-#app {
-    max-width: 600px;
-    width: 100%;
-}
-
-/* Sections cachées par défaut gérées par JS via display:none */
-
-/* Titres */
-h1, h2, h3 {
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Countdown timer style */
-#countdown {
-    font-size: 2.5em;
-    text-align: center;
-    margin: 10px 0 20px 0;
-}
-
-/* Bouton démarrer */
 button {
-    background-color: #1e90ff;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: block;
-    margin: 20px auto;
+  background-color: #1e90ff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
 }
 
 button:disabled {
-    background-color: grey;
-    cursor: not-allowed;
+  background-color: grey;
+  cursor: not-allowed;
 }
 
-/* Sections mot de passe */
-.password-section {
-    margin-top: 20px;
-    text-align: center;
+#countdown {
+  font-size: 2.5em;
+  margin-top: 20px;
+  font-weight: bold;
 }
 
-.password-section input[type="text"] {
-    padding: 8px;
-    font-size: 1em;
-    width: 200px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.password-section label {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
-/* Message sous mot de passe */
-#checkpoint-msg, #tondeuse-msg, #code-msg {
-    margin-top: 10px;
-    height: 20px;
-    font-weight: bold;
-    color: #0f0; /* vert succès */
-}
-
-/* Message erreur */
-.error-msg {
-    color: #f00;
-}
-
-/* Animation container */
-#animation-container {
-    height: 100px;
-    font-family: 'Impact', sans-serif;
-    font-size: 2.5em;
-    text-align: center;
-    margin-top: 20px;
-    color: #ff4500;
-    user-select: none;
-}
-
-/* Liste des lieux */
-#location-list {
-    list-style: none;
-    padding-left: 0;
-    font-size: 1.3em;
-}
-
-#location-list li {
-    margin: 10px 0;
-    position: relative;
-    padding-left: 20px;
-}
-
-/* Petits points style type carte au trésor */
-#location-list li::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #ff4500;
-    font-size: 1.5em;
-}
-
-/* Roulette section */
-#roulette-section {
-    margin-top: 20px;
-    text-align: center;
-}
-
-#roulette-prenoms, #roulette-gages {
-    font-size: 1.5em;
-    margin: 10px 0;
-    min-height: 40px;
-}
-
-/* Checkbox label style */
-label {
-    cursor: pointer;
-    user-select: none;
-}
-
-/* Message en rouge pour Laser Games */
-.red-text {
-    color: #ff0000;
-    font-weight: bold;
-}
-
-/* Video section styles */
-#video-player {
-    text-align: center;
-    margin: 20px 0;
-}
-
-/* Responsive: améliorer la taille texte sur mobile */
-@media (max-width: 480px) {
-    #countdown {
-        font-size: 2em;
-    }
-    button {
-        width: 90%;
-        font-size: 1em;
-        padding: 10px 0;
-    }
-    .password-section input[type="text"] {
-        width: 80%;
-        margin-bottom: 10px;
-    }
-    #location-list li {
-        font-size: 1.1em;
-    }
+#video-player iframe {
+  max-width: 100%;
+  height: 315px;
+  margin-top: 20px;
 }
