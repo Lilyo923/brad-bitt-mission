@@ -1,79 +1,94 @@
+/* reset & basics */
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #111;
-  color: white;
-  font-family: 'Arial', sans-serif;
+  margin: 0; padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100vh;
+}
+
+#app {
+  width: 100%;
+  max-width: 600px;
   text-align: center;
 }
 
-.hidden {
+.page {
   display: none;
 }
 
-#password-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  gap: 5px;
+.page.active {
+  display: block;
 }
 
-input[type="password"] {
-  padding: 8px;
-  border-radius: 4px;
-  border: none;
+#countdown {
+  font-size: 48px;
+  margin: 20px 0;
 }
 
 button {
-  padding: 8px 12px;
-  background-color: #444;
-  color: white;
+  padding: 12px 25px;
+  font-size: 18px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 15px;
 }
 
 button:disabled {
-  background-color: gray;
+  background: gray;
   cursor: not-allowed;
+  opacity: 0.6;
 }
 
-#brad-title {
-  font-family: Impact, sans-serif;
-  font-size: 1.8rem;
-}
-#carte-tresor {
-    margin: 20px 0;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.2em;
-    line-height: 2;
-    background-color: rgba(255,255,255,0.05);
-    padding: 15px;
-    border-radius: 10px;
+button.enabled {
+  background: #4caf50;
+  cursor: pointer;
+  opacity: 1;
 }
 
-#gages-lille {
-    margin-top: 30px;
-    background: rgba(255,255,255,0.05);
-    padding: 20px;
-    border-radius: 10px;
+#checkpoint-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #222;
+  padding: 10px;
+  border-radius: 6px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-#liste-gages li {
-    text-align: left;
-    margin: 10px 0;
+#checkpoint-input {
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+  width: 150px;
 }
 
-#roulette-resultat {
-    margin-top: 20px;
-    font-size: 1.1em;
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 10px;
+#video-container {
+  max-width: 100%;
+  max-height: 60vh;
+  margin: 0 auto;
+}
+
+#info {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+#lieux-list {
+  list-style: none;
+  padding: 0;
+  font-size: 24px;
+  line-height: 2;
+}
+
+#lieux-list li {
+  border-bottom: 1px solid #444;
+  padding: 10px 0;
 }
