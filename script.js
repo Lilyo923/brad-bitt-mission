@@ -1,3 +1,3 @@
-// Pour ce message statique, aucun script n'est nécessaire pour le moment,
-// mais tu peux ajouter une animation ou redirection future ici si tu veux.
-console.log("Message affiché : Update du Projet avec humour !");
+document.getElementById('reportBtn').addEventListener('click', function () {
+  alert("Trop tard… Brad a déjà fui par le conduit d’aération. 🕳️");
+});
