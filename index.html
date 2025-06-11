@@ -22,3 +22,19 @@
   <script src="script.js"></script>
 </body>
 </html>
+<div id="adventureSection" style="display: none;">
+  <div id="animationContainer"></div>
+
+  <div id="tondeuseSection" style="display: none;">
+    <input type="password" id="tondeuseInput" placeholder="Mot de passe secret">
+    <button onclick="checkTondeuse()">Valider</button>
+  </div>
+
+  <div id="videoContainer" style="display: none;">
+    <h2>Un message de Brad Bitt</h2>
+    <iframe id="bradVideo" width="100%" height="200" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1"
+      frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <button id="nextButton" disabled>Il faut finir la vidéo pour continuer</button>
+  </div>
+</div>
