@@ -1,144 +1,76 @@
-const launchTime = new Date("2025-06-12T10:00:00").getTime();
-const codes = { secret: "checkpoint", main: "tondeuse", bk: "bouilloire", lg: "epuisette" };
-const G = {
-  lille: [
-    "Demander un Serrano très salé",
-    "Dans un magasin Pokémon, demander des Aquali",
-    "Imprimer photo d’Astérion et dire qu’on le cherche",
-    "Dans l’Apple Store, afficher le site"
-  ],
-  bk: [
-    "Garder la couronne BK toute la journée",
-    "Demander un burger au Serrano",
-    "Aux toilettes, crier « vachement salé »",
-    "Se filmer en story dégustation"
-  ],
-  lg: [
-    "Faire semblant quand on vous tire dessus",
-    "Faire une emote toutes les 5 min",
-    "Courir dans le labyrinthe toutes les 5 min",
-    "Dire votre emplacement toutes les 5 min"
-  ]
-};
-const N = ["Téo","Edwin","Hippolyte","Arthur"];
-let used = { lille: [], bk: [], lg: [] }, current = "";
+const countdownEl = document.getElementById("countdown");
+const startButton = document.getElementById("start-button");
+const mainContent = document.getElementById("main-content");
+const introAnim = document.getElementById("intro-animation");
+const passwordSection = document.getElementById("password-section");
+const videoSection = document.getElementById("video-section");
+const nextButton = document.getElementById("next-button");
 
-// 1. Timer et accès secret
-setInterval(()=>{
-  const d = launchTime - Date.now();
-  if (d <= 0) { show("launch"); hide("intro"); } 
-  else {
-    const h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000), s = Math.floor((d%60000)/1000);
-    query("#countdown").innerText = `${h}h ${m}m ${s}s`;
-  }
-},1000);
+const launchDate = new Date("June 12, 2025 10:00:00").getTime();
 
-function checkSecret(){
-  if (q("#secretCode").value.toLowerCase() === codes.secret) {
-    show("launch"); hide("intro");
+function updateCountdown() {
+  const now = new Date().getTime();
+  const distance = launchDate - now;
+
+  if (distance <= 0) {
+    countdownEl.innerHTML = "C'est le moment !";
+    startButton.classList.remove("hidden");
+    clearInterval(interval);
+  } else {
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / 1000 / 60) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+    countdownEl.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
   }
 }
 
-// 2. Animation + mot de passe main
-function startAnimation(){
-  hide("launch");
-  show("anim");
-  const txt="Le retour incontesté de Brad Bitt";
-  let i=0, el=q("#animText"), anim = setInterval(()=>{
-    el.textContent += txt[i++] || (()=>{ clearInterval(anim); show("videoIntro"); initYT("player_int","btn_int"); })();
-  }, 100);
+const interval = setInterval(updateCountdown, 1000);
+updateCountdown();
+
+startButton.addEventListener("click", () => {
+  mainContent.classList.remove("hidden");
+  document.getElementById("password-section").classList.remove("hidden");
+});
+
+function checkCheckpoint() {
+  const value = document.getElementById("checkpoint-password").value;
+  if (value.toLowerCase() === "checkpoint") {
+    alert("Accès test autorisé !");
+    mainContent.classList.remove("hidden");
+    document.getElementById("password-section").classList.remove("hidden");
+  } else {
+    alert("Mot de passe incorrect.");
+  }
 }
 
-function checkMain(){
-  if (q("#mainCode").value.toLowerCase() === codes.main) {
-    hide("anim");
-    show("videoIntro");
-    initYT("player_int","btn_int");
-  } else q("#errorMain").innerText="❌";
+function checkMainPassword() {
+  const value = document.getElementById("main-password").value;
+  if (value.toLowerCase() === "tondeuse") {
+    introAnim.innerHTML = "Le retour incontesté de Brad Bitt";
+    introAnim.classList.remove("hidden");
+    setTimeout(() => {
+      videoSection.classList.remove("hidden");
+      passwordSection.classList.add("hidden");
+    }, 2000);
+  } else {
+    alert("Mot de passe incorrect.");
+  }
 }
 
-// 3. Init YouTube
-function initYT(playerId, btnId){
-  new YT.Player(playerId, {
-    videoId: "2DMl0zoaPZ0", events: { 'onStateChange': ev=>{
-      if (ev.data===YT.PlayerState.ENDED) {
-        q(`#${btnId}`).disabled=false;
-        q(`#${btnId}`).classList.remove("locked");
-      }
-    }}
+// YouTube API setup
+let player;
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('video-frame', {
+    events: {
+      'onStateChange': onPlayerStateChange
+    }
   });
 }
 
-// 4. Map
-function goMap(){
-  hide("videoIntro", "section","congrats");
-  show("map");
-}
-
-function unlock(loc){
-  const val = q(`#code_${loc}`).value.toLowerCase();
-  if (val===codes[loc]) {
-    q(`#btn_${loc}`).disabled=false;
-    q(`#btn_${loc}`).classList.remove("locked");
+function onPlayerStateChange(event) {
+  if (event.data === YT.PlayerState.ENDED) {
+    nextButton.disabled = false;
+    nextButton.innerText = "Suivant";
   }
 }
-
-function enter(loc){
-  current = loc;
-  hide("map");
-  show("section");
-  q("#secTitle").innerText = `📍 ${loc.charAt(0).toUpperCase()+loc.slice(1)}`;
-  q("#secNote").innerText = loc==="lg" ? "Changement de pseudo en rouge !" : "";
-}
-
-// 5. Roulette + gages
-function spin(){
-  const name = rnd(N.filter(n=>!used[current].includes(n)));
-  used[current].push(name);
-  q("#spinName").innerText = `🎉 ${name}`;
-  
-  const gage = rnd(G[current].filter(g=> !used[current].includes(g)));
-  used[current].push(gage);
-  q("#spinGage").innerText = `🎯 ${gage}`;
-  
-  const li = document.createElement("li"), cb=document.createElement("input");
-  cb.type="checkbox"; cb.addEventListener("change",()=>confirmEnable());
-  li.appendChild(cb); li.append(" "+gage);
-  q("#gageList").appendChild(li);
-}
-
-function confirmEnable(){
-  const chks = qAll("#gageList input");
-  if (chks.every(c=>c.checked)) {
-    unq("#btn_confirm");
-    q("#btn_confirm").disabled=false;
-  }
-}
-
-// 6. Validation
-function confirm(){
-  hide("section");
-  show("congrats");
-  initYT(`player_${current}`, "btn_" + (current==="lg"?"final":""));
-}
-
-// 7. Code final
-function submitCode(){
-  if (q("#finalCode").value.toLowerCase()===codes[current]) {
-    hide("congrats");
-    show("map");
-    q(`#btn_${current}`).disabled=false;
-    if (current==="lg") show("final");
-  } else q("#errorFinal").innerText="❌";
-}
-
-// Utils
-function q(s){ return document.querySelector(s); }
-function qAll(s){ return [...document.querySelectorAll(s)]; }
-function show(...ids){ ids.forEach(i=>q("#"+i).classList.remove("hidden")); }
-function hide(...ids){ ids.forEach(i=>q("#"+i).classList.add("hidden")); }
-function rnd(a){ return a[Math.floor(Math.random()*a.length)]; }
-
-// Load YT API
-let t=document.createElement("script"); t.src="https://www.youtube.com/iframe_api";
-document.head.appendChild(t);
