@@ -212,4 +212,65 @@ codeBtn.onclick = () => {
       showFinal();
       locationsSection.classList.add('hidden');
       return;
-   
+    }
+    locationCode.value = '';
+    codeBtn.disabled = true;
+    tasksSection.classList.remove('hidden');
+    currentLocation.textContent = locations[currentStage - 1].name;
+    prepareTasks(currentStage - 1);
+  } else {
+    codeMsg.textContent = 'Code incorrect.';
+  }
+};
+
+// Prepare tasks UI
+function prepareTasks(stageIndex) {
+  tasksList.innerHTML = '';
+  locations[stageIndex].tasks.forEach((task, i) => {
+    let label = document.createElement('label');
+    let checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.dataset.index = i;
+    checkbox.checked = tasksDone[stageIndex][i];
+    checkbox.onchange = () => {
+      tasksDone[stageIndex][i] = checkbox.checked;
+      checkAllTasks(stageIndex);
+    };
+    label.appendChild(checkbox);
+    label.append(` ${task}`);
+    tasksList.appendChild(label);
+  });
+  confirmTasksBtn.disabled = true;
+}
+
+// Check if all tasks done
+function checkAllTasks(stageIndex) {
+  confirmTasksBtn.disabled = !tasksDone[stageIndex].every(Boolean);
+}
+
+// Confirm tasks done
+confirmTasksBtn.onclick = () => {
+  tasksSection.classList.add('hidden');
+  showVideo(getVideoForStage(currentStage - 1));
+};
+
+// Video for each stage
+function getVideoForStage(stageIndex) {
+  if (stageIndex === 0) return 'ZAHUIzGBiQ'; // première vidéo (adaptée)
+  if (stageIndex === 1) return 'D9Sou89ULNU';
+  if (stageIndex === 2) return 'xkADM8X-tz8';
+  return '';
+}
+
+function showFinal() {
+  finalSection.classList.remove('hidden');
+}
+
+spinBtn.onclick = () => {
+  rouletteState.nameIndex = Math.floor(Math.random() * names.length);
+  rouletteState.taskIndex = Math.floor(Math.random() * locations[currentStage - 1].tasks.length);
+
+  // Animation simple de roulette
+  nameRouletteSpan.textContent = names[rouletteState.nameIndex];
+  taskRouletteSpan.textContent = locations[currentStage - 1].tasks[rouletteState.taskIndex];
+};
