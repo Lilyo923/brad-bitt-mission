@@ -3,95 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brad Bitt Adventure</title>
+  <title>Aventure Brad Bitt</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
   <div id="app">
-
-    <!-- Timer + Start -->
-    <div id="launch-section">
+    <div id="countdown-container">
       <h1>Lancement dans :</h1>
-      <div id="timer">--:--:--</div>
-      <button id="start-btn" disabled>Commencer l’aventure</button>
+      <div id="countdown">--:--:--:--</div>
     </div>
 
-    <!-- Password Checkpoint -->
-    <div id="password-checkpoint">
-      <input type="text" id="checkpoint-input" placeholder="Mot de passe Checkpoint" />
-      <button id="checkpoint-validate">Valider</button>
-      <div id="checkpoint-status"></div>
+    <button id="start-adventure" style="display:none;">Commencer l’aventure</button>
+
+    <div id="password-section">
+      <input type="text" id="password-input" placeholder="Mot de passe" />
+      <button id="password-validate">Valider</button>
+      <div id="password-feedback"></div>
     </div>
 
-    <!-- Animation and main access -->
-    <div id="animation-section" class="hidden">
-      <div id="animated-text"></div>
-      <input type="password" id="access-code" placeholder="Mot de passe secret" />
-      <button id="access-validate">Valider</button>
-      <div id="access-status"></div>
-    </div>
+    <div id="animation-container" style="display:none;"></div>
 
-    <!-- Video Section -->
-    <div id="video-section" class="hidden">
-      <h2 id="brad-message">Message de Brad Bitt</h2>
+    <div id="video-section" style="display:none;">
+      <h2 id="brad-message"></h2>
       <div id="player"></div>
       <button id="video-next" disabled>Suivant</button>
+      <div id="video-info"></div>
     </div>
 
-    <!-- Locations Section -->
-    <div id="locations-section" class="hidden">
-      <h2>Les lieux à suivre :</h2>
+    <div id="locations-section" style="display:none;">
+      <h2>Les lieux à suivre</h2>
       <ul id="locations-list">
         <li>Lille</li>
-        <li>??? (Burger King)</li>
-        <li>??? (Laser Games)</li>
+        <li>???</li>
+        <li>???</li>
       </ul>
-
-      <div id="code-entry-container">
-        <input type="text" id="location-code" placeholder="Entrer le code" disabled />
-        <button id="location-code-btn" disabled>Mettre le code</button>
-        <div id="location-code-status">Le code ne peut pas encore être entré</div>
-      </div>
+      <button id="enter-code-btn" disabled>Mettre le code</button>
+      <div id="code-status">Le code ne peut pas encore être entré</div>
     </div>
 
-    <!-- Tasks Section -->
-    <div id="tasks-section" class="hidden">
-      <h2 id="tasks-location-title"></h2>
-      
-      <div id="roulette-container">
-        <div>
-          <button id="spin-names">Lancer roulette prénoms</button>
-          <div id="roulette-names"></div>
-        </div>
-        <div>
-          <button id="spin-tasks">Lancer roulette gages</button>
-          <div id="roulette-tasks"></div>
-        </div>
-      </div>
-
+    <div id="tasks-section" style="display:none;">
+      <h2>Gages pour <span id="current-location"></span></h2>
+      <div id="roulette-prenoms"></div>
+      <div id="roulette-tasks"></div>
       <ul id="tasks-list"></ul>
-
-      <div id="task-complete-section" class="hidden">
-        <p>Tous les gages sont cochés ?</p>
-        <button id="confirm-tasks-yes">Oui</button>
-        <button id="confirm-tasks-no">Non</button>
-      </div>
+      <button id="confirm-tasks" disabled>Confirmer</button>
     </div>
 
-    <!-- Final Video Section -->
-    <div id="final-video-section" class="hidden">
-      <h2 id="final-brad-message">Message de Brad Bitt</h2>
-      <div id="final-player"></div>
-      <button id="final-video-next" disabled>Suivant</button>
-    </div>
-
-    <!-- End Section -->
-    <div id="end-section" class="hidden">
+    <div id="end-section" style="display:none;">
       <p><em>Merci d’avoir joué</em></p>
     </div>
-
   </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
 </html>
