@@ -1,9 +1,51 @@
-body { background:#111; color:#eee; font:16px Arial; text-align:center; margin:0; padding:20px; }
-.hidden { display:none; }
-.locked, button:disabled { opacity:0.4; cursor:not-allowed; }
-.impact { font-family:Impact; font-size:2.5rem; }
-.red { color:red; font-weight:bold; }
-.error { color:#f55; }
-.italic { font-style:italic; }
-button { margin:0.5em; padding:0.5em 1em; }
-.hint { color:#aaa; font-size:0.9em; margin-top:0.5em; }
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f4f4f4;
+  padding: 2rem;
+}
+
+#countdown {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+#start-button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.hidden {
+  display: none;
+}
+
+#checkpoint-box {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+#intro-animation {
+  font-size: 2rem;
+  font-family: Impact, sans-serif;
+  margin: 2rem 0;
+  color: #222;
+  animation: flyIn 2s forwards;
+}
+
+@keyframes flyIn {
+  0% {
+    letter-spacing: 2rem;
+    opacity: 0;
+  }
+  100% {
+    letter-spacing: normal;
+    opacity: 1;
+  }
+}
+
+button:disabled {
+  background-color: #aaa;
+  color: white;
+}
