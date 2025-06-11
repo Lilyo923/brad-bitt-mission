@@ -1,37 +1,64 @@
 body {
-  margin: 0;
+  background: black;
+  color: white;
   font-family: Arial, sans-serif;
-  background-color: #000;
-  color: #fff;
-  text-align: center;
   padding: 20px;
+  margin: 0;
 }
 
-button {
-  background-color: #1e90ff;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 8px;
-  color: white;
-  font-size: 1.2em;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.3s;
+h1.impact {
+  font-family: Impact, sans-serif;
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+.hidden {
+  display: none;
+}
+
+#countdown-container {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 20px;
 }
 
 button:disabled {
-  background-color: grey;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
-#countdown {
-  font-size: 2.5em;
-  margin-top: 20px;
-  font-weight: bold;
+#password-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #222;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-#video-player iframe {
-  max-width: 100%;
-  height: 315px;
-  margin-top: 20px;
+#map p {
+  margin: 10px 0;
+  font-size: 1.2em;
+}
+
+#roulette-container {
+  margin: 20px 0;
+}
+
+#name-roulette span, #task-roulette span {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+#tasks-list label {
+  display: block;
+  margin: 5px 0;
+}
+
+#final-section h2 {
+  font-style: italic;
+  text-align: center;
+  margin-top: 50px;
 }
