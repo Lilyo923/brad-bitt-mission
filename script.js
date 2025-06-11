@@ -81,3 +81,29 @@ function onPlayerStateChange(event) {
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 document.body.appendChild(tag);
+// Prénoms et gages
+const prenoms = ["Téo", "Edwin", "Hippolyte", "Arthur"];
+const gages = [
+    "Aller dans un supermarché et demander un Serrano très très salé",
+    "Aller dans un magasin de cartes Pokémon et demander s’ils ont des Aquali avec un regard douteux",
+    "Aller imprimer des photos d’Astérion et dire que vous cherchez cet homme",
+    "Mettre le site de Brad Bitt sur tous les appareils d’un Apple Store"
+];
+
+// Fonction pour lancer la roulette
+function lancerRoulette() {
+    const prenom = prenoms[Math.floor(Math.random() * prenoms.length)];
+    const gage = gages[Math.floor(Math.random() * gages.length)];
+
+    document.getElementById("roulette-prenom").innerText = prenom;
+    document.getElementById("roulette-gage").innerText = gage;
+    document.getElementById("roulette-resultat").classList.remove("hidden");
+    document.getElementById("valider-gages").classList.remove("hidden");
+}
+
+// Fonction de validation des gages
+function validerTousLesGages() {
+    // Passer à l’étape suivante (par ex. afficher mot de passe pour le prochain lieu)
+    alert("Tous les gages de Lille ont été accomplis !");
+    // Ici on peut afficher un champ pour entrer le code « bouilloire »
+}
