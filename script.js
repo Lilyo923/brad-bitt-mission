@@ -1,3 +1,2 @@
-document.getElementById("report-btn").addEventListener("click", function () {
-  alert("Signalement enregistré. Merci pour votre vigilance.");
-});
+// Le bouton déclenche une simple alerte (effet "troll")
+console.log("Brad Bitt est en cavale...");
