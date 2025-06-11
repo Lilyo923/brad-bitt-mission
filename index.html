@@ -1,1 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Brad Bitt – Aventure</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="countdown-screen">
+    <h1>Lancement dans :</h1>
+    <div id="countdown">00:00:00</div>
+    <button id="start-btn" disabled>Commencer l’aventure</button>
+    <div id="checkpoint">
+      <input type="password" id="password" placeholder="Checkpoint">
+      <button id="pass-btn">Valider</button>
+      <div id="pass-msg"></div>
+    </div>
+  </div>
 
+  <div id="cutscene-screen" class="hidden">
+    <div id="cutscene-text"></div>
+  </div>
+
+  <div id="video1-screen" class="hidden">
+    <h2>Message de Brad Bitt</h2>
+    <div id="player1"></div>
+    <button id="next1" disabled>Suivant</button>
+  </div>
+
+  <div id="map-screen" class="hidden">
+    <h2>Liste des lieux à suivre</h2>
+    <div id="map">
+      <div class="point">Lille</div>
+      <div class="point hidden">??? (Burger King)</div>
+      <div class="point hidden">??? (Laser Games)</div>
+    </div>
+    <button id="code-burger" disabled>Mettre le code</button>
+    <div id="code-msg"></div>
+  </div>
+
+  <!-- Sections pour chaque lieu avec roulettes et gages repetées -->
+  <!-- Section Burger King -->
+  <div id="burger-screen" class="hidden">
+    <h2>Burger King – Roulettes</h2>
+    <div>
+      <select id="name-bk"></select>
+      <select id="task-bk"></select>
+      <button id="roll-bk">Roule</button>
+    </div>
+    <ul id="tasks-bk"></ul>
+    <button id="confirm-bk" disabled>Confirmer</button>
+    <div id="video-bk">
+      <div id="player2"></div>
+    </div>
+    <button id="next-bk" disabled>Suivant</button>
+  </div>
+
+  <!-- Laser Games section -->
+  <div id="laser-screen" class="hidden">
+    <h2>Laser Games – Roulettes</h2>
+    <div>
+      <select id="name-lg"></select>
+      <select id="task-lg"></select>
+      <button id="roll-lg">Roule</button>
+    </div>
+    <ul id="tasks-lg"></ul>
+    <button id="confirm-lg" disabled>Confirmer</button>
+    <div id="video-lg">
+      <div id="player3"></div>
+    </div>
+    <button id="next-lg" disabled>Suivant</button>
+  </div>
+
+  <div id="end-screen" class="hidden">
+    <p><em>Merci d’avoir joué</em></p>
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js"></script>
+</body>
+</html>
