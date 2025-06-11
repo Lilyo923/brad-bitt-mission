@@ -1,58 +1,82 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brad Bitt Adventure</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le Retour Incontesté de Brad Bitt</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="container">
-    <h1>Lancement dans :</h1>
-    <div id="countdown">--:--:--</div>
+    <div id="app">
 
-    <div id="password-section">
-      <label for="password-input">Mot de passe secret :</label>
-      <input type="password" id="password-input" autocomplete="off" />
-      <button id="password-validate-btn">Valider</button>
-      <div id="password-feedback"></div>
+        <!-- Section de lancement avec le timer -->
+        <div id="launch-section">
+            <h1>Lancement dans :</h1>
+            <div id="countdown">--:--:--:--</div>
+            <!-- Bouton commencer l’aventure, caché au départ -->
+            <button id="start-btn" style="display:none;">Commencer l’aventure</button>
+        </div>
+
+        <!-- Section mot de passe Checkpoint (accès au site) -->
+        <div id="password-checkpoint" class="password-section">
+            <label for="checkpoint-input">Mot de passe Checkpoint :</label>
+            <input type="text" id="checkpoint-input" />
+            <button id="checkpoint-validate">Valider</button>
+            <div id="checkpoint-msg"></div>
+        </div>
+
+        <!-- Section animation et accès au retour de Brad Bitt -->
+        <div id="bradbitt-section" style="display:none;">
+            <div id="bradbitt-message">Message de Brad Bitt ici</div>
+            <div id="animation-container"></div>
+            <div class="password-section">
+                <label for="tondeuse-input">Mot de passe pour l’aventure :</label>
+                <input type="text" id="tondeuse-input" />
+                <button id="tondeuse-validate">Valider</button>
+                <div id="tondeuse-msg"></div>
+            </div>
+        </div>
+
+        <!-- Section vidéo YouTube -->
+        <div id="video-section" style="display:none;">
+            <div id="video-message"></div>
+            <div id="video-player"></div>
+            <button id="video-next" disabled>Suivant (regarder la vidéo jusqu’à la fin)</button>
+        </div>
+
+        <!-- Section lieux et gages -->
+        <div id="locations-section" style="display:none;">
+            <h2>Les lieux à suivre :</h2>
+            <ul id="location-list">
+                <li id="location-lille">Lille</li>
+                <li id="location-burgerking">Burger King ???</li>
+                <li id="location-lasergames">Laser Games ???</li>
+            </ul>
+            <button id="enter-code-btn" disabled>Entrer le code</button>
+            <input type="text" id="code-input" placeholder="Entrer le code" />
+            <div id="code-msg"></div>
+
+            <!-- Roulette prénoms et gages -->
+            <div id="roulette-section" style="display:none;">
+                <h3>Roulette des prénoms et gages</h3>
+                <div id="roulette-prenoms"></div>
+                <div id="roulette-gages"></div>
+                <button id="roulette-spin">Lancer la roulette</button>
+                <div id="roulette-result"></div>
+                <div>
+                    <label><input type="checkbox" id="gage-done" /> Gage accompli</label>
+                </div>
+                <button id="next-challenge" disabled>Suivant</button>
+            </div>
+        </div>
+
+        <!-- Section fin -->
+        <div id="end-section" style="display:none; color: white; background-color: black; height: 100vh; display:flex; justify-content:center; align-items:center;">
+            <em>Merci d’avoir joué</em>
+        </div>
+
     </div>
 
-    <button id="start-adventure" style="display:none;">Commencer l’aventure</button>
-
-    <div id="animation-container" style="display:none;">
-      <canvas id="animation-canvas" width="600" height="200"></canvas>
-    </div>
-
-    <div id="second-password-section" style="display:none;">
-      <label for="second-password-input">Mot de passe pour accéder :</label>
-      <input type="password" id="second-password-input" autocomplete="off" />
-      <button id="second-password-validate-btn">Valider</button>
-      <div id="second-password-feedback"></div>
-    </div>
-
-    <div id="video-section" style="display:none;">
-      <h2>Message de Brad Bitt :</h2>
-      <div id="video-message">Bienvenue dans l’aventure !</div>
-      <div id="video-player-container">
-        <iframe
-          id="youtube-video"
-          width="560"
-          height="315"
-          src=""
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
-      <button id="next-btn" disabled>Suivant (terminez la vidéo)</button>
-    </div>
-
-    <!-- À partir d’ici on peut rajouter la suite avec les lieux etc -->
-
-  </div>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
