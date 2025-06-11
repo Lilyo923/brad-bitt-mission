@@ -1,70 +1,95 @@
-// Compte à rebours jusqu'au 12 juin 2025 à 10h
-const countdownEl = document.getElementById("countdown");
-const startBtn = document.getElementById("startBtn");
-const checkpointInput = document.getElementById("checkpointInput");
-const validateCheckpoint = document.getElementById("validateCheckpoint");
-const passwordContainer = document.getElementById("password-container");
+// ==== VARIABLES ====
 
-const secondScreen = document.getElementById("second-screen");
-const bradInput = document.getElementById("bradPassword");
-const validateBrad = document.getElementById("validateBrad");
+const launchSection = document.getElementById('launch-section');
+const countdownEl = document.getElementById('countdown');
+const btnCommencer = document.getElementById('btn-commencer');
 
-const thirdScreen = document.getElementById("third-screen");
-const nextBtn = document.getElementById("nextBtn");
-let player;
+const checkpointContainer = document.getElementById('checkpoint-container');
+const checkpointInput = document.getElementById('checkpoint-input');
+const checkpointValider = document.getElementById('checkpoint-valider');
+
+const bradbittSection = document.getElementById('bradbitt-section');
+const bradbittPasswordInput = document.getElementById('bradbitt-password');
+const bradbittValider = document.getElementById('bradbitt-valider');
+
+const videoSection = document.getElementById('video-section');
+const btnSuivant = document.getElementById('btn-suivant');
+const infoText = document.getElementById('info');
+
+const lieuxSection = document.getElementById('lieux-section');
+
+const pages = document.querySelectorAll('.page');
+
+const LAUNCH_DATE = new Date('2025-06-12T10:00:00');
+
+let player; // YouTube player
+
+// ==== FONCTIONS UTILITAIRES ====
+
+function showPage(page) {
+  pages.forEach(p => p.classList.remove('active'));
+  page.classList.add('active');
+}
+
+// ==== COMPTE À REBOURS ====
 
 function updateCountdown() {
-  const target = new Date("2025-06-12T10:00:00");
   const now = new Date();
-  const diff = target - now;
+  const diff = LAUNCH_DATE - now;
 
   if (diff <= 0) {
-    countdownEl.textContent = "Lancement prêt !";
-    startBtn.classList.remove("hidden");
+    countdownEl.textContent = '00:00:00';
+    btnCommencer.disabled = false;
+    btnCommencer.classList.add('enabled');
+    clearInterval(intervalCountdown);
   } else {
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-    countdownEl.textContent = `${hours}h ${minutes}m ${seconds}s`;
-    requestAnimationFrame(updateCountdown);
+    let h = Math.floor(diff / 1000 / 3600);
+    let m = Math.floor((diff / 1000 % 3600) / 60);
+    let s = Math.floor((diff / 1000) % 60);
+
+    h = h.toString().padStart(2, '0');
+    m = m.toString().padStart(2, '0');
+    s = s.toString().padStart(2, '0');
+
+    countdownEl.textContent = `${h}:${m}:${s}`;
   }
 }
 
+const intervalCountdown = setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Mot de passe checkpoint
-validateCheckpoint.addEventListener("click", () => {
-  if (checkpointInput.value === "Checkpoint") {
-    passwordContainer.innerHTML = "✅ Accès autorisé";
-    setTimeout(() => {
-      document.getElementById("main-screen").classList.add("hidden");
-      secondScreen.classList.remove("hidden");
-    }, 5000);
+// ==== MOT DE PASSE CHECKPOINT ====
+
+checkpointValider.addEventListener('click', () => {
+  const val = checkpointInput.value.trim();
+  if (val.toLowerCase() === 'checkpoint') {
+    alert('Accès Checkpoint autorisé !');
+    checkpointContainer.style.display = 'none'; // disparait 5s plus tard ?
   } else {
-    passwordContainer.innerHTML = "❌ Mot de passe incorrect";
-    setTimeout(() => location.reload(), 2000);
+    alert('Mot de passe Checkpoint incorrect');
   }
 });
 
-// Bouton "Commencer l'aventure"
-startBtn.addEventListener("click", () => {
-  document.getElementById("main-screen").classList.add("hidden");
-  secondScreen.classList.remove("hidden");
+// ==== BOUTON COMMENCER ====
+
+btnCommencer.addEventListener('click', () => {
+  showPage(bradbittSection);
 });
 
-// Mot de passe Brad
-validateBrad.addEventListener("click", () => {
-  if (bradInput.value.toLowerCase() === "tondeuse") {
-    secondScreen.classList.add("hidden");
-    thirdScreen.classList.remove("hidden");
+// ==== MOT DE PASSE LE RETOUR INCONTESTÉ DE BRAD BITT ====
+
+bradbittValider.addEventListener('click', () => {
+  if (bradbittPasswordInput.value.trim().toLowerCase() === 'tondeuse') {
+    showPage(videoSection);
   } else {
-    alert("Mot de passe incorrect !");
+    alert('Mot de passe incorrect');
   }
 });
 
-// Gérer l’API YouTube (attendre la fin de la vidéo)
+// ==== YOUTUBE IFRAME API ====
+
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('bradVideo', {
+  player = new YT.Player('video', {
     events: {
       'onStateChange': onPlayerStateChange
     }
@@ -73,37 +98,16 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerStateChange(event) {
   if (event.data === YT.PlayerState.ENDED) {
-    nextBtn.disabled = false;
+    btnSuivant.disabled = false;
+    btnSuivant.classList.add('enabled');
+    infoText.style.display = 'none';
   }
 }
 
-// Charger API YouTube
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-document.body.appendChild(tag);
-// Prénoms et gages
-const prenoms = ["Téo", "Edwin", "Hippolyte", "Arthur"];
-const gages = [
-    "Aller dans un supermarché et demander un Serrano très très salé",
-    "Aller dans un magasin de cartes Pokémon et demander s’ils ont des Aquali avec un regard douteux",
-    "Aller imprimer des photos d’Astérion et dire que vous cherchez cet homme",
-    "Mettre le site de Brad Bitt sur tous les appareils d’un Apple Store"
-];
+// ==== BOUTON SUIVANT ====
 
-// Fonction pour lancer la roulette
-function lancerRoulette() {
-    const prenom = prenoms[Math.floor(Math.random() * prenoms.length)];
-    const gage = gages[Math.floor(Math.random() * gages.length)];
-
-    document.getElementById("roulette-prenom").innerText = prenom;
-    document.getElementById("roulette-gage").innerText = gage;
-    document.getElementById("roulette-resultat").classList.remove("hidden");
-    document.getElementById("valider-gages").classList.remove("hidden");
-}
-
-// Fonction de validation des gages
-function validerTousLesGages() {
-    // Passer à l’étape suivante (par ex. afficher mot de passe pour le prochain lieu)
-    alert("Tous les gages de Lille ont été accomplis !");
-    // Ici on peut afficher un champ pour entrer le code « bouilloire »
-}
+btnSuivant.addEventListener('click', () => {
+  if (!btnSuivant.disabled) {
+    showPage(lieuxSection);
+  }
+});
