@@ -1,80 +1,87 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Brad Bitt – Aventure</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Brad Bitt – Mission Gages</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="countdown-screen">
+  <!-- 1. Intro + timer + access secret -->
+  <div id="intro">
     <h1>Lancement dans :</h1>
-    <div id="countdown">00:00:00</div>
-    <button id="start-btn" disabled>Commencer l’aventure</button>
-    <div id="checkpoint">
-      <input type="password" id="password" placeholder="Checkpoint">
-      <button id="pass-btn">Valider</button>
-      <div id="pass-msg"></div>
+    <div id="countdown"></div>
+    <div id="secret">
+      <input type="password" id="secretCode" placeholder="Code secret (Checkpoint)" />
+      <button onclick="checkSecret()">OK</button>
     </div>
   </div>
 
-  <div id="cutscene-screen" class="hidden">
-    <div id="cutscene-text"></div>
+  <!-- 2. Bouton début aventure -->
+  <div id="launch" class="hidden">
+    <button onclick="startAnimation()">Commencer l’aventure</button>
   </div>
 
-  <div id="video1-screen" class="hidden">
-    <h2>Message de Brad Bitt</h2>
-    <div id="player1"></div>
-    <button id="next1" disabled>Suivant</button>
+  <!-- 3. Animation + mot de passe tondeuse -->
+  <div id="anim" class="hidden">
+    <h1 id="animText" class="impact"></h1>
+    <input type="password" id="mainCode" placeholder="Code (tondeuse)" />
+    <button onclick="checkMain()">Valider</button>
+    <p id="errorMain" class="error"></p>
   </div>
 
-  <div id="map-screen" class="hidden">
-    <h2>Liste des lieux à suivre</h2>
-    <div id="map">
-      <div class="point">Lille</div>
-      <div class="point hidden">??? (Burger King)</div>
-      <div class="point hidden">??? (Laser Games)</div>
-    </div>
-    <button id="code-burger" disabled>Mettre le code</button>
-    <div id="code-msg"></div>
+  <!-- 4. Vidéo intro -->
+  <div id="videoIntro" class="hidden">
+    <h2>Un message de Brad Bitt</h2>
+    <div id="player_int"></div>
+    <button id="btn_int" class="locked" disabled onclick="goMap()">Suivant</button>
+    <p class="hint">Regardez jusqu’à la fin.</p>
   </div>
 
-  <!-- Sections pour chaque lieu avec roulettes et gages repetées -->
-  <!-- Section Burger King -->
-  <div id="burger-screen" class="hidden">
-    <h2>Burger King – Roulettes</h2>
-    <div>
-      <select id="name-bk"></select>
-      <select id="task-bk"></select>
-      <button id="roll-bk">Roule</button>
-    </div>
-    <ul id="tasks-bk"></ul>
-    <button id="confirm-bk" disabled>Confirmer</button>
-    <div id="video-bk">
-      <div id="player2"></div>
-    </div>
-    <button id="next-bk" disabled>Suivant</button>
+  <!-- 5. Carte de mission -->
+  <div id="map" class="hidden">
+    <h2>Carte au trésor</h2>
+    <ul>
+      <li><button onclick="enter('lille')">• Lille</button></li>
+      <li>
+        <button id="btn_bk" class="locked" disabled>• ???</button>
+        <input type="password" id="code_bk" placeholder="Code (bouilloire)" />
+        <button onclick="unlock('bk')">OK</button>
+      </li>
+      <li>
+        <button id="btn_lg" class="locked" disabled>• ???</button>
+        <input type="password" id="code_lg" placeholder="Code (épuisette)" />
+        <button onclick="unlock('lg')">OK</button>
+      </li>
+    </ul>
   </div>
 
-  <!-- Laser Games section -->
-  <div id="laser-screen" class="hidden">
-    <h2>Laser Games – Roulettes</h2>
-    <div>
-      <select id="name-lg"></select>
-      <select id="task-lg"></select>
-      <button id="roll-lg">Roule</button>
-    </div>
-    <ul id="tasks-lg"></ul>
-    <button id="confirm-lg" disabled>Confirmer</button>
-    <div id="video-lg">
-      <div id="player3"></div>
-    </div>
-    <button id="next-lg" disabled>Suivant</button>
+  <!-- 6. Section lieu -->
+  <div id="section" class="hidden">
+    <h2 id="secTitle"></h2>
+    <p id="secNote" class="red"></p>
+    <button onclick="spin()">🎲 Tirage prénom+gage</button>
+    <p id="spinName"></p>
+    <p id="spinGage"></p>
+    <ul id="gageList"></ul>
+    <button id="btn_confirm" class="locked" disabled onclick="confirm()">✅ Oui</button>
+    <button onclick="goMap()">❌ Non</button>
   </div>
 
-  <div id="end-screen" class="hidden">
-    <p><em>Merci d’avoir joué</em></p>
+  <!-- 7. Vidéo félicitations + code -->
+  <div id="congrats" class="hidden">
+    <div id="player_sec"></div>
+    <input type="password" id="finalCode" placeholder="Code suivant…" />
+    <button onclick="submitCode()">OK</button>
+    <p id="errorFinal" class="error"></p>
   </div>
 
+  <!-- 8. Ecran final -->
+  <div id="final" class="hidden">
+    <p class="italic">Merci d’avoir joué</p>
+  </div>
+
+  <!-- API YouTube + Script -->
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
