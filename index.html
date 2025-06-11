@@ -3,85 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Brad Bitt – Mission Gages</title>
+  <title>Brad Bitt Adventure</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- 1. Intro + timer + access secret -->
-  <div id="intro">
+  <div id="countdown-container">
     <h1>Lancement dans :</h1>
     <div id="countdown"></div>
-    <div id="secret">
-      <input type="password" id="secretCode" placeholder="Code secret (Checkpoint)" />
-      <button onclick="checkSecret()">OK</button>
+  </div>
+
+  <button id="start-button" class="hidden">Commencer l'aventure</button>
+
+  <div id="checkpoint-box">
+    <input type="password" id="checkpoint-password" placeholder="Mot de passe" />
+    <button onclick="checkCheckpoint()">Valider</button>
+  </div>
+
+  <div id="main-content" class="hidden">
+    <div id="intro-animation" class="hidden"></div>
+    <div id="password-section" class="hidden">
+      <p>Entrez le mot de passe pour continuer :</p>
+      <input type="password" id="main-password" placeholder="Mot de passe secret" />
+      <button onclick="checkMainPassword()">Valider</button>
+    </div>
+
+    <div id="video-section" class="hidden">
+      <h2>Un message de Brad Bitt</h2>
+      <iframe id="video-frame"
+              width="560" height="315"
+              src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+      </iframe>
+      <button id="next-button" disabled>Suivant (regardez la vidéo d'abord)</button>
     </div>
   </div>
 
-  <!-- 2. Bouton début aventure -->
-  <div id="launch" class="hidden">
-    <button onclick="startAnimation()">Commencer l’aventure</button>
-  </div>
-
-  <!-- 3. Animation + mot de passe tondeuse -->
-  <div id="anim" class="hidden">
-    <h1 id="animText" class="impact"></h1>
-    <input type="password" id="mainCode" placeholder="Code (tondeuse)" />
-    <button onclick="checkMain()">Valider</button>
-    <p id="errorMain" class="error"></p>
-  </div>
-
-  <!-- 4. Vidéo intro -->
-  <div id="videoIntro" class="hidden">
-    <h2>Un message de Brad Bitt</h2>
-    <div id="player_int"></div>
-    <button id="btn_int" class="locked" disabled onclick="goMap()">Suivant</button>
-    <p class="hint">Regardez jusqu’à la fin.</p>
-  </div>
-
-  <!-- 5. Carte de mission -->
-  <div id="map" class="hidden">
-    <h2>Carte au trésor</h2>
-    <ul>
-      <li><button onclick="enter('lille')">• Lille</button></li>
-      <li>
-        <button id="btn_bk" class="locked" disabled>• ???</button>
-        <input type="password" id="code_bk" placeholder="Code (bouilloire)" />
-        <button onclick="unlock('bk')">OK</button>
-      </li>
-      <li>
-        <button id="btn_lg" class="locked" disabled>• ???</button>
-        <input type="password" id="code_lg" placeholder="Code (épuisette)" />
-        <button onclick="unlock('lg')">OK</button>
-      </li>
-    </ul>
-  </div>
-
-  <!-- 6. Section lieu -->
-  <div id="section" class="hidden">
-    <h2 id="secTitle"></h2>
-    <p id="secNote" class="red"></p>
-    <button onclick="spin()">🎲 Tirage prénom+gage</button>
-    <p id="spinName"></p>
-    <p id="spinGage"></p>
-    <ul id="gageList"></ul>
-    <button id="btn_confirm" class="locked" disabled onclick="confirm()">✅ Oui</button>
-    <button onclick="goMap()">❌ Non</button>
-  </div>
-
-  <!-- 7. Vidéo félicitations + code -->
-  <div id="congrats" class="hidden">
-    <div id="player_sec"></div>
-    <input type="password" id="finalCode" placeholder="Code suivant…" />
-    <button onclick="submitCode()">OK</button>
-    <p id="errorFinal" class="error"></p>
-  </div>
-
-  <!-- 8. Ecran final -->
-  <div id="final" class="hidden">
-    <p class="italic">Merci d’avoir joué</p>
-  </div>
-
-  <!-- API YouTube + Script -->
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
 </body>
