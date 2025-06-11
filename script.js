@@ -1,65 +1,33 @@
-* {
-  box-sizing: border-box;
-}
+// Compte à rebours pour le 12 juin 2025 à 10h
+const countdown = document.getElementById("countdown");
+const startButton = document.getElementById("startButton");
+const launchDate = new Date("2025-06-12T10:00:00").getTime();
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #111;
-  color: white;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
+function updateCountdown() {
+  const now = new Date().getTime();
+  const distance = launchDate - now;
 
-.container {
-  padding: 20px;
-  margin-top: 15vh;
+  if (distance > 0) {
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    countdown.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+  } else {
+    countdown.style.display = "none";
+    startButton.style.display = "inline-block";
+  }
 }
+setInterval(updateCountdown, 1000);
 
-h1 {
-  font-size: 6vw;
-  margin-bottom: 20px;
-}
-
-#countdown {
-  font-size: 8vw;
-  margin: 20px 0;
-}
-
-#startButton {
-  padding: 15px 30px;
-  font-size: 5vw;
-  background-color: #0f0;
-  color: black;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.password-box {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.password-box input {
-  padding: 10px;
-  font-size: 4vw;
-  border-radius: 5px;
-  border: none;
-  margin-bottom: 5px;
-}
-
-.password-box button {
-  padding: 8px 16px;
-  font-size: 4vw;
-  border: none;
-  border-radius: 5px;
-  background-color: #444;
-  color: white;
-  cursor: pointer;
+// Mot de passe Checkpoint (accès rapide)
+function checkCheckpoint() {
+  const input = document.getElementById("checkpointPassword").value;
+  if (input.toLowerCase() === "checkpoint") {
+    alert("Accès autorisé. Vous pouvez cliquer sur 'Commencer l'aventure'.");
+    countdown.style.display = "none";
+    startButton.style.display = "inline-block";
+  } else {
+    alert("Mot de passe incorrect !");
+  }
 }
