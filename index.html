@@ -1,64 +1,62 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lancement de l'aventure</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Le Retour de Brad Bitt</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="main-screen">
+
+<div id="app">
+
+  <!-- Page Lancement + compte à rebours -->
+  <section id="launch-section" class="page active">
     <h1>Lancement dans :</h1>
-    <div id="countdown"></div>
-    <button id="startBtn" class="hidden">Commencer l’aventure</button>
-    
-    <div id="password-container">
-      <input type="password" id="checkpointInput" placeholder="Mot de passe" />
-      <button id="validateCheckpoint">Valider</button>
-    </div>
+    <div id="countdown">--:--:--</div>
+    <button id="btn-commencer" disabled>Commencer l'aventure</button>
+  </section>
+
+  <!-- Mot de passe Checkpoint (en bas à droite) -->
+  <div id="checkpoint-container">
+    <input type="password" id="checkpoint-input" placeholder="Mot de passe Checkpoint" />
+    <button id="checkpoint-valider">Valider</button>
   </div>
 
-  <div id="second-screen" class="hidden">
-    <h1 id="brad-title">Le retour incontesté de Brad Bitt</h1>
-    <input type="password" id="bradPassword" placeholder="Mot de passe..." />
-    <button id="validateBrad">Valider</button>
-  </div>
+  <!-- Page "Le retour incontesté de Brad Bitt" -->
+  <section id="bradbitt-section" class="page">
+    <h1>Le retour incontesté de Brad Bitt</h1>
+    <input type="password" id="bradbitt-password" placeholder="Mot de passe" />
+    <button id="bradbitt-valider">Valider</button>
+  </section>
 
-  <div id="third-screen" class="hidden">
-    <h2>Un message de Brad Bitt</h2>
+  <!-- Page vidéo + bouton suivant -->
+  <section id="video-section" class="page">
+    <h2>Message de Brad Bitt</h2>
     <div id="video-container">
-      <iframe id="bradVideo" width="100%" height="215" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+      <iframe id="video" width="560" height="315"
+        src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1"
+        title="YouTube video player" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
     </div>
-    <button id="nextBtn" disabled>Suivant</button>
-  </div>
+    <button id="btn-suivant" disabled>Suivant</button>
+    <div id="info">Le bouton sera accessible uniquement lorsque la vidéo sera finie.</div>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- Page lieux -->
+  <section id="lieux-section" class="page">
+    <h2>Les lieux à suivre</h2>
+    <ul id="lieux-list">
+      <li>Lille</li>
+      <li>Burger King ???</li>
+      <li>Laser Games ???</li>
+    </ul>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
-<!-- Interface des lieux -->
-<div id="lieux-section" class="hidden">
-    <h2>Les lieux à suivre</h2>
-    <div id="carte-tresor">
-        <p>🔴 Lille</p>
-        <p>⏳ ???</p>
-        <p>⏳ ???</p>
-    </div>
-
-    <div id="gages-lille">
-        <h3>Gages à Lille</h3>
-        <ul id="liste-gages">
-            <li><input type="checkbox"> Aller dans un supermarché et demander un Serrano très très salé</li>
-            <li><input type="checkbox"> Aller dans un magasin de cartes Pokémon et demander s’ils ont des Aquali avec un regard douteux</li>
-            <li><input type="checkbox"> Aller imprimer des photos d’Astérion et dire que vous cherchez cet homme</li>
-            <li><input type="checkbox"> Mettre le site de Brad Bitt sur tous les appareils d’un Apple Store</li>
-        </ul>
-
-        <button onclick="lancerRoulette()">🎰 Lancer les roulettes</button>
-        <div id="roulette-resultat" class="hidden">
-            <p><strong>Prénom :</strong> <span id="roulette-prenom"></span></p>
-            <p><strong>Gage :</strong> <span id="roulette-gage"></span></p>
-        </div>
-
-        <button id="valider-gages" class="hidden" onclick="validerTousLesGages()">✅ Tous les gages sont faits</button>
-    </div>
-</div>
