@@ -1,62 +1,41 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Le Retour de Brad Bitt</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Brad Bitt Adventure</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="app">
-
-  <!-- Page Lancement + compte à rebours -->
-  <section id="launch-section" class="page active">
+  <div id="page-1" class="page">
     <h1>Lancement dans :</h1>
-    <div id="countdown">--:--:--</div>
-    <button id="btn-commencer" disabled>Commencer l'aventure</button>
-  </section>
+    <div id="countdown"></div>
+    <button id="startBtn" style="display:none;">Commencer l'aventure</button>
 
-  <!-- Mot de passe Checkpoint (en bas à droite) -->
-  <div id="checkpoint-container">
-    <input type="password" id="checkpoint-input" placeholder="Mot de passe Checkpoint" />
-    <button id="checkpoint-valider">Valider</button>
+    <div id="checkpointAccess">
+      <input type="password" id="checkpointInput" placeholder="Mot de passe" />
+      <button onclick="validateCheckpoint()">Valider</button>
+    </div>
   </div>
 
-  <!-- Page "Le retour incontesté de Brad Bitt" -->
-  <section id="bradbitt-section" class="page">
-    <h1>Le retour incontesté de Brad Bitt</h1>
-    <input type="password" id="bradbitt-password" placeholder="Mot de passe" />
-    <button id="bradbitt-valider">Valider</button>
-  </section>
-
-  <!-- Page vidéo + bouton suivant -->
-  <section id="video-section" class="page">
-    <h2>Message de Brad Bitt</h2>
-    <div id="video-container">
-      <iframe id="video" width="560" height="315"
-        src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1"
-        title="YouTube video player" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
+  <div id="page-2" class="page hidden">
+    <h1 id="introTitle">Le retour incontesté de Brad Bitt</h1>
+    <div id="passwordSection">
+      <input type="password" id="secondPassword" placeholder="Mot de passe" />
+      <button onclick="validateSecondPassword()">Valider</button>
     </div>
-    <button id="btn-suivant" disabled>Suivant</button>
-    <div id="info">Le bouton sera accessible uniquement lorsque la vidéo sera finie.</div>
-  </section>
+  </div>
 
-  <!-- Page lieux -->
-  <section id="lieux-section" class="page">
-    <h2>Les lieux à suivre</h2>
-    <ul id="lieux-list">
-      <li>Lille</li>
-      <li>Burger King ???</li>
-      <li>Laser Games ???</li>
-    </ul>
-  </section>
+  <div id="page-3" class="page hidden">
+    <h2>Un message de Brad Bitt</h2>
+    <div class="video-container">
+      <iframe id="ytplayer" width="100%" height="315" src="https://www.youtube.com/embed/2DMl0zoaPZ0?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <p>Le bouton sera accessible une fois la vidéo terminée.</p>
+    <button id="nextBtn" disabled>Suivant</button>
+  </div>
 
-</div>
-
-<script src="script.js"></script>
-<script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js"></script>
 </body>
 </html>
