@@ -52,3 +52,56 @@ input[type="password"] {
   margin-top: 10px;
   font-style: italic;
 }
+/* PAGE 4 - CARTE DES LIEUX */
+#page-4 {
+  text-align: center;
+  background: url('https://i.imgur.com/QgzYZep.jpg') no-repeat center center;
+  background-size: cover;
+  color: #fff;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.map {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.location {
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px dashed #fff;
+  padding: 20px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.location:hover {
+  transform: scale(1.02);
+}
+
+.location h2 {
+  font-family: 'Impact', sans-serif;
+  font-size: 28px;
+}
+
+.location button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  background: #ffdd57;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.location button:hover {
+  background: #ffd000;
+}
+
+.locked {
+  opacity: 0.4;
+  pointer-events: none;
+}
