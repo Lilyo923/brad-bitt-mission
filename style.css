@@ -1,93 +1,50 @@
-/* Style général */
 body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: black;
-    color: white;
-    text-align: center;
-    padding: 20px;
+  margin: 0;
+  padding: 0;
+  background-color: #111;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
 }
 
-/* Compte à rebours */
-#countdown-container h1 {
-    font-size: 2em;
+.hidden {
+  display: none;
 }
 
-#countdown {
-    font-size: 3em;
-    margin-top: 10px;
+#password-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 5px;
 }
 
-/* Zone mot de passe Checkpoint */
-#checkpoint-box {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: rgba(255,255,255,0.1);
-    padding: 10px;
-    border-radius: 8px;
-}
-
-#checkpoint-box input {
-    padding: 5px;
-    margin-right: 5px;
-}
-
-/* Bouton Commencer */
-#start-button-container {
-    margin-top: 30px;
+input[type="password"] {
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
 }
 
 button {
-    padding: 10px 20px;
-    font-size: 1.1em;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #ffffff;
-    color: black;
+  padding: 8px 12px;
+  background-color: #444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-button.disabled {
-    background-color: grey;
-    color: white;
-    cursor: not-allowed;
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
 }
 
-/* Animation titre */
-#animated-title {
-    font-family: Impact, sans-serif;
-    font-size: 2.5em;
-    margin: 40px 0;
-    animation: flyIn 1s ease-out forwards;
-    opacity: 0;
-}
-
-/* Animation */
-@keyframes flyIn {
-    from {
-        transform: translateY(-100px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Cacher les éléments par défaut */
-.hidden {
-    display: none;
-}
-
-/* Vidéo */
-#video-container {
-    margin: 20px auto;
-    max-width: 100%;
-}
-
-iframe {
-    width: 90%;
-    max-width: 560px;
-    height: 315px;
+#brad-title {
+  font-family: Impact, sans-serif;
+  font-size: 1.8rem;
 }
