@@ -1,10 +1,36 @@
-body { background: #111; color: #eee; font-family: Arial; text-align: center; padding: 20px; }
-.hidden { display:none; }
-.impact { font-family: Impact; font-size: 2.5rem; }
-.error { color: #f55; }
-.red { color: red; font-weight: bold; }
-.italic { font-style: italic; }
-button { padding: .5rem 1rem; margin: .5rem; }
-button.disabled, button.locked { background: #333; color: #555; cursor: not-allowed; }
-button:not(.disabled):not(.locked) { cursor: pointer; }
-.hint { color: #aaa; font-size: .9rem; margin-top: .5rem; }
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 50px;
+}
+
+#countdown {
+  font-size: 2em;
+  margin: 20px 0;
+}
+
+#checkpointAccess {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+#animationContainer {
+  font-family: Impact, sans-serif;
+  font-size: 40px;
+  color: red;
+  margin-top: 50px;
+  animation: appear 2s ease-out forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: scale(0.2) rotate(10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
