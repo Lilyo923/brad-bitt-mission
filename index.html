@@ -50,3 +50,50 @@
   <script src="script.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lille - Gages</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Lille - Les gages</h1>
+    
+    <div class="roulette-container">
+      <div>
+        <h2>Prénom</h2>
+        <div id="prenomDisplay" class="roulette-display">--</div>
+        <button id="spinPrenomBtn">Lancer prénom</button>
+      </div>
+      <div>
+        <h2>Gage</h2>
+        <div id="gageDisplay" class="roulette-display">--</div>
+        <button id="spinGageBtn">Lancer gage</button>
+      </div>
+    </div>
+
+    <h3>Liste des gages :</h3>
+    <ul id="gageList">
+      <li><label><input type="checkbox" data-gage="1"> Aller dans un supermarché et demander un Serrano très très salé.</label></li>
+      <li><label><input type="checkbox" data-gage="2"> Aller dans un magasin de cartes Pokémon et demander des cartes Aquali avec un regard discutable.</label></li>
+      <li><label><input type="checkbox" data-gage="3"> Aller imprimer quelques photos de Asterion et dire que vous cherchez cet homme.</label></li>
+      <li><label><input type="checkbox" data-gage="4"> Aller dans l’Apple Store et mettre le site de Brad Bitt sur tous les appareils.</label></li>
+    </ul>
+
+    <div id="videoSection" class="hidden">
+      <h3>Message de Brad Bitt</h3>
+      <iframe id="videoBrad" width="320" height="180" 
+        src="https://www.youtube.com/embed/ZAHUIzGBiQ?rel=0&autoplay=1" 
+        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+      </iframe>
+    </div>
+
+    <button id="nextBtn">Suivant</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
